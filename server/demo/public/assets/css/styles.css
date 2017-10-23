@@ -44,11 +44,14 @@ body {
 
 header#logged-out,
 header#logged-in {
-  min-height: 6.5rem;
-  max-width: 75rem;
+  min-height: 4.5rem;
+  width: 100vw;
   margin: 0 auto;
-  border-bottom: 0.2rem solid #F1F1F1;
-  position: relative; }
+  background: #0080FF;
+  box-shadow: 0px 0px 26px 4px rgba(144, 144, 144, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 10; }
   header#logged-out #logo,
   header#logged-in #logo {
     width: 4rem;
@@ -66,21 +69,41 @@ header#logged-in {
     background-color: #0080FF;
     border: 0.1rem solid #0080FF;
     border-radius: 0.4rem; }
+  header#logged-out #simulate-toggle,
+  header#logged-in #simulate-toggle {
+    color: #000000;
+    background-color: #FFFFFF;
+    display: inline-block;
+    border-radius: 2.125rem;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+    font-family: "BariolBold";
+    vertical-align: top;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    padding: 0.5rem 1rem;
+    top: 50%;
+    margin-right: 20rem;
+    border: none;
+    margin-top: -0.8rem;
+    outline: none; }
   header#logged-out #user,
   header#logged-in #user {
     position: absolute;
     right: 0;
     padding: 1rem;
     top: 50%;
-    margin-top: -2.125rem; }
+    margin-top: -2.125rem;
+    margin-right: 4rem; }
     header#logged-out #user .image,
     header#logged-out #user div[data-type="picture"],
     header#logged-in #user .image,
     header#logged-in #user div[data-type="picture"] {
-      border: 0.05rem solid #DDDDDD;
-      width: 2.125rem;
-      height: 2.125rem;
-      border-radius: 2.125rem;
+      border: 0.05rem solid #0080FF;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 1.8rem;
       margin: 0 0.4rem 0 0;
       background-color: rgba(240, 240, 240, 0.8);
       background-position: center center;
@@ -92,28 +115,30 @@ header#logged-in {
       position: relative; }
     header#logged-out #user div[data-type="name"],
     header#logged-in #user div[data-type="name"] {
-      color: #FFFFFF;
-      background-color: #0080FF;
-      padding: 0.5rem 2.4rem 0.6rem 1rem;
+      color: #0080FF;
+      background-color: #FFFFFF;
+      padding: 0.5rem 1.6rem 0.4rem 1rem;
       display: inline-block;
       border-radius: 2.125rem;
       box-sizing: border-box;
-      font-size: 1rem;
-      font-family: "BariolRegular";
+      font-size: 0.85rem;
+      font-family: "BariolBold";
       vertical-align: top;
       cursor: pointer;
-      min-height: 2.224375rem; }
+      min-height: 1.8rem;
+      top: 0.2rem;
+      position: relative; }
       header#logged-out #user div[data-type="name"] #menu-down-arrow,
       header#logged-in #user div[data-type="name"] #menu-down-arrow {
-        width: 1rem;
+        width: 0.7rem;
         height: 0.95rem;
-        background-image: url(/assets/img/down-arrow.png);
+        background-image: url(/assets/img/down-arrow-alt.png);
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
-        right: 2rem;
-        top: 1.6rem; }
+        right: 0.7rem;
+        top: 0.45rem; }
   header#logged-out #user-menu,
   header#logged-in #user-menu {
     position: absolute;
@@ -123,7 +148,7 @@ header#logged-in {
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url(/assets/img/tooltip.png);
-    right: -2rem;
+    right: 2rem;
     top: 5.5rem;
     z-index: 10;
     opacity: 0;
@@ -157,18 +182,6 @@ header#logged-in {
         header#logged-in #user-menu .options .option:hover {
           background-color: #F2F2F2;
           transition: background-color 0.3s ease; }
-  @media (max-width: 76em) {
-    header#logged-out,
-    header#logged-in {
-      max-width: 64rem; } }
-  @media (max-width: 65em) {
-    header#logged-out,
-    header#logged-in {
-      max-width: 55rem; } }
-  @media (max-width: 64em) {
-    header#logged-out,
-    header#logged-in {
-      width: 95%; } }
 
 .dropdown {
   z-index: 10;
@@ -198,19 +211,19 @@ header#logged-in {
     display: inline-block;
     vertical-align: middle;
     border-radius: 0.2rem; }
+    .dropdown .value-picture.flag-us {
+      background-image: url(/assets/img/flag-us.png); }
   .dropdown .value-name {
     display: inline-block;
     margin-left: 0.5rem;
     vertical-align: middle; }
   .dropdown .values {
-    min-width: 9.5rem;
     display: none;
+    min-width: 9.5rem;
     position: absolute;
     top: 3rem;
-    border: 0.1rem solid #EEE;
-    border-radius: 0.8rem;
-    left: -2rem;
-    box-shadow: 0px 0px 6px 3px rgba(218, 218, 218, 0.28);
+    border: 0.1rem solid #f7f7f7;
+    left: 0rem;
     overflow: hidden; }
     .dropdown .values .value {
       padding: 1rem 2rem;
@@ -262,7 +275,7 @@ main > .bottom {
   box-shadow: 0px 2px 11px 2px rgba(198, 198, 198, 0.5);
   border-radius: 3px;
   position: relative;
-  z-index: 10;
+  z-index: 9;
   margin-right: 2rem;
   margin-top: 1rem; }
   .share a {
@@ -300,7 +313,7 @@ main > .bottom {
 .comment-section {
   max-width: 47rem;
   width: 90%;
-  margin: 0 auto;
+  margin: 0 0;
   position: relative;
   padding-top: 2rem; }
   .comment-section .comment-count .icon {
@@ -427,6 +440,77 @@ main > .bottom {
       font-family: "BariolRegular"; }
       .comment-section .poster textarea:focus {
         outline: none; }
+
+#sidebar {
+  width: 5.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  height: 100vh;
+  background: #0080FF;
+  box-shadow: 0px 0px 26px 4px rgba(144, 144, 144, 0.5);
+  box-sizing: border-box; }
+  #sidebar button {
+    border: none;
+    outline: none;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: transparent;
+    cursor: pointer; }
+  #sidebar button[data-type] {
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-bottom: 2rem; }
+    @media (min-height: 44em) {
+      #sidebar button[data-type] {
+        margin-bottom: 3rem; } }
+    @media (min-height: 55em) {
+      #sidebar button[data-type] {
+        margin-bottom: 4rem; } }
+  #sidebar button[data-type="logo"] {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-top: 0.8rem; }
+  #sidebar button[data-type]:not([data-type="logo"]):not([data-type="write-article"]) {
+    border-radius: 0.3rem; }
+    #sidebar button[data-type]:not([data-type="logo"]):not([data-type="write-article"]):hover, #sidebar button[data-type]:not([data-type="logo"]):not([data-type="write-article"]).selected {
+      box-shadow: 0px 0px 8px 0px rgba(0, 50, 255, 0.5); }
+  #sidebar button[data-type="write-article"] {
+    transition: transform 0.3s ease;
+    width: 2.8rem;
+    height: 2.8rem; }
+    #sidebar button[data-type="write-article"]:hover, #sidebar button[data-type="write-article"].selected {
+      transform: scale(1.1, 1.1);
+      transition: transform 0.3s ease; }
+  #sidebar button[data-type="logo"] {
+    background-image: url(/assets/img/sidebar/logo.png); }
+  #sidebar button[data-type="mywallet"] {
+    background-image: url(/assets/img/sidebar/mywallet.png); }
+    #sidebar button[data-type="mywallet"]:hover, #sidebar button[data-type="mywallet"].selected {
+      background-image: url(/assets/img/sidebar/mywallet-selected.png); }
+  #sidebar button[data-type="assigned-articles"] {
+    background-image: url(/assets/img/sidebar/assigned-articles.png); }
+    #sidebar button[data-type="assigned-articles"]:hover, #sidebar button[data-type="assigned-articles"].selected {
+      background-image: url(/assets/img/sidebar/assigned-articles-selected.png); }
+  #sidebar button[data-type="reviewed-articles"] {
+    background-image: url(/assets/img/sidebar/reviewed-articles.png); }
+    #sidebar button[data-type="reviewed-articles"]:hover, #sidebar button[data-type="reviewed-articles"].selected {
+      background-image: url(/assets/img/sidebar/reviewed-articles-selected.png); }
+  #sidebar button[data-type="drafted-articles"] {
+    background-image: url(/assets/img/sidebar/drafted-articles.png); }
+    #sidebar button[data-type="drafted-articles"]:hover, #sidebar button[data-type="drafted-articles"].selected {
+      background-image: url(/assets/img/sidebar/drafted-articles-selected.png); }
+  #sidebar button[data-type="submitted-articles"] {
+    background-image: url(/assets/img/sidebar/submitted-articles.png); }
+    #sidebar button[data-type="submitted-articles"]:hover, #sidebar button[data-type="submitted-articles"].selected {
+      background-image: url(/assets/img/sidebar/submitted-articles-selected.png); }
+  #sidebar button[data-type="write-article"] {
+    background-image: url(/assets/img/sidebar/write-article.png); }
 
 a.btn {
   background: #0080FF;
@@ -661,9 +745,7 @@ a.btn {
     margin-top: 3rem; }
 
 .empty-message {
-  display: block;
-  text-align: center;
-  margin-top: 10rem;
+  margin: 10rem 0 0 2rem;
   font-size: 2rem;
   font-family: "BariolRegular";
   color: #232323; }
@@ -696,6 +778,10 @@ a.btn {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat; }
+  .image .image-overlay {
+    width: inherit;
+    min-height: inherit;
+    position: absolute; }
 
 #loading-indicator {
   position: fixed;
@@ -784,8 +870,6 @@ a.btn {
     #support-links > a.support-telegram > div {
       background-image: url(/assets/img/icon-telegram-alt.png); }
 
-#page-dashboard body {
-  border-top: 0.3rem solid #0080FF; }
 #page-dashboard main {
   max-width: 75rem;
   margin: 0 auto;
@@ -857,10 +941,10 @@ a.btn {
         #page-dashboard .module.feed .bottom {
           display: none; } }
     #page-dashboard .module.feed h2 {
-      font-family: "BariolBold";
+      font-family: "BariolRegular";
       text-align: center;
       display: block;
-      font-size: 1.7rem;
+      font-size: 1.4rem;
       margin-bottom: 0.2rem;
       color: rgba(139, 139, 139, 0.9); }
     #page-dashboard .module.feed .bottom {
@@ -1202,6 +1286,16 @@ a.btn {
       #page-login #wrapper #sections section[data-section="getstarted"] button#register-btn,
       #page-onboard #wrapper #sections section[data-section="getstarted"] button#register-btn {
         background-color: #0058FF; }
+  #page-type #wrapper #sections section[data-section="version"] h1,
+  #page-login #wrapper #sections section[data-section="version"] h1,
+  #page-onboard #wrapper #sections section[data-section="version"] h1 {
+    margin-top: 4rem;
+    margin-bottom: 2rem; }
+  #page-type #wrapper #sections section[data-section="version"] p,
+  #page-login #wrapper #sections section[data-section="version"] p,
+  #page-onboard #wrapper #sections section[data-section="version"] p {
+    max-width: 29rem;
+    margin-bottom: 2rem; }
   #page-type #wrapper #sections section[data-section="setup"] h1,
   #page-login #wrapper #sections section[data-section="setup"] h1,
   #page-onboard #wrapper #sections section[data-section="setup"] h1 {
@@ -1332,6 +1426,53 @@ a.btn {
     #page-login #wrapper #sections section[data-section="signup"] small,
     #page-onboard #wrapper #sections section[data-section="signup"] small {
       margin-bottom: 3rem; }
+    #page-type #wrapper #sections section[data-section="signup"] h1 .slack,
+    #page-login #wrapper #sections section[data-section="signup"] h1 .slack,
+    #page-onboard #wrapper #sections section[data-section="signup"] h1 .slack {
+      background-size: contain;
+      background-image: url(/assets/img/slack-logo.png);
+      background-position: center center;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      position: relative;
+      top: 0.3rem; }
+    #page-type #wrapper #sections section[data-section="signup"] .slack-button,
+    #page-login #wrapper #sections section[data-section="signup"] .slack-button,
+    #page-onboard #wrapper #sections section[data-section="signup"] .slack-button {
+      background-color: #FFF;
+      box-shadow: 0px 4px 20px 0px #d6d6d6;
+      color: #000;
+      font-family: "GeomanistMedium";
+      font-size: 0.9rem;
+      letter-spacing: .12em;
+      vertical-align: middle;
+      max-width: 10rem;
+      text-align: center;
+      padding: 1.2rem 2.5rem;
+      border-radius: 1.8rem;
+      display: block;
+      margin: 2rem auto 3.8rem auto;
+      border: 0.01rem solid rgba(223, 229, 244, 0.59); }
+      #page-type #wrapper #sections section[data-section="signup"] .slack-button:hover,
+      #page-login #wrapper #sections section[data-section="signup"] .slack-button:hover,
+      #page-onboard #wrapper #sections section[data-section="signup"] .slack-button:hover {
+        opacity: 0.8; }
+      #page-type #wrapper #sections section[data-section="signup"] .slack-button .slack,
+      #page-login #wrapper #sections section[data-section="signup"] .slack-button .slack,
+      #page-onboard #wrapper #sections section[data-section="signup"] .slack-button .slack {
+        background-image: url(/assets/img/slack-logo.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: inline-block;
+        height: 1rem;
+        margin-right: 0.1rem;
+        vertical-align: middle;
+        width: 1rem;
+        top: -0.1rem;
+        position: relative; }
   #page-type #wrapper #sections section[data-section="selecttype"],
   #page-login #wrapper #sections section[data-section="selecttype"],
   #page-onboard #wrapper #sections section[data-section="selecttype"] {
@@ -1426,35 +1567,86 @@ a.btn {
   #page-login main {
     box-shadow: 0px 0px 20px 4px rgba(218, 218, 218, 0.5); }
 
-#page-stream #articles {
+.app-pages {
+  width: 100vw;
+  height: 100vh;
   position: relative;
-  max-width: 35rem;
-  margin: 3rem auto 15rem auto; }
-  #page-stream #articles > div:not(.divider):not(.heading) {
+  overflow: hidden; }
+  .app-pages .app-page {
+    padding: 6rem 1rem 1rem 7rem;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box; }
+    .app-pages .app-page[data-page="article-review"] {
+      padding: 0; }
+      .app-pages .app-page[data-page="article-review"] main {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding-top: 6rem;
+        padding-left: 6rem; }
+      .app-pages .app-page[data-page="article-review"] #review .bottom .back-button,
+      .app-pages .app-page[data-page="article-review"] #article .bottom .back-button {
+        left: 10.5rem; }
+      .app-pages .app-page[data-page="article-review"] #review .heading,
+      .app-pages .app-page[data-page="article-review"] #article .heading {
+        margin: 0; }
+      .app-pages .app-page[data-page="article-review"] #review .section .container,
+      .app-pages .app-page[data-page="article-review"] #article .section .container {
+        margin: 0; }
+    .app-pages .app-page .show, .app-pages .app-page.show {
+      top: 0rem;
+      opacity: 1;
+      transition: opacity 0.9s ease 1.2s, top 0.9s ease 1.2s;
+      z-index: 1; }
+      .app-pages .app-page .show .bottom, .app-pages .app-page .show .editor-bottom, .app-pages .app-page.show .bottom, .app-pages .app-page.show .editor-bottom {
+        opacity: 1;
+        transition: opacity 1s ease 1.5s; }
+    .app-pages .app-page .hide, .app-pages .app-page.hide {
+      top: 10rem;
+      opacity: 0;
+      transition: opacity 1s ease, top 0.8s ease;
+      z-index: 0; }
+      .app-pages .app-page .hide .bottom, .app-pages .app-page .hide .editor-bottom, .app-pages .app-page.hide .bottom, .app-pages .app-page.hide .editor-bottom {
+        opacity: 0;
+        transition: opacity 0.3s ease; }
+
+.wrapper {
+  padding-left: 5rem; }
+
+main#stream #articles {
+  position: relative;
+  margin: 2rem 0 15rem 2rem;
+  max-width: 50rem; }
+  main#stream #articles > div:not(.divider):not(.heading) {
     margin-bottom: 3rem; }
-#page-stream .article {
+main#stream .article {
   cursor: pointer;
   position: relative;
   background-color: transparent;
   border: none;
   outline: none; }
-  #page-stream .article .preview, #page-stream .article .image {
+  main#stream .article .preview, main#stream .article .image {
     width: 100%;
     background-color: #EEEEEE;
     border-radius: 0.5rem; }
-  #page-stream .article .details h3 {
+  main#stream .article .details h3 {
     white-space: normal;
     font-size: 1.1rem;
     text-align: center;
     line-height: 1.5; }
-  #page-stream .article .details > span:nth-child(2) {
+  main#stream .article .details > span:nth-child(2) {
     color: #A9A9A9;
     font-family: "GeomanistLight";
     font-size: 0.9rem;
     position: absolute;
     left: 0;
     bottom: 0; }
-  #page-stream .article .details > a:nth-child(3) {
+  main#stream .article .details > a:nth-child(3) {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -1463,7 +1655,7 @@ a.btn {
     color: #A9A9A9;
     font-family: "GeomanistLight";
     font-size: 0.9rem; }
-    #page-stream .article .details > a:nth-child(3) > span:nth-child(1) {
+    main#stream .article .details > a:nth-child(3) > span:nth-child(1) {
       display: inline-block;
       width: 1rem;
       height: 1rem;
@@ -1474,24 +1666,122 @@ a.btn {
       position: relative;
       top: 0.08rem;
       margin-right: 0.08rem; }
-#page-stream .article-single:not(.right-preview) h3 {
+main#stream .article-cards {
+  height: 28rem; }
+  main#stream .article-cards .article-card {
+    float: left;
+    width: 26rem;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    outline: none;
+    background: #FFFFFF;
+    box-shadow: 0px 10px 20px 0px #E4E8EF;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0 2rem 1.25rem 0;
+    vertical-align: top; }
+    main#stream .article-cards .article-card .preview, main#stream .article-cards .article-card .image {
+      width: 100%;
+      background-color: #EEEEEE;
+      min-height: 18rem; }
+    main#stream .article-cards .article-card.color-0 .image .image-overlay {
+      opacity: 0.8;
+      background-image: linear-gradient(-135deg, #ed5565 0%, #d62839 100%); }
+    main#stream .article-cards .article-card.color-1 .image .image-overlay {
+      opacity: 0.8;
+      background-image: linear-gradient(-135deg, #5d9cec 0%, #0e65d7 100%); }
+    main#stream .article-cards .article-card.color-2 .image .image-overlay {
+      opacity: 0.8;
+      background-image: linear-gradient(-135deg, #48cfad 0%, #19a784 100%); }
+    main#stream .article-cards .article-card.color-3 .image .image-overlay {
+      opacity: 0.8;
+      background-image: linear-gradient(-135deg, #ffd97c 0%, #f6a742 100%); }
+    main#stream .article-cards .article-card.color-4 .image .image-overlay {
+      opacity: 0.8;
+      background-image: linear-gradient(-135deg, #ac92ec 0%, #7455c3 100%); }
+    main#stream .article-cards .article-card .details {
+      box-sizing: border-box;
+      padding: 0 3rem; }
+      main#stream .article-cards .article-card .details h3 {
+        white-space: normal;
+        font-size: 1.1rem;
+        text-align: center;
+        line-height: 1.5;
+        min-height: 6rem; }
+      main#stream .article-cards .article-card .details > span:nth-child(2) {
+        color: #A9A9A9;
+        font-family: "GeomanistLight";
+        font-size: 0.9rem;
+        position: absolute;
+        left: 4rem;
+        bottom: 1.5rem; }
+      main#stream .article-cards .article-card .details > a:nth-child(3) {
+        position: absolute;
+        right: 4rem;
+        bottom: 1.5rem;
+        display: inline-block;
+        text-decoration: none;
+        color: #A9A9A9;
+        font-family: "GeomanistLight";
+        font-size: 0.9rem; }
+        main#stream .article-cards .article-card .details > a:nth-child(3) > span:nth-child(1) {
+          display: inline-block;
+          width: 1rem;
+          height: 1rem;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-image: url(/assets/img/heart.png);
+          background-size: contain;
+          position: relative;
+          top: 0.08rem;
+          margin-right: 0.08rem; }
+  main#stream .article-cards .article-card:nth-child(2),
+  main#stream .article-cards .article-card:nth-child(3) {
+    width: 19rem;
+    height: 12.4984375rem; }
+    main#stream .article-cards .article-card:nth-child(2) h3,
+    main#stream .article-cards .article-card:nth-child(3) h3 {
+      font-size: 0.8rem;
+      margin: 0.5rem 0 0 0;
+      line-height: 1.3; }
+    main#stream .article-cards .article-card:nth-child(2) .details > span:nth-child(2),
+    main#stream .article-cards .article-card:nth-child(3) .details > span:nth-child(2) {
+      bottom: 0.7rem;
+      font-size: 0.7rem; }
+    main#stream .article-cards .article-card:nth-child(2) .details > a:nth-child(3),
+    main#stream .article-cards .article-card:nth-child(3) .details > a:nth-child(3) {
+      bottom: 0.7rem;
+      font-size: 0.7rem; }
+      main#stream .article-cards .article-card:nth-child(2) .details > a:nth-child(3) > span:nth-child(1),
+      main#stream .article-cards .article-card:nth-child(3) .details > a:nth-child(3) > span:nth-child(1) {
+        width: 0.7rem;
+        height: 0.7rem;
+        top: 0.05rem;
+        margin-right: -0.03rem; }
+    main#stream .article-cards .article-card:nth-child(2) .preview, main#stream .article-cards .article-card:nth-child(2) .image,
+    main#stream .article-cards .article-card:nth-child(3) .preview,
+    main#stream .article-cards .article-card:nth-child(3) .image {
+      min-height: 8rem; }
+main#stream .article-single:not(.right-preview) h3 {
   min-height: 5rem; }
-#page-stream .article-single:not(.right-preview) .preview, #page-stream .article-single:not(.right-preview) .image {
+main#stream .article-single:not(.right-preview) .preview, main#stream .article-single:not(.right-preview) .image {
   min-height: 18rem; }
-#page-stream .article-single.right-preview h3 {
+main#stream .article-single.right-preview h3 {
   text-align: left;
   min-height: 6rem; }
-#page-stream .article-single.right-preview .preview, #page-stream .article-single.right-preview .image {
+main#stream .article-single.right-preview .preview, main#stream .article-single.right-preview .image {
   top: 0;
   position: absolute;
   right: 0;
   width: 48%;
   min-height: 12rem; }
-#page-stream .article-single.right-preview .details {
+main#stream .article-single.right-preview .details {
   min-height: 12rem;
   width: 48%;
   position: relative; }
-#page-stream .article-group .article {
+main#stream .article-group .article {
   width: 48%;
   display: inline-block;
   white-space: nowrap;
@@ -1499,56 +1789,60 @@ a.btn {
   background-color: transparent;
   border: none;
   outline: none; }
-  #page-stream .article-group .article:first-child {
+  main#stream .article-group .article:first-child {
     margin-right: 2%; }
-  #page-stream .article-group .article h3 {
+  main#stream .article-group .article h3 {
     text-align: left;
     min-height: 6rem; }
-  #page-stream .article-group .article .preview, #page-stream .article-group .article .image {
+  main#stream .article-group .article .preview, main#stream .article-group .article .image {
     min-height: 12rem; }
-  #page-stream .article-group .article .details {
+  main#stream .article-group .article .details {
     min-height: 6rem; }
-#page-stream .divider {
-  width: 12rem;
-  height: 1rem;
-  background-image: url(/assets/img/divider.png);
+main#stream .divider {
+  width: 50rem;
+  height: 0.5rem;
+  background-image: url(/assets/img/divider-repeat.png);
   background-position: center center;
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
   background-size: contain;
-  margin: 8rem auto;
+  margin: 5rem 0;
   display: block; }
-#page-stream .heading h2 {
-  font-family: "BariolBold";
-  text-align: center;
+main#stream .heading h2 {
+  font-family: "BariolRegular";
+  text-align: left;
   display: block;
-  font-size: 2.1rem;
+  font-size: 1.4rem;
   margin-bottom: 3rem;
-  color: rgba(139, 139, 139, 0.6); }
-#page-stream .heading .dropdown {
-  position: absolute;
-  right: 0;
-  top: 0; }
-
-#page-review .radios,
-#page-article .radios {
-  text-align: center; }
-  #page-review .radios .radio,
-  #page-article .radios .radio {
-    margin: 0 2rem; }
-#page-review .radio,
-#page-article .radio {
+  color: rgba(139, 139, 139, 0.6);
+  margin-top: 0; }
+main#stream .heading.today h2 {
   display: inline-block; }
-  #page-review .radio input[type="radio"],
-  #page-article .radio input[type="radio"] {
+main#stream .heading .dropdown {
+  left: 2rem;
+  position: relative;
+  display: inline-block;
+  z-index: 1; }
+
+#review .radios,
+#article .radios {
+  text-align: center; }
+  #review .radios .radio,
+  #article .radios .radio {
+    margin: 0 2rem; }
+#review .radio,
+#article .radio {
+  display: inline-block; }
+  #review .radio input[type="radio"],
+  #article .radio input[type="radio"] {
     position: absolute;
     opacity: 0; }
-    #page-review .radio input[type="radio"] + .radio-label,
-    #page-article .radio input[type="radio"] + .radio-label {
+    #review .radio input[type="radio"] + .radio-label,
+    #article .radio input[type="radio"] + .radio-label {
       color: #969696;
       font-family: "BariolBold";
       font-size: 1.1rem; }
-      #page-review .radio input[type="radio"] + .radio-label:before,
-      #page-article .radio input[type="radio"] + .radio-label:before {
+      #review .radio input[type="radio"] + .radio-label:before,
+      #article .radio input[type="radio"] + .radio-label:before {
         content: '';
         background: #E8E8E8;
         border-radius: 100%;
@@ -1563,31 +1857,31 @@ a.btn {
         cursor: pointer;
         text-align: center;
         transition: all 250ms ease; }
-    #page-review .radio input[type="radio"]:checked + .radio-label:before,
-    #page-article .radio input[type="radio"]:checked + .radio-label:before {
+    #review .radio input[type="radio"]:checked + .radio-label:before,
+    #article .radio input[type="radio"]:checked + .radio-label:before {
       background-color: #00FF5A;
       box-shadow: inset 0 0 0 4px #E8E8E8; }
-    #page-review .radio input[type="radio"]:focus + .radio-label:before,
-    #page-article .radio input[type="radio"]:focus + .radio-label:before {
+    #review .radio input[type="radio"]:focus + .radio-label:before,
+    #article .radio input[type="radio"]:focus + .radio-label:before {
       outline: none;
       border-color: #00FF5A; }
-    #page-review .radio input[type="radio"]:disabled + .radio-label:before,
-    #page-article .radio input[type="radio"]:disabled + .radio-label:before {
+    #review .radio input[type="radio"]:disabled + .radio-label:before,
+    #article .radio input[type="radio"]:disabled + .radio-label:before {
       box-shadow: inset 0 0 0 4px #E8E8E8;
       border-color: #a8a8a8;
       background: #a8a8a8; }
-    #page-review .radio input[type="radio"] + .radio-label:empty:before,
-    #page-article .radio input[type="radio"] + .radio-label:empty:before {
+    #review .radio input[type="radio"] + .radio-label:empty:before,
+    #article .radio input[type="radio"] + .radio-label:empty:before {
       margin-right: 0; }
-#page-review .share,
-#page-article .share {
+#review .share,
+#article .share {
   float: right; }
-#page-review .comment-section,
-#page-article .comment-section {
+#review .comment-section,
+#article .comment-section {
   margin-bottom: 20rem;
   border-top: 0.12rem solid #DDD; }
-#page-review .divider,
-#page-article .divider {
+#review .divider,
+#article .divider {
   width: 12rem;
   height: 1rem;
   background-image: url(/assets/img/article-divider.png);
@@ -1596,34 +1890,34 @@ a.btn {
   background-size: contain;
   margin: 7rem auto 4rem;
   display: block; }
-#page-review article,
-#page-article article {
+#review article,
+#article article {
   max-width: 47rem;
-  margin: 0 auto 5rem auto;
+  margin: 0 0 5rem 0;
   width: 95%;
   padding-bottom: 5rem; }
-  #page-review article h1,
-  #page-article article h1 {
+  #review article h1,
+  #article article h1 {
     font-family: "GeomanistBold";
     text-align: center;
     margin: 2rem 0 0.5rem 0;
     line-height: 1.5; }
-  #page-review article p,
-  #page-article article p {
+  #review article p,
+  #article article p {
     font-family: "GeomanistRegular";
     line-height: 2;
     font-size: 1.1rem;
     margin-bottom: 2rem; }
-  #page-review article .body,
-  #page-article article .body {
+  #review article .body,
+  #article article .body {
     line-height: 1.8;
     font-family: "GeomanistRegular";
     font-size: 1.1rem; }
-    #page-review article .body b,
-    #page-article article .body b {
+    #review article .body b,
+    #article article .body b {
       font-family: "GeomanistBold"; }
-    #page-review article .body a,
-    #page-article article .body a {
+    #review article .body a,
+    #article article .body a {
       color: #0080FF;
       text-decoration: none;
       border-bottom: 0.02rem solid #0080FF;
@@ -1631,28 +1925,28 @@ a.btn {
       height: 1.7rem;
       transition: all 0.5s ease;
       font-family: "GeomanistRegular"; }
-      #page-review article .body a:hover,
-      #page-article article .body a:hover {
+      #review article .body a:hover,
+      #article article .body a:hover {
         color: #0455A7;
         border-bottom-color: #0455A7;
         transition: all 0.5s ease; }
-    #page-review article .body .image,
-    #page-article article .body .image {
+    #review article .body .image,
+    #article article .body .image {
       margin: 4rem auto;
       border-radius: 0.5rem;
       background-color: #EEEEEE;
       width: 80%;
       display: block; }
-      #page-review article .body .image#main-media,
-      #page-article article .body .image#main-media {
+      #review article .body .imagemain#media,
+      #article article .body .imagemain#media {
         width: 100%;
         margin: 1rem auto; }
-#page-review .intro,
-#page-article .intro {
+#review .intro,
+#article .intro {
   position: relative;
   margin-top: 3rem; }
-  #page-review .intro .read-guidelines,
-  #page-article .intro .read-guidelines {
+  #review .intro .read-guidelines,
+  #article .intro .read-guidelines {
     position: absolute;
     right: 0;
     width: 14rem;
@@ -1665,17 +1959,17 @@ a.btn {
     border: none;
     display: block;
     top: 0; }
-  #page-review .intro .picture, #page-review .intro .image,
-  #page-article .intro .picture,
-  #page-article .intro .image {
+  #review .intro .picture, #review .intro .image,
+  #article .intro .picture,
+  #article .intro .image {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 3.5rem;
     background-color: #EEE;
     display: inline-block;
     vertical-align: top; }
-  #page-review .intro .details,
-  #page-article .intro .details {
+  #review .intro .details,
+  #article .intro .details {
     height: 4rem;
     display: inline-block;
     vertical-align: top;
@@ -1686,15 +1980,15 @@ a.btn {
     top: 0.3rem;
     line-height: 1.5;
     padding-left: 0.2rem; }
-    #page-review .intro .details span,
-    #page-article .intro .details span {
+    #review .intro .details span,
+    #article .intro .details span {
       display: block;
       font-family: "BariolRegular"; }
-      #page-review .intro .details span strong,
-      #page-article .intro .details span strong {
+      #review .intro .details span strong,
+      #article .intro .details span strong {
         font-family: "BariolBold"; }
-#page-review .bottom .feedback-button,
-#page-article .bottom .feedback-button {
+#review .bottom .feedback-button,
+#article .bottom .feedback-button {
   width: 13rem;
   height: 4rem;
   background-image: url(/assets/img/feedback-button.png);
@@ -1703,19 +1997,20 @@ a.btn {
   background-size: 100%;
   position: fixed;
   bottom: 1rem;
-  left: 2rem;
+  right: 4rem;
   background-color: transparent;
   box-shadow: none;
   margin: 0;
-  padding: 0; }
-  #page-review .bottom .feedback-button.hasfeedback,
-  #page-article .bottom .feedback-button.hasfeedback {
+  padding: 0;
+  left: auto; }
+  #review .bottom .feedback-button.hasfeedback,
+  #article .bottom .feedback-button.hasfeedback {
     background-image: url(/assets/img/edit-feedback-button.png); }
-  #page-review .bottom .feedback-button:hover,
-  #page-article .bottom .feedback-button:hover {
+  #review .bottom .feedback-button:hover,
+  #article .bottom .feedback-button:hover {
     opacity: 0.8; }
-#page-review .bottom .back-button,
-#page-article .bottom .back-button {
+#review .bottom .back-button,
+#article .bottom .back-button {
   width: 3rem;
   height: 3rem;
   background-image: url(/assets/img/back-button.png);
@@ -1724,54 +2019,53 @@ a.btn {
   background-size: 100%;
   position: fixed;
   bottom: 1rem;
-  left: 5rem;
+  left: 10.5rem;
   background-color: transparent;
   box-shadow: none;
   margin: 0;
   padding: 0; }
-  #page-review .bottom .back-button:hover,
-  #page-article .bottom .back-button:hover {
+  #review .bottom .back-button:hover,
+  #article .bottom .back-button:hover {
     opacity: 0.8; }
-#page-review .bottom .next-button,
-#page-article .bottom .next-button {
+#review .bottom .next-button,
+#article .bottom .next-button {
   background: #0080FF;
   box-shadow: 0px 2px 6px 1px rgba(0, 128, 255, 0.5);
   color: rgba(255, 255, 255, 0.9); }
-  #page-review .bottom .next-button[disabled="disabled"],
-  #page-article .bottom .next-button[disabled="disabled"] {
+  #review .bottom .next-button[disabled="disabled"],
+  #article .bottom .next-button[disabled="disabled"] {
     background-color: #bbb;
     box-shadow: 0 0.125rem 0.375rem 0.0625rem rgba(51, 46, 46, 0.5); }
-#page-review .heading,
-#page-article .heading {
+#review .heading,
+#article .heading {
   max-width: 55rem;
   width: 95%;
   margin: 0 auto;
   position: relative;
   margin-top: 2rem; }
-  #page-review .heading h1,
-  #page-article .heading h1 {
+  #review .heading h1,
+  #article .heading h1 {
     font-family: "BariolRegular";
     color: #BCBCBC;
     letter-spacing: 0.08rem;
-    font-size: 1.6rem; }
-#page-review .section,
-#page-article .section {
+    font-size: 1.4rem; }
+#review .section,
+#article .section {
   display: block; }
-  #page-review .section p,
-  #page-article .section p {
+  #review .section p,
+  #article .section p {
     color: #0080FF;
     font-family: "BariolBold";
     font-size: 1.3rem;
     text-align: center;
     padding: 3rem 20% 2rem 20%;
     line-height: 1.5; }
-    #page-review .section p a,
-    #page-article .section p a {
+    #review .section p a,
+    #article .section p a {
       color: #0080FF; }
-  #page-review .section .container,
-  #page-article .section .container {
+  #review .section .container,
+  #article .section .container {
     background: #FFFFFF;
-    box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.12);
     border-radius: 5px;
     width: 90%;
     max-width: 55rem;
@@ -1780,8 +2074,8 @@ a.btn {
     position: relative;
     overflow: hidden;
     box-sizing: border-box; }
-#page-review main#review-done h3,
-#page-article main#review-done h3 {
+#review main#review-done h3,
+#article main#review-done h3 {
   color: #00FF5A;
   text-align: center;
   font-family: "BariolRegular";
@@ -1789,23 +2083,25 @@ a.btn {
   margin-top: 8rem;
   font-size: 2rem; }
 
-#page-account main {
+main#account main {
   padding-bottom: 9rem; }
-#page-account h1 {
+main#account h1 {
   font-size: 1.5rem;
   color: #BCBCBC;
   font-family: "BariolRegular";
   display: block;
-  margin: 2rem  auto 2rem auto;
+  margin: 2rem 0 2rem 2rem;
   width: 95%;
   max-width: 64rem; }
-#page-account .account-profile {
+main#account a.btn {
+  margin: 3rem 0 0 2rem; }
+main#account .account-profile {
   width: 10rem;
   height: 10rem;
-  margin: 0 auto 3rem auto;
+  margin: 0 0 3rem 2rem;
   display: block;
   position: relative; }
-  #page-account .account-profile button {
+  main#account .account-profile button {
     border: none;
     width: 4rem;
     height: 4rem;
@@ -1818,7 +2114,7 @@ a.btn {
     top: 0rem;
     right: -4rem;
     outline: none; }
-  #page-account .account-profile .image {
+  main#account .account-profile .image {
     width: 10rem;
     height: 10rem;
     background-color: #EEE;
@@ -1828,9 +2124,9 @@ a.btn {
     overflow: hidden;
     display: block;
     cursor: pointer; }
-#page-account .fields .field {
+main#account .fields .field {
   margin-bottom: 2rem; }
-  #page-account .fields .field input {
+  main#account .fields .field input {
     background: #FFFFFF;
     box-shadow: 0px 0px 9px 1px rgba(180, 180, 180, 0.5);
     border-radius: 0.4rem;
@@ -1841,69 +2137,69 @@ a.btn {
     border: none;
     width: 45%;
     max-width: 30rem;
-    margin-left: auto;
+    margin-left: 2rem;
     margin-right: auto;
     margin-bottom: 1rem;
     text-align: center; }
 
-#page-article-reviewed main,
-#page-article-assigned main,
-#page-article-submitted main,
-#page-article-read main,
-#page-article-drafts main {
+main#article-reviewed main,
+main#article-assigned main,
+main#article-submitted main,
+main#article-read main,
+main#article-drafts main {
   padding-bottom: 9rem; }
-#page-article-reviewed h1,
-#page-article-assigned h1,
-#page-article-submitted h1,
-#page-article-read h1,
-#page-article-drafts h1 {
-  font-size: 1.5rem;
+main#article-reviewed h1,
+main#article-assigned h1,
+main#article-submitted h1,
+main#article-read h1,
+main#article-drafts h1 {
+  font-size: 1.4rem;
   color: #BCBCBC;
   font-family: "BariolRegular";
   display: block;
-  margin: 2rem  auto 2rem auto;
+  margin: 2rem 0 2rem 2rem;
   width: 95%;
   max-width: 64rem; }
-#page-article-reviewed .notice,
-#page-article-assigned .notice,
-#page-article-submitted .notice,
-#page-article-read .notice,
-#page-article-drafts .notice {
+main#article-reviewed .notice,
+main#article-assigned .notice,
+main#article-submitted .notice,
+main#article-read .notice,
+main#article-drafts .notice {
   font-size: 2.3rem;
   text-align: center;
   margin-top: 10rem;
   color: #232323;
   font-family: "BariolRegular"; }
-  #page-article-reviewed .notice strong,
-  #page-article-assigned .notice strong,
-  #page-article-submitted .notice strong,
-  #page-article-read .notice strong,
-  #page-article-drafts .notice strong {
+  main#article-reviewed .notice strong,
+  main#article-assigned .notice strong,
+  main#article-submitted .notice strong,
+  main#article-read .notice strong,
+  main#article-drafts .notice strong {
     font-family: "BariolBold"; }
-#page-article-reviewed .articles,
-#page-article-assigned .articles,
-#page-article-submitted .articles,
-#page-article-read .articles,
-#page-article-drafts .articles {
+main#article-reviewed .articles,
+main#article-assigned .articles,
+main#article-submitted .articles,
+main#article-read .articles,
+main#article-drafts .articles {
   width: 95%;
   max-width: 64rem;
-  margin: 2.5rem auto 0 auto;
-  text-align: center; }
-  #page-article-reviewed .articles .article-wrapper,
-  #page-article-assigned .articles .article-wrapper,
-  #page-article-submitted .articles .article-wrapper,
-  #page-article-read .articles .article-wrapper,
-  #page-article-drafts .articles .article-wrapper {
+  margin: 2.5rem 0 0 0;
+  text-align: left; }
+  main#article-reviewed .articles .article-wrapper,
+  main#article-assigned .articles .article-wrapper,
+  main#article-submitted .articles .article-wrapper,
+  main#article-read .articles .article-wrapper,
+  main#article-drafts .articles .article-wrapper {
     display: inline-block;
     margin: 1rem 2rem 5rem 2rem;
     text-decoration: none;
     color: #000;
-    text-decoration: none; }
-    #page-article-reviewed .articles .article-wrapper .article,
-    #page-article-assigned .articles .article-wrapper .article,
-    #page-article-submitted .articles .article-wrapper .article,
-    #page-article-read .articles .article-wrapper .article,
-    #page-article-drafts .articles .article-wrapper .article {
+    text-align: center; }
+    main#article-reviewed .articles .article-wrapper .article,
+    main#article-assigned .articles .article-wrapper .article,
+    main#article-submitted .articles .article-wrapper .article,
+    main#article-read .articles .article-wrapper .article,
+    main#article-drafts .articles .article-wrapper .article {
       width: 14rem;
       height: 20rem;
       background: #FFFFFF;
@@ -1912,22 +2208,22 @@ a.btn {
       overflow: hidden;
       display: inline-block;
       cursor: pointer; }
-      #page-article-reviewed .articles .article-wrapper .article .preview, #page-article-reviewed .articles .article-wrapper .article .image,
-      #page-article-assigned .articles .article-wrapper .article .preview,
-      #page-article-assigned .articles .article-wrapper .article .image,
-      #page-article-submitted .articles .article-wrapper .article .preview,
-      #page-article-submitted .articles .article-wrapper .article .image,
-      #page-article-read .articles .article-wrapper .article .preview,
-      #page-article-read .articles .article-wrapper .article .image,
-      #page-article-drafts .articles .article-wrapper .article .preview,
-      #page-article-drafts .articles .article-wrapper .article .image {
+      main#article-reviewed .articles .article-wrapper .article .preview, main#article-reviewed .articles .article-wrapper .article .image,
+      main#article-assigned .articles .article-wrapper .article .preview,
+      main#article-assigned .articles .article-wrapper .article .image,
+      main#article-submitted .articles .article-wrapper .article .preview,
+      main#article-submitted .articles .article-wrapper .article .image,
+      main#article-read .articles .article-wrapper .article .preview,
+      main#article-read .articles .article-wrapper .article .image,
+      main#article-drafts .articles .article-wrapper .article .preview,
+      main#article-drafts .articles .article-wrapper .article .image {
         height: 10rem;
         background-color: #F3F2F2; }
-      #page-article-reviewed .articles .article-wrapper .article .body i,
-      #page-article-assigned .articles .article-wrapper .article .body i,
-      #page-article-submitted .articles .article-wrapper .article .body i,
-      #page-article-read .articles .article-wrapper .article .body i,
-      #page-article-drafts .articles .article-wrapper .article .body i {
+      main#article-reviewed .articles .article-wrapper .article .body i,
+      main#article-assigned .articles .article-wrapper .article .body i,
+      main#article-submitted .articles .article-wrapper .article .body i,
+      main#article-read .articles .article-wrapper .article .body i,
+      main#article-drafts .articles .article-wrapper .article .body i {
         width: 1.3rem;
         height: 1.3rem;
         background-position: center center;
@@ -1938,11 +2234,11 @@ a.btn {
         vertical-align: middle;
         position: relative;
         top: -0.08rem; }
-      #page-article-reviewed .articles .article-wrapper .article .body span:nth-child(1),
-      #page-article-assigned .articles .article-wrapper .article .body span:nth-child(1),
-      #page-article-submitted .articles .article-wrapper .article .body span:nth-child(1),
-      #page-article-read .articles .article-wrapper .article .body span:nth-child(1),
-      #page-article-drafts .articles .article-wrapper .article .body span:nth-child(1) {
+      main#article-reviewed .articles .article-wrapper .article .body span:nth-child(1),
+      main#article-assigned .articles .article-wrapper .article .body span:nth-child(1),
+      main#article-submitted .articles .article-wrapper .article .body span:nth-child(1),
+      main#article-read .articles .article-wrapper .article .body span:nth-child(1),
+      main#article-drafts .articles .article-wrapper .article .body span:nth-child(1) {
         display: block;
         font-family: "BariolBold";
         font-size: 1.2rem;
@@ -1952,79 +2248,79 @@ a.btn {
         max-width: 80%;
         margin-left: auto;
         margin-right: auto; }
-      #page-article-reviewed .articles .article-wrapper .article .body span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .article .body span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .article .body span:nth-child(2),
-      #page-article-read .articles .article-wrapper .article .body span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .article .body span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .article .body span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .article .body span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .article .body span:nth-child(2),
+      main#article-read .articles .article-wrapper .article .body span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .article .body span:nth-child(2) {
         color: #A2A2A2;
         font-size: 0.8rem;
         vertical-align: middle;
         font-family: "BariolLight";
         margin-left: 0.3rem;
         letter-spacing: 0.08rem; }
-    #page-article-reviewed .articles .article-wrapper .state,
-    #page-article-assigned .articles .article-wrapper .state,
-    #page-article-submitted .articles .article-wrapper .state,
-    #page-article-read .articles .article-wrapper .state,
-    #page-article-drafts .articles .article-wrapper .state {
+    main#article-reviewed .articles .article-wrapper .state,
+    main#article-assigned .articles .article-wrapper .state,
+    main#article-submitted .articles .article-wrapper .state,
+    main#article-read .articles .article-wrapper .state,
+    main#article-drafts .articles .article-wrapper .state {
       margin-top: 1rem; }
-      #page-article-reviewed .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status[data-status="approved"] span:nth-child(2) {
         color: #00FF5A; }
-      #page-article-reviewed .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status[data-status="rejected"] span:nth-child(2) {
         color: #FF7070; }
-      #page-article-reviewed .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status[data-status="pending"] span:nth-child(2) {
         color: #5E5E5E; }
-      #page-article-reviewed .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status[data-status="inreview"] span:nth-child(2) {
         color: #0080FF; }
-      #page-article-reviewed .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status[data-status="votecount"] span:nth-child(2) {
         color: #0096FF; }
-      #page-article-reviewed .articles .article-wrapper .state .status span:nth-child(1),
-      #page-article-assigned .articles .article-wrapper .state .status span:nth-child(1),
-      #page-article-submitted .articles .article-wrapper .state .status span:nth-child(1),
-      #page-article-read .articles .article-wrapper .state .status span:nth-child(1),
-      #page-article-drafts .articles .article-wrapper .state .status span:nth-child(1) {
+      main#article-reviewed .articles .article-wrapper .state .status span:nth-child(1),
+      main#article-assigned .articles .article-wrapper .state .status span:nth-child(1),
+      main#article-submitted .articles .article-wrapper .state .status span:nth-child(1),
+      main#article-read .articles .article-wrapper .state .status span:nth-child(1),
+      main#article-drafts .articles .article-wrapper .state .status span:nth-child(1) {
         font-family: "BariolRegular";
         letter-spacing: 0.05rem;
         color: #868686; }
-      #page-article-reviewed .articles .article-wrapper .state .status span:nth-child(2),
-      #page-article-assigned .articles .article-wrapper .state .status span:nth-child(2),
-      #page-article-submitted .articles .article-wrapper .state .status span:nth-child(2),
-      #page-article-read .articles .article-wrapper .state .status span:nth-child(2),
-      #page-article-drafts .articles .article-wrapper .state .status span:nth-child(2) {
+      main#article-reviewed .articles .article-wrapper .state .status span:nth-child(2),
+      main#article-assigned .articles .article-wrapper .state .status span:nth-child(2),
+      main#article-submitted .articles .article-wrapper .state .status span:nth-child(2),
+      main#article-read .articles .article-wrapper .state .status span:nth-child(2),
+      main#article-drafts .articles .article-wrapper .state .status span:nth-child(2) {
         font-family: "BariolBold";
         letter-spacing: 0.05rem; }
-    #page-article-reviewed .articles .article-wrapper .options,
-    #page-article-assigned .articles .article-wrapper .options,
-    #page-article-submitted .articles .article-wrapper .options,
-    #page-article-read .articles .article-wrapper .options,
-    #page-article-drafts .articles .article-wrapper .options {
+    main#article-reviewed .articles .article-wrapper .options,
+    main#article-assigned .articles .article-wrapper .options,
+    main#article-submitted .articles .article-wrapper .options,
+    main#article-read .articles .article-wrapper .options,
+    main#article-drafts .articles .article-wrapper .options {
       text-align: center; }
-      #page-article-reviewed .articles .article-wrapper .options .option,
-      #page-article-assigned .articles .article-wrapper .options .option,
-      #page-article-submitted .articles .article-wrapper .options .option,
-      #page-article-read .articles .article-wrapper .options .option,
-      #page-article-drafts .articles .article-wrapper .options .option {
+      main#article-reviewed .articles .article-wrapper .options .option,
+      main#article-assigned .articles .article-wrapper .options .option,
+      main#article-submitted .articles .article-wrapper .options .option,
+      main#article-read .articles .article-wrapper .options .option,
+      main#article-drafts .articles .article-wrapper .options .option {
         display: inline-block;
         background-position: center center;
         background-repeat: no-repeat;
@@ -2034,41 +2330,41 @@ a.btn {
         outline: none;
         background-color: transparent;
         border: none; }
-        #page-article-reviewed .articles .article-wrapper .options .option:hover,
-        #page-article-assigned .articles .article-wrapper .options .option:hover,
-        #page-article-submitted .articles .article-wrapper .options .option:hover,
-        #page-article-read .articles .article-wrapper .options .option:hover,
-        #page-article-drafts .articles .article-wrapper .options .option:hover {
+        main#article-reviewed .articles .article-wrapper .options .option:hover,
+        main#article-assigned .articles .article-wrapper .options .option:hover,
+        main#article-submitted .articles .article-wrapper .options .option:hover,
+        main#article-read .articles .article-wrapper .options .option:hover,
+        main#article-drafts .articles .article-wrapper .options .option:hover {
           opacity: 0.8; }
-        #page-article-reviewed .articles .article-wrapper .options .option.option-edit,
-        #page-article-assigned .articles .article-wrapper .options .option.option-edit,
-        #page-article-submitted .articles .article-wrapper .options .option.option-edit,
-        #page-article-read .articles .article-wrapper .options .option.option-edit,
-        #page-article-drafts .articles .article-wrapper .options .option.option-edit {
+        main#article-reviewed .articles .article-wrapper .options .option.option-edit,
+        main#article-assigned .articles .article-wrapper .options .option.option-edit,
+        main#article-submitted .articles .article-wrapper .options .option.option-edit,
+        main#article-read .articles .article-wrapper .options .option.option-edit,
+        main#article-drafts .articles .article-wrapper .options .option.option-edit {
           width: 1.9rem;
           height: 1.9rem;
           background-image: url(/assets/img/articles-edit.png); }
-        #page-article-reviewed .articles .article-wrapper .options .option.option-delete,
-        #page-article-assigned .articles .article-wrapper .options .option.option-delete,
-        #page-article-submitted .articles .article-wrapper .options .option.option-delete,
-        #page-article-read .articles .article-wrapper .options .option.option-delete,
-        #page-article-drafts .articles .article-wrapper .options .option.option-delete {
+        main#article-reviewed .articles .article-wrapper .options .option.option-delete,
+        main#article-assigned .articles .article-wrapper .options .option.option-delete,
+        main#article-submitted .articles .article-wrapper .options .option.option-delete,
+        main#article-read .articles .article-wrapper .options .option.option-delete,
+        main#article-drafts .articles .article-wrapper .options .option.option-delete {
           width: 1.7rem;
           height: 1.7rem;
           background-image: url(/assets/img/articles-trash.png); }
-        #page-article-reviewed .articles .article-wrapper .options .option.option-remove,
-        #page-article-assigned .articles .article-wrapper .options .option.option-remove,
-        #page-article-submitted .articles .article-wrapper .options .option.option-remove,
-        #page-article-read .articles .article-wrapper .options .option.option-remove,
-        #page-article-drafts .articles .article-wrapper .options .option.option-remove {
+        main#article-reviewed .articles .article-wrapper .options .option.option-remove,
+        main#article-assigned .articles .article-wrapper .options .option.option-remove,
+        main#article-submitted .articles .article-wrapper .options .option.option-remove,
+        main#article-read .articles .article-wrapper .options .option.option-remove,
+        main#article-drafts .articles .article-wrapper .options .option.option-remove {
           width: 1.3rem;
           height: 1.3rem;
           background-image: url(/assets/img/articles-cancel.png); }
-        #page-article-reviewed .articles .article-wrapper .options .option.option-review,
-        #page-article-assigned .articles .article-wrapper .options .option.option-review,
-        #page-article-submitted .articles .article-wrapper .options .option.option-review,
-        #page-article-read .articles .article-wrapper .options .option.option-review,
-        #page-article-drafts .articles .article-wrapper .options .option.option-review {
+        main#article-reviewed .articles .article-wrapper .options .option.option-review,
+        main#article-assigned .articles .article-wrapper .options .option.option-review,
+        main#article-submitted .articles .article-wrapper .options .option.option-review,
+        main#article-read .articles .article-wrapper .options .option.option-review,
+        main#article-drafts .articles .article-wrapper .options .option.option-review {
           background: #0080FF;
           box-shadow: 0px 2px 6px 1px rgba(0, 128, 255, 0.5);
           border-radius: 4px;
@@ -2080,256 +2376,252 @@ a.btn {
           letter-spacing: 0.08rem;
           outline: none;
           border: none; }
-          #page-article-reviewed .articles .article-wrapper .options .option.option-review:hover,
-          #page-article-assigned .articles .article-wrapper .options .option.option-review:hover,
-          #page-article-submitted .articles .article-wrapper .options .option.option-review:hover,
-          #page-article-read .articles .article-wrapper .options .option.option-review:hover,
-          #page-article-drafts .articles .article-wrapper .options .option.option-review:hover {
+          main#article-reviewed .articles .article-wrapper .options .option.option-review:hover,
+          main#article-assigned .articles .article-wrapper .options .option.option-review:hover,
+          main#article-submitted .articles .article-wrapper .options .option.option-review:hover,
+          main#article-read .articles .article-wrapper .options .option.option-review:hover,
+          main#article-drafts .articles .article-wrapper .options .option.option-review:hover {
             opacity: 0.8; }
 
-#page-wallet .heading {
-  max-width: 55rem;
-  width: 95%;
-  margin: 0 auto;
-  position: relative;
-  margin-top: 2rem; }
-  #page-wallet .heading h1 {
-    font-family: "BariolRegular";
-    color: #BCBCBC;
-    letter-spacing: 0.08rem;
-    font-size: 1.6rem; }
-#page-wallet .heading .options {
-  text-align: right;
-  position: absolute;
-  right: 0;
-  top: 0; }
-  #page-wallet .heading .options .option {
-    text-decoration: none;
-    color: #BCBCBC;
-    font-family: "BariolRegular";
-    letter-spacing: 0.08rem;
-    font-size: 1.4rem;
-    margin-left: 3rem; }
-    #page-wallet .heading .options .option.selected {
-      color: #0080FF;
-      color: rgba(0, 127, 255, 0.9);
-      text-shadow: 0px 2px 4px rgba(0, 128, 255, 0.5); }
-    #page-wallet .heading .options .option:hover {
-      opacity: 0.8; }
-  @media (max-width: 64em) {
-    #page-wallet .heading .options {
-      position: relative;
-      top: auto;
-      right: auto;
-      text-align: center;
-      display: block; }
-      #page-wallet .heading .options .option {
-        display: inline-block;
-        margin: 1rem;
-        font-size: 1.2rem; } }
-#page-wallet .sections .section {
-  display: none; }
-  #page-wallet .sections .section.visible {
-    display: block; }
-  #page-wallet .sections .section .container {
-    background: #FFFFFF;
-    box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.12);
-    border-radius: 5px;
-    width: 90%;
+main#wallet {
+  padding-left: 2rem; }
+  main#wallet .heading {
     max-width: 55rem;
-    margin: 2rem auto 1.5rem auto;
-    height: 21rem;
+    width: 95%;
     position: relative;
-    overflow: hidden;
-    box-sizing: border-box; }
-#page-wallet .sections div[data-section="balance"] .container {
-  text-align: center;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url(/assets/img/wallet-background.png); }
-  #page-wallet .sections div[data-section="balance"] .container > h3 {
-    font-family: "BariolBold";
-    font-size: 3.8rem;
-    letter-spacing: 0.05rem;
-    color: #0080FF;
-    margin: 8rem 0 1rem 0; }
-  #page-wallet .sections div[data-section="balance"] .container > span {
-    font-family: "BariolLight";
-    color: #5CAEFF;
-    letter-spacing: 0.05rem;
-    font-size: 1.8rem; }
-  #page-wallet .sections div[data-section="balance"] .container > i {
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-size: 90%;
-    background-image: url(/assets/img/wallet-icon.png);
-    width: 5rem;
-    height: 4rem;
+    margin-top: 2rem; }
+    main#wallet .heading h1 {
+      font-family: "BariolRegular";
+      color: #BCBCBC;
+      letter-spacing: 0.08rem;
+      font-size: 1.4rem; }
+  main#wallet .heading .options {
+    text-align: right;
     position: absolute;
-    top: 0;
-    left: -0.5rem; }
-#page-wallet .sections div[data-section="transactions"] .container {
-  padding: 3rem;
-  overflow-y: auto; }
-  #page-wallet .sections div[data-section="transactions"] .container p {
-    color: #666;
-    padding: 2rem 15% 0 15%;
-    line-height: 1.5;
+    right: 0;
+    top: 0; }
+    main#wallet .heading .options .option {
+      text-decoration: none;
+      color: #BCBCBC;
+      font-family: "BariolRegular";
+      letter-spacing: 0.08rem;
+      font-size: 1.4rem;
+      margin-left: 3rem; }
+      main#wallet .heading .options .option.selected {
+        color: #0080FF;
+        color: rgba(0, 127, 255, 0.9);
+        text-shadow: 0px 2px 4px rgba(0, 128, 255, 0.5); }
+      main#wallet .heading .options .option:hover {
+        opacity: 0.8; }
+    @media (max-width: 64em) {
+      main#wallet .heading .options {
+        position: relative;
+        top: auto;
+        right: auto;
+        text-align: center;
+        display: block; }
+        main#wallet .heading .options .option {
+          display: inline-block;
+          margin: 1rem;
+          font-size: 1.2rem; } }
+  main#wallet .sections .section {
+    display: none; }
+    main#wallet .sections .section.visible {
+      display: block; }
+    main#wallet .sections .section .container {
+      background: #FFFFFF;
+      box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.12);
+      border-radius: 5px;
+      width: 90%;
+      max-width: 55rem;
+      margin: 2rem 0 1.5rem 0;
+      height: 21rem;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box; }
+  main#wallet .sections div[data-section="balance"] .container {
     text-align: center;
-    font-size: 1.3rem;
-    font-family: "BariolRegular"; }
-    #page-wallet .sections div[data-section="transactions"] .container p a {
-      text-decoration: none;
-      color: #0080FF;
-      font-family: "BariolBold"; }
-#page-wallet .sections div[data-section="buy"] .top {
-  width: 95%;
-  white-space: nowrap;
-  max-width: 55rem;
-  margin: 0 auto; }
-  #page-wallet .sections div[data-section="buy"] .top p {
-    position: relative;
-    padding-left: 3rem;
-    font-size: 0.9rem; }
-    #page-wallet .sections div[data-section="buy"] .top p .option-number {
-      background: #FFE800;
-      box-shadow: 0px 0px 8px 2px rgba(255, 231, 0, 0.5);
-      box-sizing: border-box;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 1rem;
-      display: inline-block;
-      color: #FFFFFF;
-      text-align: center;
-      font-size: 1.2rem;
-      padding-top: 0.3rem;
-      position: absolute;
-      top: -0.3rem;
-      left: 0; }
-  #page-wallet .sections div[data-section="buy"] .top .left {
-    width: 40%;
-    margin: 1.5%;
-    min-height: 18rem;
-    display: inline-block;
-    white-space: normal;
-    box-sizing: border-box;
-    vertical-align: top;
-    padding: 1rem; }
-  #page-wallet .sections div[data-section="buy"] .top .center {
-    width: 10%;
-    min-height: 18rem;
-    display: inline-block;
-    white-space: normal;
-    box-sizing: border-box;
-    vertical-align: top;
-    font-size: 2rem;
-    padding-top: 8rem;
-    color: #919191;
-    font-family: "BariolBold";
-    text-align: center; }
-  #page-wallet .sections div[data-section="buy"] .top .right {
-    width: 40%;
-    margin: 1.5%;
-    min-height: 18rem;
-    display: inline-block;
-    white-space: normal;
-    box-sizing: border-box;
-    vertical-align: top;
-    padding: 1rem; }
-    #page-wallet .sections div[data-section="buy"] .top .right .button {
-      background: #0080FF;
-      box-shadow: 0px 2px 6px 1px rgba(0, 128, 255, 0.5);
-      border-radius: 4px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(/assets/img/wallet-background.png); }
+    main#wallet .sections div[data-section="balance"] .container > h3 {
       font-family: "BariolBold";
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-      letter-spacing: 1.12px;
-      padding: 1rem 1.5rem;
-      display: block;
-      margin: 3rem auto 0 auto;
-      text-decoration: none;
-      max-width: 10rem;
+      font-size: 3.8rem;
+      letter-spacing: 0.05rem;
+      color: #0080FF;
+      margin: 8rem 0 1rem 0; }
+    main#wallet .sections div[data-section="balance"] .container > span {
+      font-family: "BariolLight";
+      color: #5CAEFF;
+      letter-spacing: 0.05rem;
+      font-size: 1.8rem; }
+    main#wallet .sections div[data-section="balance"] .container > i {
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      background-size: 90%;
+      background-image: url(/assets/img/wallet-icon.png);
+      width: 5rem;
+      height: 4rem;
+      position: absolute;
+      top: 0;
+      left: -0.5rem; }
+  main#wallet .sections div[data-section="transactions"] .container {
+    padding: 3rem;
+    overflow-y: auto; }
+    main#wallet .sections div[data-section="transactions"] .container p {
+      color: #666;
+      padding: 2rem 15% 0 15%;
+      line-height: 1.5;
+      text-align: center;
+      font-size: 1.3rem;
+      font-family: "BariolRegular"; }
+      main#wallet .sections div[data-section="transactions"] .container p a {
+        text-decoration: none;
+        color: #0080FF;
+        font-family: "BariolBold"; }
+  main#wallet .sections div[data-section="buy"] .top {
+    width: 95%;
+    white-space: nowrap;
+    max-width: 55rem; }
+    main#wallet .sections div[data-section="buy"] .top p {
+      position: relative;
+      padding-left: 3rem;
+      font-size: 0.9rem; }
+      main#wallet .sections div[data-section="buy"] .top p .option-number {
+        background: #FFE800;
+        box-shadow: 0px 0px 8px 2px rgba(255, 231, 0, 0.5);
+        box-sizing: border-box;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 1rem;
+        display: inline-block;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 1.2rem;
+        padding-top: 0.3rem;
+        position: absolute;
+        top: -0.3rem;
+        left: 0; }
+    main#wallet .sections div[data-section="buy"] .top .left {
+      width: 40%;
+      margin: 1.5%;
+      min-height: 18rem;
+      display: inline-block;
+      white-space: normal;
+      box-sizing: border-box;
+      vertical-align: top;
+      padding: 1rem; }
+    main#wallet .sections div[data-section="buy"] .top .center {
+      width: 10%;
+      min-height: 18rem;
+      display: inline-block;
+      white-space: normal;
+      box-sizing: border-box;
+      vertical-align: top;
+      font-size: 2rem;
+      padding-top: 8rem;
+      color: #919191;
+      font-family: "BariolBold";
       text-align: center; }
-      #page-wallet .sections div[data-section="buy"] .top .right .button.disabled {
-        background: #DDDDDD;
-        box-shadow: 0px 2px 6px 1px rgba(180, 180, 180, 0.5);
-        opacity: 0.6; }
-  @media (max-width: 64em) {
-    #page-wallet .sections div[data-section="buy"] .top .left {
-      width: 100%;
-      display: block;
-      margin-left: 0;
-      margin-right: 0; }
-    #page-wallet .sections div[data-section="buy"] .top .center {
-      display: none; }
-    #page-wallet .sections div[data-section="buy"] .top .right {
-      width: 100%;
-      display: block;
-      margin-left: 0;
-      margin-right: 0; } }
-#page-wallet .sections div[data-section="buy"] .bottom {
-  width: 95%;
-  max-width: 55rem;
-  margin: 0 auto;
-  padding: 3rem 1rem 3rem 0;
-  border-top: 0.1rem solid #F0F0F0;
-  font-size: 0.9rem; }
-  #page-wallet .sections div[data-section="buy"] .bottom a {
-    box-sizing: border-box;
-    padding: 0.8rem 2rem;
-    color: #0080FF;
-    border: 0.1rem solid #0080FF;
-    text-decoration: none;
-    display: inline-block;
-    margin-left: 0.5rem;
+    main#wallet .sections div[data-section="buy"] .top .right {
+      width: 40%;
+      margin: 1.5%;
+      min-height: 18rem;
+      display: inline-block;
+      white-space: normal;
+      box-sizing: border-box;
+      vertical-align: top;
+      padding: 1rem; }
+      main#wallet .sections div[data-section="buy"] .top .right .button {
+        background: #0080FF;
+        box-shadow: 0px 2px 6px 1px rgba(0, 128, 255, 0.5);
+        border-radius: 4px;
+        font-family: "BariolBold";
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: 1.12px;
+        padding: 1rem 1.5rem;
+        display: block;
+        margin: 3rem auto 0 auto;
+        text-decoration: none;
+        max-width: 10rem;
+        text-align: center; }
+        main#wallet .sections div[data-section="buy"] .top .right .button.disabled {
+          background: #DDDDDD;
+          box-shadow: 0px 2px 6px 1px rgba(180, 180, 180, 0.5);
+          opacity: 0.6; }
+    @media (max-width: 64em) {
+      main#wallet .sections div[data-section="buy"] .top .left {
+        width: 100%;
+        display: block;
+        margin-left: 0;
+        margin-right: 0; }
+      main#wallet .sections div[data-section="buy"] .top .center {
+        display: none; }
+      main#wallet .sections div[data-section="buy"] .top .right {
+        width: 100%;
+        display: block;
+        margin-left: 0;
+        margin-right: 0; } }
+  main#wallet .sections div[data-section="buy"] .bottom {
+    width: 95%;
+    max-width: 55rem;
+    padding: 3rem 1rem 3rem 0;
+    border-top: 0.1rem solid #F0F0F0;
     font-size: 0.9rem; }
-#page-wallet #wallet-address {
-  display: block;
-  color: #595959;
-  font-family: "BariolRegular";
-  letter-spacing: 0.08rem;
-  width: 95%;
-  max-width: 55rem;
-  margin: 0 auto 10rem auto; }
-  #page-wallet #wallet-address a {
-    color: #0080FF;
-    font-family: "BariolBold";
-    text-decoration: none; }
-#page-wallet #qrcode {
-  margin: 2rem auto;
-  display: block; }
+    main#wallet .sections div[data-section="buy"] .bottom a {
+      box-sizing: border-box;
+      padding: 0.8rem 2rem;
+      color: #0080FF;
+      border: 0.1rem solid #0080FF;
+      text-decoration: none;
+      display: inline-block;
+      margin-left: 0.5rem;
+      font-size: 0.9rem; }
+  main#wallet #wallet-address {
+    display: block;
+    color: #595959;
+    font-family: "BariolRegular";
+    letter-spacing: 0.08rem; }
+    main#wallet #wallet-address a {
+      color: #0080FF;
+      font-family: "BariolBold";
+      text-decoration: none; }
+  main#wallet #qrcode {
+    margin: 2rem auto;
+    display: block; }
 
-#page-editor .heading {
+main#editor .heading {
   max-width: 55rem;
-  margin: 3rem auto 0 auto;
+  margin: 3rem 0;
   width: 90%;
   position: relative; }
-  #page-editor .heading h1 {
+  main#editor .heading h1 {
     font-family: "BariolRegular";
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #BCBCBC;
     letter-spacing: 0.08rem;
     margin: 0; }
-  #page-editor .heading .save-indicator {
+  main#editor .heading .save-indicator {
     font-family: "BariolRegular";
     color: #BCBCBC;
     font-size: 1.5rem;
     position: absolute;
     right: 5%;
     top: 0; }
-#page-editor .content {
+main#editor .content {
   max-width: 55rem;
-  margin: 2rem auto 0 auto;
+  margin: 2rem 0;
   width: 90%;
   position: relative; }
-  #page-editor .content .image {
+  main#editor .content .image {
     margin: 0.5rem 0 2rem 0; }
-  #page-editor .content .remove-media {
+  main#editor .content .remove-media {
     text-decoration: none;
     color: #CCC;
     font-size: 0.9rem; }
-  #page-editor .content .add-media {
+  main#editor .content .add-media {
     border: none;
     width: 3rem;
     height: 3rem;
@@ -2342,9 +2634,9 @@ a.btn {
     top: 3rem;
     left: -4rem;
     outline: none; }
-    #page-editor .content .add-media:hover {
+    main#editor .content .add-media:hover {
       opacity: 0.8; }
-  #page-editor .content .title {
+  main#editor .content .title {
     font-family: "GeomanistBold";
     letter-spacing: 0.08rem;
     display: block;
@@ -2352,12 +2644,12 @@ a.btn {
     border: none;
     font-size: 1.8rem;
     width: 100%; }
-    #page-editor .content .title ::placeholder {
+    main#editor .content .title ::placeholder {
       font-family: "GeomanistRegular";
       letter-spacing: 0.1rem; }
-    #page-editor .content .title:focus {
+    main#editor .content .title:focus {
       outline: none; }
-  #page-editor .content .body {
+  main#editor .content .body {
     outline: none;
     font-size: 1.3rem;
     font-family: "GeomanistRegular";
@@ -2369,20 +2661,20 @@ a.btn {
     line-height: 1.5;
     box-sizing: border-box;
     margin-bottom: 10rem; }
-    #page-editor .content .body.content-editor {
+    main#editor .content .body.content-editor {
       position: relative; }
-      #page-editor .content .body.content-editor .placeholder {
+      main#editor .content .body.content-editor .placeholder {
         position: absolute;
         top: 0;
         z-index: -1; }
-      #page-editor .content .body.content-editor .editable-content {
+      main#editor .content .body.content-editor .editable-content {
         min-height: 15rem;
         outline: none !important; }
-        #page-editor .content .body.content-editor .editable-content b, #page-editor .content .body.content-editor .editable-content strong {
+        main#editor .content .body.content-editor .editable-content b, main#editor .content .body.content-editor .editable-content strong {
           font-family: "GeomanistBold"; }
-    #page-editor .content .body:focus {
+    main#editor .content .body:focus {
       outline: none; }
-#page-editor .editor-controls {
+main#editor .editor-controls {
   background: #FFFFFF;
   box-shadow: 0px 2px 11px 2px rgba(198, 198, 198, 0.5);
   border-radius: 3px;
@@ -2392,7 +2684,7 @@ a.btn {
   bottom: 3rem;
   left: 10%;
   text-align: center; }
-  #page-editor .editor-controls .editor-bold {
+  main#editor .editor-controls .editor-bold {
     width: 1.2rem;
     height: 1.2rem;
     background-position: center center;
@@ -2401,9 +2693,9 @@ a.btn {
     background-image: url(/assets/img/editor-bold.png);
     display: inline-block;
     margin: 0.1rem 1.5rem 1rem 0; }
-    #page-editor .editor-controls .editor-bold:hover, #page-editor .editor-controls .editor-bold:active {
+    main#editor .editor-controls .editor-bold:hover, main#editor .editor-controls .editor-bold:active {
       opacity: 0.3; }
-  #page-editor .editor-controls .editor-italic {
+  main#editor .editor-controls .editor-italic {
     width: 1.3rem;
     height: 1.3rem;
     background-position: center center;
@@ -2412,9 +2704,9 @@ a.btn {
     background-image: url(/assets/img/editor-italic.png);
     display: inline-block;
     margin: 0.8rem 1.5rem 1rem 0; }
-    #page-editor .editor-controls .editor-italic:hover, #page-editor .editor-controls .editor-italic:active {
+    main#editor .editor-controls .editor-italic:hover, main#editor .editor-controls .editor-italic:active {
       opacity: 0.3; }
-  #page-editor .editor-controls .editor-link {
+  main#editor .editor-controls .editor-link {
     width: 1.3rem;
     height: 1.3rem;
     background-position: center center;
@@ -2423,16 +2715,16 @@ a.btn {
     background-image: url(/assets/img/editor-link.png);
     display: inline-block;
     margin: 0.8rem 0rem 1rem 0rem; }
-    #page-editor .editor-controls .editor-link:hover, #page-editor .editor-controls .editor-link:active {
+    main#editor .editor-controls .editor-link:hover, main#editor .editor-controls .editor-link:active {
       opacity: 0.3; }
-#page-editor .editor-bottom {
+main#editor .editor-bottom {
   position: fixed;
   height: 10rem;
   width: 100vw;
   bottom: 0;
   background-image: linear-gradient(0deg, #ffffff 7%, rgba(255, 255, 255, 0) 100%);
   z-index: 10; }
-  #page-editor .editor-bottom .guidelines {
+  main#editor .editor-bottom .guidelines {
     z-index: 0;
     color: #0080FF;
     position: fixed;
@@ -2447,24 +2739,24 @@ a.btn {
     font-family: "BariolBold";
     left: 50%;
     margin-left: -47.5%; }
-    #page-editor .editor-bottom .guidelines:hover {
+    main#editor .editor-bottom .guidelines:hover {
       opacity: 0.8; }
     @media (max-width: 40em) {
-      #page-editor .editor-bottom .guidelines {
+      main#editor .editor-bottom .guidelines {
         display: none; } }
     @media (min-width: 75em) {
-      #page-editor .editor-bottom .guidelines {
+      main#editor .editor-bottom .guidelines {
         max-width: 75rem;
         margin-left: -37.5rem; } }
     @media (max-width: 65em) {
-      #page-editor .editor-bottom .guidelines {
+      main#editor .editor-bottom .guidelines {
         max-width: 55rem;
         margin-left: -27.5rem; } }
     @media (max-width: 64em) {
-      #page-editor .editor-bottom .guidelines {
+      main#editor .editor-bottom .guidelines {
         width: 95%;
         margin-left: -47.5%; } }
-  #page-editor .editor-bottom a.button, #page-editor .editor-bottom button {
+  main#editor .editor-bottom a.button, main#editor .editor-bottom button {
     z-index: 1;
     background: #0080FF;
     box-shadow: 0px 2px 6px 1px rgba(0, 128, 255, 0.5);
@@ -2485,11 +2777,11 @@ a.btn {
     text-align: center;
     padding-top: 0.8rem;
     box-sizing: border-box; }
-    #page-editor .editor-bottom a.button[disabled="disabled"], #page-editor .editor-bottom button[disabled="disabled"] {
+    main#editor .editor-bottom a.button[disabled="disabled"], main#editor .editor-bottom button[disabled="disabled"] {
       background-color: #bbb;
       opacity: 0.5;
       box-shadow: 0 0.125rem 0.375rem 0.0625rem rgba(51, 46, 46, 0.5); }
-    #page-editor .editor-bottom a.button:hover, #page-editor .editor-bottom button:hover {
+    main#editor .editor-bottom a.button:hover, main#editor .editor-bottom button:hover {
       opacity: 0.8; }
 
 #page-test #dropper {
@@ -2509,7 +2801,7 @@ a.btn {
 
 main.blog {
   max-width: 45rem;
-  margin: 0 auto;
+  margin: 9rem auto 0 auto;
   padding-bottom: 10rem;
   width: 95%;
   font-family: "GeomanistRegular"; }

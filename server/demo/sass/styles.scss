@@ -48,9 +48,6 @@
 // Imports
 @import "compass";
 
-$body-border-color: #0080FF;
-$header-border-color: #F1F1F1;
-
 em {
   font-family: 'BariolRegularItalic';
 }
@@ -73,13 +70,17 @@ body {
   min-height: 100vh;
 }
 
+// Header
 header#logged-out,
 header#logged-in {
-  min-height: 6.5rem;
-  max-width: 75rem;
+  min-height: 4.5rem;
+  width: 100vw;
   margin: 0 auto;
-  border-bottom: 0.2rem solid $header-border-color;
-  position: relative;
+  background: #0080FF;
+  box-shadow: 0px 0px 26px 4px rgba(144,144,144,0.50);
+  position: fixed;
+  top: 0;
+  z-index: 10;
 
   #logo {
     width: 4rem;
@@ -99,22 +100,40 @@ header#logged-in {
     border-radius: 0.4rem;
   }
 
-  #user {
-    $user-name-background: #0080FF;
-    $user-name-color: #FFFFFF;
+  #simulate-toggle {
+      color: #000000;
+      background-color: #FFFFFF;
+      display: inline-block;
+      border-radius: 2.125rem;
+      box-sizing: border-box;
+      font-size: 0.85rem;
+      font-family: "BariolBold";
+      vertical-align: top;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      padding: 0.5rem 1rem;
+      top: 50%;
+      margin-right: 20rem;
+      border: none;
+      margin-top: -0.8rem;
+      outline: none;
+  }
 
+  #user {
     position: absolute;
     right: 0;
     padding: 1rem;
     top: 50%;
     margin-top: -2.125rem;
+    margin-right: 4rem;
 
     .image,
     div[data-type="picture"] {
-      border: 0.05rem solid #DDDDDD;
-      width: 2.125rem;
-      height: 2.125rem;
-      border-radius: 2.125rem;
+      border: 0.05rem solid #0080FF;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 1.8rem;
       margin: 0 0.4rem 0 0;
       background-color: rgba(240,240,240,0.8);
       background-position: center center;
@@ -127,29 +146,30 @@ header#logged-in {
     }
 
     div[data-type="name"] {
-      color: $user-name-color;
-      background-color: $user-name-background;
-      padding: 0.5rem 2.4rem 0.6rem 1rem;
+      color: #0080FF;
+      background-color: #FFFFFF;
+      padding: 0.5rem 1.6rem 0.4rem 1rem;
       display: inline-block;
       border-radius: 2.125rem;
       box-sizing: border-box;
-      font-size: 1rem;
-      font-family: "BariolRegular";
+      font-size: 0.85rem;
+      font-family: "BariolBold";
       vertical-align: top;
       cursor: pointer;
-      min-height: 2.224375rem;
-      // width: 9.4rem;
+      min-height: 1.8rem;
+      top: 0.2rem;
+      position: relative;
 
       #menu-down-arrow {
-        width: 1rem;
+        width: 0.7rem;
         height: 0.95rem;
-        background-image: url(/assets/img/down-arrow.png);
+        background-image: url(/assets/img/down-arrow-alt.png);
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
-        right: 2rem;
-        top: 1.6rem;
+        right: 0.7rem;
+        top: 0.45rem;
       }
 
     }
@@ -163,7 +183,7 @@ header#logged-in {
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url(/assets/img/tooltip.png);
-    right: -2rem;
+    right: 2rem;
     top: 5.5rem;
     z-index: 10;
     opacity: 0;
@@ -203,18 +223,6 @@ header#logged-in {
       }
     }
   }
-
-  @media (max-width: 76em) {
-    max-width: 64rem;
-  }
-
-  @media (max-width: 65em) {
-    max-width: 55rem;
- }
-
- @media (max-width: 64em) {
-    width: 95%;
-  }
 }
 
 // Dropdown
@@ -250,6 +258,11 @@ header#logged-in {
       display: inline-block;
       vertical-align: middle;
       border-radius: 0.2rem;
+
+      &.flag-us {
+          background-image: url(/assets/img/flag-us.png);
+      }
+
     }
 
     .value-name {
@@ -259,15 +272,14 @@ header#logged-in {
     }
 
    .values {
-     min-width: 9.5rem;
      display: none;
+     min-width: 9.5rem;
      position: absolute;
      top: 3rem;
-     border: 0.1rem solid #EEE;
-     border-radius: 0.8rem;
-     left: -2rem;
-     box-shadow: 0px 0px 6px 3px rgba(218, 218, 218,0.28);
+     border: 0.1rem solid #f7f7f7;
+     left: 0rem;
      overflow: hidden;
+
 
       .value {
         padding: 1rem 2rem;
@@ -289,6 +301,7 @@ header#logged-in {
      }
    }
 }
+
 
 // Back to dashboard
 main > .bottom {
@@ -338,7 +351,7 @@ main > .bottom {
   box-shadow: 0px 2px 11px 2px rgba(198,198,198,0.50);
   border-radius: 3px;
   position: relative;
-  z-index: 10;
+  z-index: 9;
   margin-right: 2rem;
   margin-top: 1rem;
 
@@ -395,7 +408,7 @@ main > .bottom {
 .comment-section {
   max-width: 47rem;
   width: 90%;
-  margin: 0 auto;
+  margin: 0 0;
   position: relative;
   padding-top: 2rem;
 
@@ -569,7 +582,113 @@ main > .bottom {
   }
 }
 
-// button
+// Sidebar style
+#sidebar {
+  width: 5.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  height: 100vh;
+  background: #0080FF;
+  box-shadow: 0px 0px 26px 4px rgba(144,144,144,0.50);
+  box-sizing: border-box;
+
+  button {
+      border: none;
+      outline: none;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: transparent;
+      cursor: pointer;
+  }
+
+  button[data-type] {
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-bottom: 2rem;
+
+    @media (min-height: 44em) {
+        margin-bottom: 3rem;
+    }
+
+    @media (min-height: 55em) {
+        margin-bottom: 4rem;
+    }
+  }
+
+  button[data-type="logo"] {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-top: 0.8rem;
+  }
+
+  button[data-type]:not([data-type="logo"]):not([data-type="write-article"]) {
+    border-radius: 0.3rem;
+    &:hover, &.selected {
+        box-shadow: 0px 0px 8px 0px rgba(0,50,255,0.50);
+    }
+  }
+
+  button[data-type="write-article"] {
+    transition: transform 0.3s ease;
+    width: 2.8rem;
+    height: 2.8rem;
+    &:hover, &.selected {
+        transform: scale(1.1, 1.1);
+        transition: transform 0.3s ease;
+    }
+  }
+
+  button[data-type="logo"] {
+      background-image: url(/assets/img/sidebar/logo.png);
+  }
+
+  button[data-type="mywallet"] {
+      background-image: url(/assets/img/sidebar/mywallet.png);
+      &:hover, &.selected {
+          background-image: url(/assets/img/sidebar/mywallet-selected.png);
+      }
+  }
+
+  button[data-type="assigned-articles"] {
+      background-image: url(/assets/img/sidebar/assigned-articles.png);
+      &:hover, &.selected {
+          background-image: url(/assets/img/sidebar/assigned-articles-selected.png);
+      }
+  }
+
+  button[data-type="reviewed-articles"] {
+      background-image: url(/assets/img/sidebar/reviewed-articles.png);
+      &:hover, &.selected {
+          background-image: url(/assets/img/sidebar/reviewed-articles-selected.png);
+      }
+  }
+
+  button[data-type="drafted-articles"] {
+      background-image: url(/assets/img/sidebar/drafted-articles.png);
+      &:hover, &.selected {
+          background-image: url(/assets/img/sidebar/drafted-articles-selected.png);
+      }
+  }
+
+  button[data-type="submitted-articles"] {
+      background-image: url(/assets/img/sidebar/submitted-articles.png);
+      &:hover, &.selected {
+          background-image: url(/assets/img/sidebar/submitted-articles-selected.png);
+      }
+  }
+
+  button[data-type="write-article"] {
+      background-image: url(/assets/img/sidebar/write-article.png);
+  }
+}
+
+// Button
 a.btn {
     background: #0080FF;
     box-shadow: 0px 2px 6px 1px rgba(0,128,255,0.50);
@@ -601,6 +720,7 @@ a.btn {
     }
 }
 
+// General popup style
 .popup {
     position: fixed;
     top: 0;
@@ -941,15 +1061,15 @@ a.btn {
     }
 }
 
+// no data message
 .empty-message {
-  display: block;
-  text-align: center;
-  margin-top: 10rem;
+  margin: 10rem 0 0 2rem;
   font-size: 2rem;
   font-family: "BariolRegular";
   color: #232323;
 }
 
+// dropdown
 .droparea {
     margin: 1rem auto;
     width: 80%;
@@ -980,13 +1100,22 @@ a.btn {
     }
 }
 
+// General image style
 .image {
   width: inherit;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  .image-overlay {
+    width: inherit;
+    min-height: inherit;
+    position: absolute;
+  }
 }
 
+
+// loading
 #loading-indicator {
     position: fixed;
     top: 0;
@@ -1014,6 +1143,7 @@ a.btn {
     }
 }
 
+// bottom support link
 #support-links {
     position: fixed;
     bottom: 1.8rem;
@@ -1097,10 +1227,6 @@ a.btn {
 
 // Pages
 #page-dashboard {
-
-  body {
-    border-top: 0.3rem solid $body-border-color;
-  }
 
   main {
     max-width: 75rem;
@@ -1198,10 +1324,10 @@ a.btn {
       }
 
       h2 {
-        font-family: "BariolBold";
+        font-family: "BariolRegular";
         text-align: center;
         display: block;
-        font-size: 1.7rem;
+        font-size: 1.4rem;
         margin-bottom: 0.2rem;
         color: rgba(139,139,139,0.9);
       }
@@ -1635,6 +1761,18 @@ a.btn {
           }
         }
 
+        section[data-section="version"] {
+            h1 {
+                margin-top: 4rem;
+                margin-bottom: 2rem;
+            }
+
+            p {
+                max-width: 29rem;
+                margin-bottom: 2rem;
+            }
+        }
+
         section[data-section="setup"] {
             h1 {
                 margin-top: 4rem;
@@ -1771,6 +1909,55 @@ a.btn {
             small {
               margin-bottom: 3rem;
             }
+
+            h1 {
+              .slack {
+                  background-size: contain;
+                  background-image: url(/assets/img/slack-logo.png);
+                  background-position: center center;
+                  background-repeat: no-repeat;
+                  display: inline-block;
+                  width: 2rem;
+                  height: 2rem;
+                  position: relative;
+                  top: 0.3rem;
+              }
+            }
+
+            .slack-button {
+              background-color: #FFF;
+              box-shadow: 0px 4px 20px 0px #d6d6d6;
+              color: #000;
+              font-family: "GeomanistMedium";
+              font-size: 0.9rem;
+              letter-spacing: .12em;
+              vertical-align: middle;
+              max-width: 10rem;
+              text-align: center;
+              padding: 1.2rem 2.5rem;
+              border-radius: 1.8rem;
+              display: block;
+              margin: 2rem auto 3.8rem auto;
+              border: 0.01rem solid rgba(223, 229, 244, 0.59);
+
+              &:hover {
+                opacity: 0.8;
+              }
+
+              .slack {
+                  background-image: url(/assets/img/slack-logo.png);
+                  background-position: center center;
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  display: inline-block;
+                  height: 1rem;
+                  margin-right: 0.1rem;
+                  vertical-align: middle;
+                  width: 1rem;
+                  top: -0.1rem;
+                  position: relative;
+              }
+            }
         }
 
         section[data-section="selecttype"] {
@@ -1880,12 +2067,87 @@ a.btn {
   }
 }
 
-#page-stream {
+.app-pages {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  .app-page {
+      padding: 6rem 1rem 1rem 7rem;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      box-sizing: border-box;
+
+      &[data-page="article-review"] {
+          padding: 0;
+
+          main {
+              position: absolute;
+              width: 100vw;
+              height: 100vh;
+              overflow-y: auto;
+              box-sizing: border-box;
+              padding-top: 6rem;
+              padding-left: 6rem;
+          }
+
+          #review .bottom .back-button,
+          #article .bottom .back-button {
+             left: 10.5rem;
+          }
+
+          #review .heading,
+          #article .heading {
+              margin: 0;
+          }
+
+          #review .section .container,
+          #article .section .container {
+              margin: 0;
+          }
+      }
+
+      .show, &.show {
+        top: 0rem;
+        opacity: 1;
+        transition: opacity 0.9s ease 1.2s, top 0.9s ease 1.2s;
+        z-index: 1;
+
+        .bottom, .editor-bottom {
+          opacity: 1;
+          transition: opacity 1s ease 1.5s;
+        }
+      }
+
+      .hide, &.hide {
+        top: 10rem;
+        opacity: 0;
+        transition: opacity 1s ease, top 0.8s ease;
+        z-index: 0;
+
+        .bottom, .editor-bottom {
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+      }
+
+
+  }
+}
+
+.wrapper {
+  padding-left: 5rem;
+}
+
+main#stream {
 
   #articles {
     position: relative;
-    max-width: 35rem;
-    margin: 3rem auto 15rem auto;
+    margin: 2rem 0 15rem 2rem;
+    max-width: 50rem;
 
     & > div:not(.divider):not(.heading) {
       margin-bottom: 3rem;
@@ -1945,6 +2207,162 @@ a.btn {
            margin-right: 0.08rem;
          }
       }
+    }
+  }
+
+  .article-cards {
+    height: 28rem;
+
+    .article-card {
+      float: left;
+      width: 26rem;
+      cursor: pointer;
+      position: relative;
+      border: none;
+      outline: none;
+
+      background: #FFFFFF;
+      box-shadow: 0px 10px 20px 0px #E4E8EF;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      display: inline-block;
+      margin: 0 2rem 1.25rem 0;
+      vertical-align: top;
+
+      .preview, .image {
+        width: 100%;
+        background-color: #EEEEEE;
+        min-height: 18rem;
+      }
+
+      &.color-0 {
+        .image {
+            .image-overlay {
+                opacity: 0.8;
+                background-image: linear-gradient(-135deg, #ED5565 0%, #D62839 100%);
+            }
+        }
+      }
+
+      &.color-1 {
+        .image {
+            .image-overlay {
+                opacity: 0.8;
+                background-image: linear-gradient(-135deg, #5D9CEC 0%, #0E65D7 100%);
+            }
+        }
+      }
+
+
+      &.color-2 {
+        .image {
+            .image-overlay {
+                opacity: 0.8;
+                background-image: linear-gradient(-135deg, #48CFAD 0%, #19A784 100%);
+            }
+        }
+      }
+
+      &.color-3 {
+        .image {
+            .image-overlay {
+                opacity: 0.8;
+                background-image: linear-gradient(-135deg, #FFD97C 0%, #F6A742 100%);
+            }
+        }
+      }
+
+      &.color-4 {
+        .image {
+            .image-overlay {
+                opacity: 0.8;
+                background-image: linear-gradient(-135deg, #AC92EC 0%, #7455C3 100%);
+            }
+        }
+      }
+
+
+      .details {
+
+        box-sizing: border-box;
+        padding: 0 3rem;
+
+        h3 {
+          white-space: normal;
+          font-size: 1.1rem;
+          text-align: center;
+          line-height: 1.5;
+          min-height: 6rem;
+        }
+
+        & > span:nth-child(2) {
+          color: #A9A9A9;
+          font-family: "GeomanistLight";
+          font-size: 0.9rem;
+          position: absolute;
+          left: 4rem;
+          bottom: 1.5rem;
+        }
+
+        & > a:nth-child(3) {
+          position: absolute;
+          right: 4rem;
+          bottom: 1.5rem;
+          display: inline-block;
+          text-decoration: none;
+          color: #A9A9A9;
+          font-family: "GeomanistLight";
+          font-size: 0.9rem;
+
+           & > span:nth-child(1) {
+             display: inline-block;
+             width: 1rem;
+             height: 1rem;
+             background-position: center center;
+             background-repeat: no-repeat;
+             background-image: url(/assets/img/heart.png);
+             background-size: contain;
+             position: relative;
+             top: 0.08rem;
+             margin-right: 0.08rem;
+           }
+        }
+      }
+    }
+
+    .article-card:nth-child(2),
+    .article-card:nth-child(3) {
+        width: 19rem;
+        height: 12.4984375rem;
+
+        h3 {
+          font-size: 0.8rem;
+          margin: 0.5rem 0 0 0;
+          line-height: 1.3;
+        }
+
+        .details {
+            & > span:nth-child(2) {
+              bottom: 0.7rem;
+              font-size: 0.7rem;
+            }
+
+            & > a:nth-child(3) {
+                bottom: 0.7rem;
+                font-size: 0.7rem;
+
+                & > span:nth-child(1) {
+                    width: 0.7rem;
+                    height: 0.7rem;
+                    top: 0.05rem;
+                    margin-right: -0.03rem;
+                }
+            }
+        }
+
+        .preview, .image {
+          min-height: 8rem;
+        }
     }
   }
 
@@ -2011,36 +2429,44 @@ a.btn {
   }
 
   .divider {
-    width: 12rem;
-    height: 1rem;
-    background-image: url(/assets/img/divider.png);
+    width: 50rem;
+    height: 0.5rem;
+    background-image: url(/assets/img/divider-repeat.png);
     background-position: center center;
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     background-size: contain;
-    margin: 8rem auto;
+    margin: 5rem 0;
     display: block;
   }
 
   .heading {
       h2 {
-        font-family: "BariolBold";
-        text-align: center;
+        font-family: "BariolRegular";
+        text-align: left;
         display: block;
-        font-size: 2.1rem;
+        font-size: 1.4rem;
         margin-bottom: 3rem;
         color: rgba(139,139,139,0.6);
-    }
+        margin-top: 0;
+      }
 
-    .dropdown {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
+      &.today {
+        h2 {
+          display: inline-block;
+        }
+      }
+
+     .dropdown {
+       left: 2rem;
+       position: relative;
+       display: inline-block;
+       z-index: 1;
+     }
   }
 }
 
-#page-review,
-#page-article {
+#review,
+#article {
 
   $radioColor1: #E8E8E8;
   $radioColor2: #00FF5A;
@@ -2137,7 +2563,7 @@ a.btn {
 
   article {
       max-width: 47rem;
-      margin: 0 auto 5rem auto;
+      margin: 0 0 5rem 0;
       width: 95%;
       padding-bottom: 5rem;
 
@@ -2187,7 +2613,7 @@ a.btn {
             width: 80%;
             display: block;
 
-            &#main-media {
+            &main#media {
               width: 100%;
               margin: 1rem auto;
             }
@@ -2259,11 +2685,12 @@ a.btn {
       background-size: 100%;
       position: fixed;
       bottom: 1rem;
-      left: 2rem;
+      right: 4rem;
       background-color: transparent;
       box-shadow: none;
       margin: 0;
       padding: 0;
+      left: auto;
 
       &.hasfeedback {
         background-image: url(/assets/img/edit-feedback-button.png);
@@ -2284,7 +2711,7 @@ a.btn {
       background-size: 100%;
       position: fixed;
       bottom: 1rem;
-      left: 5rem;
+      left: 10.5rem;
       background-color: transparent;
       box-shadow: none;
       margin: 0;
@@ -2317,7 +2744,7 @@ a.btn {
         font-family: "BariolRegular";
         color: #BCBCBC;
         letter-spacing: 0.08rem;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
   }
 
@@ -2339,7 +2766,7 @@ a.btn {
 
     .container {
       background: #FFFFFF;
-      box-shadow: 0px 0px 26px 0px rgba(0,0,0,0.12);
+      //box-shadow: 0px 0px 26px 0px rgba(0,0,0,0.12);
       border-radius: 5px;
       width: 90%;
       max-width: 55rem;
@@ -2363,7 +2790,7 @@ a.btn {
   }
 }
 
-#page-account {
+main#account {
 
       main {
         padding-bottom: 9rem;
@@ -2374,15 +2801,19 @@ a.btn {
         color: #BCBCBC;
         font-family: "BariolRegular";
         display: block;
-        margin: 2rem  auto 2rem auto;
+        margin: 2rem 0 2rem 2rem;
         width: 95%;
         max-width: 64rem;
+      }
+
+      a.btn {
+        margin: 3rem 0 0 2rem;
       }
 
       .account-profile {
           width: 10rem;
           height: 10rem;
-          margin: 0 auto 3rem auto;
+          margin: 0 0 3rem 2rem;
           display: block;
           position: relative;
 
@@ -2428,7 +2859,7 @@ a.btn {
               border: none;
               width: 45%;
               max-width: 30rem;
-              margin-left: auto;
+              margin-left: 2rem;
               margin-right: auto;
               margin-bottom: 1rem;
               text-align: center;
@@ -2437,22 +2868,22 @@ a.btn {
       }
 }
 
-#page-article-reviewed,
-#page-article-assigned,
-#page-article-submitted,
-#page-article-read,
-#page-article-drafts {
+main#article-reviewed,
+main#article-assigned,
+main#article-submitted,
+main#article-read,
+main#article-drafts {
 
     main {
       padding-bottom: 9rem;
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: #BCBCBC;
       font-family: "BariolRegular";
       display: block;
-      margin: 2rem  auto 2rem auto;
+      margin: 2rem 0 2rem 2rem;
       width: 95%;
       max-width: 64rem;
     }
@@ -2472,15 +2903,15 @@ a.btn {
     .articles {
       width: 95%;
       max-width: 64rem;
-      margin: 2.5rem auto 0 auto;
-      text-align: center;
+      margin: 2.5rem 0 0 0;
+      text-align: left;
 
       .article-wrapper {
         display: inline-block;
         margin: 1rem 2rem 5rem 2rem;
         text-decoration: none;
         color: #000;
-        text-decoration: none;
+        text-align: center;
 
         .article {
             width: 14rem;
@@ -2642,11 +3073,12 @@ a.btn {
     }
 }
 
-#page-wallet {
+main#wallet {
+  padding-left: 2rem;
+
   .heading {
       max-width: 55rem;
       width: 95%;
-      margin: 0 auto;
       position: relative;
       margin-top: 2rem;
 
@@ -2654,7 +3086,7 @@ a.btn {
         font-family: "BariolRegular";
         color: #BCBCBC;
         letter-spacing: 0.08rem;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
   }
 
@@ -2717,7 +3149,7 @@ a.btn {
         border-radius: 5px;
         width: 90%;
         max-width: 55rem;
-        margin: 2rem auto 1.5rem auto;
+        margin: 2rem 0 1.5rem 0;
         height: 21rem;
         position: relative;
         overflow: hidden;
@@ -2790,7 +3222,6 @@ a.btn {
           width: 95%;
           white-space: nowrap;
           max-width: 55rem;
-          margin: 0 auto;
 
           p {
             position: relative;
@@ -2897,7 +3328,6 @@ a.btn {
         .bottom {
             width: 95%;
             max-width: 55rem;
-            margin: 0 auto;
             padding: 3rem 1rem 3rem 0;
             border-top: 0.1rem solid #F0F0F0;
             font-size: 0.9rem;
@@ -2922,9 +3352,6 @@ a.btn {
     color: #595959;
     font-family: "BariolRegular";
     letter-spacing: 0.08rem;
-    width: 95%;
-    max-width: 55rem;
-    margin: 0 auto 10rem auto;
 
     a {
       color: #0080FF;
@@ -2940,16 +3367,16 @@ a.btn {
 
 }
 
-#page-editor {
+main#editor {
   .heading {
     max-width: 55rem;
-    margin: 3rem auto 0 auto;
+    margin: 3rem 0;
     width: 90%;
     position: relative;
 
     h1 {
       font-family: "BariolRegular";
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       color: #BCBCBC;
       letter-spacing: 0.08rem;
       margin: 0;
@@ -2967,7 +3394,7 @@ a.btn {
 
   .content {
     max-width: 55rem;
-    margin: 2rem auto 0 auto;
+    margin: 2rem 0;
     width: 90%;
     position: relative;
 
@@ -3220,7 +3647,7 @@ a.btn {
 
 main.blog {
     max-width: 45rem;
-    margin: 0 auto;
+    margin: 9rem auto 0 auto;
     padding-bottom: 10rem;
     width: 95%;
     font-family: "GeomanistRegular";

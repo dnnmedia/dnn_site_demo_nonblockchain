@@ -15,21 +15,17 @@ angular.module('DNN', [
       scope: {},
       restrict: "E",
       replace: true,
-      template: '<div class="dropdown" style="display:none;">\
+      template: '<div class="dropdown" style="">\
           <div class="selected value">\
-              <span class="value-picture"></span>\
+              <span class="value-picture flag-us"></span>\
               <span class="value-name">US</span>\
               <span class="arrow"></span>\
           </div>\
           <div class="values">\
               <div class="value">\
-                  <span class="value-picture"></span>\
+                  <span class="value-picture flag-us"></span>\
                   <span class="value-name">US</span>\
               </div>\
-                  <div class="value">\
-                      <span class="value-picture"></span>\
-                      <span class="value-name">UK</span>\
-                  </div>\
           </div>\
       </div>'
     }
@@ -43,7 +39,7 @@ angular.module('DNN', [
         },
         restrict: "E",
         replace: true,
-        template: '<div class="image" style="" ></div>',
+        template: '<div class="image" style="" ><div class="image-overlay"></div></div>',
         link: function(scope, element, attrs) {
           if (typeof DNN === "object"  && typeof IPFS === "object" && scope.hash) {
               scope.$watch("hash", function() {
@@ -69,13 +65,12 @@ angular.module('DNN', [
         template: '<img class="image" src=\'\' />',
         link: function(scope, element, attrs) {
           if (typeof DNN === "object"  && typeof IPFS === "object" && scope.hash) {
-              DNN.Request.get(IPFS.config.gateway + scope.hash).then(function(data) {
-                  $timeout(function() {
-                      element.attr("src", data.replace(/"/g, ""));
+              scope.$watch("hash", function()  {
+                  DNN.Request.get(IPFS.config.gateway + scope.hash).then(function(data) {
+                      $timeout(function() {
+                          element.attr("src", data.replace(/"/g, ""));
+                      })
                   })
-              })
-              scope.$on("hash", function()  {
-                scope.render();
               })
           }
         }

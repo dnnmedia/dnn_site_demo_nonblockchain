@@ -84,6 +84,46 @@ var md5 = require('md5');
 var hat = require('hat');
 
 
+
+/*
+|--------------------------------------------------------------------------
+|  DB
+|--------------------------------------------------------------------------
+|
+|  MongoDB connection
+|
+*/
+var mongojs = require('mongojs')
+var db = mongojs("dnnmedia:dnnmedia@dnn.media:37018/dnnmedia")
+
+
+/*
+|--------------------------------------------------------------------------
+|  Cleans ObjectId
+|--------------------------------------------------------------------------
+|
+|  Perpares ObjectID
+|
+*/
+var cleanObjectId = function(objectid) {
+		var objectid = typeof objectid === "string" ? objectid : ""
+		return objectid.length >=12 && objectid.length <=24 ? objectid : "000000000000";
+};
+
+/*
+|--------------------------------------------------------------------------
+|  Verify Token
+|--------------------------------------------------------------------------
+|
+|  Checks if token corresponds to user
+|
+*/
+var verifyToken = function(request, callback) {
+		db.collection("AlphaUser").findOne({token: request.payload.token, _id: mongojs.ObjectId( cleanObjectId(request.payload._id) )}, function(error, dbUser) {
+				typeof callback === "function" ? callback(!error && dbUser) : null;
+		})
+};
+
 /*
 |--------------------------------------------------------------------------
 |  View
@@ -95,7 +135,7 @@ var hat = require('hat');
 server.register([require('vision'), require("inert")], function (err) {
 
 
-	// WEBSITES
+	// DEMO
 	/* ==================================================== */
 	/* ==================================================== */
 
@@ -131,7 +171,7 @@ server.register([require('vision'), require("inert")], function (err) {
 	{
 		if (request.response.isBoom)
 		{
-				return reply.redirect('/');
+				//return reply.redirect('/');
 		}
 
 		return reply.continue();
@@ -164,16 +204,16 @@ server.register([require('vision'), require("inert")], function (err) {
 		path: '/',
 		handler: function(request, reply)
 		{
-			reply.redirect("/dashboard");
+			reply.redirect("/alpha");
 		}
 	});
 
 	server.route({
 		method: 'GET',
-		path: '/dashboard',
+		path: '/alpha',
 		handler: function(request, reply)
 		{
-			reply.view('page-dashboard', {id: "dashboard"});
+			reply.view('page', {id: "page"});
 		}
 	});
 
@@ -222,143 +262,194 @@ server.register([require('vision'), require("inert")], function (err) {
 		}
 	});
 
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| API Endpoints
+	|--------------------------------------------------------------------------
+	|
+	| All api endpoint routes
+	|
+	*/
 	server.route({
-		method: 'GET',
-		path: '/test/editor',
+		method: 'POST',
+		path: '/api/v1/user/verify',
 		handler: function(request, reply)
 		{
-			reply.view('page-test-editor', {id: "test-editor"});
+				verifyToken(request, function(isTokenValid) {
+						if (isTokenValid) reply({valid: true});
+						else reply({valid: false});
+				})
+		}
+	});
+
+	server.route({
+		method: 'POST',
+		path: '/api/v1/user/add',
+		handler: function(request, reply)
+		{
+				var user = {
+						name: request.payload.fullname || "",
+						token: md5((new Date()).getTime()),
+						added: (new Date())
+				};
+
+				db.collection("AlphaUser").insert(user, function(error, dbUser) {
+						reply({user:dbUser, error:err});
+				});
+
+		}
+	});
+
+	server.route({
+		method: 'POST',
+		path: '/api/v1/articles',
+		handler: function(request, reply)
+		{
+			  verifyToken(request, function(isTokenValid) {
+						reply({articles: []});
+				});
+		}
+	});
+
+	server.route({
+		method: 'POST',
+		path: '/api/v1/submit/article',
+		handler: function(request, reply)
+		{
+			  verifyToken(request, function(isTokenValid) {
+						if (isTokenValid) {
+								var article = request.payload.article || {}
+							 	db.collection("AlphaArticle").insert({article:article, user:request.payload.userid}, function(error, dbArticle) {
+										if (!error && dbArticle) reply({article:dbArticle, error:error})
+										else reply({article:dbArticle, error:error})
+								})
+						}
+						else reply({error: true, value: isTokenValid})
+				});
 		}
 	});
 
 	server.route({
 		method: 'GET',
-		path: '/test/dnn',
+		path: '/api/v1/media/{id}',
 		handler: function(request, reply)
 		{
-			reply.view('page-test-dnn', {id: "test-dnn"});
-		}
-	});
-
-
-	server.route({
-		method: 'GET',
-		path: '/stream',
-		handler: function(request, reply)
-		{
-			reply.view('page-stream', {id: "stream"});
+				db.collection("AlphaMedia").findOne({_id: mongojs.ObjectId(cleanObjectId(request.params.id))}, function(error, dbMedia) {
+						if (!error && dbMedia) {
+								reply(dbMedia.media).type("text/plain");
+						}
+						else reply("").type("text/plain");
+				})
 		}
 	});
 
 	server.route({
-		method: 'GET',
-		path: '/article/preview/{hash}',
+		method: 'POST',
+		path: '/api/v1/media/add',
 		handler: function(request, reply)
 		{
-			reply.view('page-article-preview', {id: "article"});
+			 	db.collection("AlphaMedia").insert({ media: request.payload.media, created: (new Date()) }, function(error, dbMedia) {
+						if (!error && dbMedia) reply({added:true, error:error, mediaid:dbMedia._id});
+						else reply({added:false, error:error})
+				})
 		}
 	});
 
 	server.route({
-		method: 'GET',
-		path: '/article/review/{hash}',
+		method: 'POST',
+		path: '/api/v1/review/article',
 		handler: function(request, reply)
 		{
-			reply.view('page-article-review', {id: "review"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/account',
-		handler: function(request, reply)
-		{
-			reply.view('page-account', {id: "account"});
+			  verifyToken(request, function(isTokenValid) {
+						if (isTokenValid) {
+							 	db.collection("AlphaReviewedArticle").insert({feedback: request.payload.feedback, articleid:request.payload.articleid, user:request.payload.userid}, function(error, dbArticle) {
+										if (!error && dbArticle) reply({article:dbArticle, error:error})
+										else reply({article:dbArticle, error:error})
+								})
+						}
+						else reply({error: true, value: isTokenValid})
+				});
 		}
 	});
 
 	server.route({
 		method: 'GET',
-		path: '/article/{hash}',
+		path: '/api/v1/reviewed/articles',
 		handler: function(request, reply)
 		{
-			reply.redirect("/");
+			  verifyToken(request, function(isTokenValid) {
+						reply({articles: []});
+				});
+		}
+	});
+
+	// server.route({
+	// 	method: 'POST',
+	// 	path: '/api/v1/draft/article',
+	// 	handler: function(request, reply)
+	// 	{
+	// 		  verifyToken(request, function(isTokenValid) {
+	// 					db.collection("AlphaDraftedArticle").findOne({_id: mongojs.ObjectId(cleanObjectId(request.payload.draftid))}, function(error, dbDraft) {
+	// 							if (!error && dbDraft) reply({article: dbDraft})
+	// 							else reply({})
+	// 					})
+	// 			});
+	// 	}
+	// });
+
+	server.route({
+		method: 'POST',
+		path: '/api/v1/draft/article',
+		handler: function(request, reply)
+		{
+			  verifyToken(request, function(isTokenValid) {
+						db.collection("AlphaDraftedArticle").findOne({_id: mongojs.ObjectId(cleanObjectId(request.payload.draftid))}, function(error, dbDraft) {
+								if (dbDraft) {
+										db.collection("AlphaDraftedArticle").update({_id: mongojs.ObjectId( cleanObjectId(request.payload.draftid) )}, {article: request.payload.article}, function(error, dbDraft) {
+												reply({updated: !error});
+										})
+								}
+								else {
+										var draft = {
+												user: request.payload.userid,
+												article: request.payload.article,
+												created: (new Date()),
+												updated: (new Date())
+										};
+										db.collection("AlphaDraftedArticle").insert(draft, function(error, dbDraft) {
+												reply({error:error, article: dbDraft})
+										})
+								}
+						})
+				});
 		}
 	});
 
 	server.route({
-		method: 'GET',
-		path: '/article/drafts',
+		method: 'POST',
+		path: '/api/v1/drafted/articles',
 		handler: function(request, reply)
 		{
-			reply.view('page-article-drafts', {id: "article-drafts"});
+			  verifyToken(request, function(isTokenValid) {
+						reply({articles: []});
+				});
 		}
 	});
 
 	server.route({
-		method: 'GET',
-		path: '/article/read',
+		method: 'POST',
+		path: '/api/v1/draft/article/remove',
 		handler: function(request, reply)
 		{
-			reply.view('page-article-read', {id: "article-read"});
+			  verifyToken(request, function(isTokenValid) {
+							db.collection("AlphaDraftedArticle").remove({_id: mongojs.ObjectId(cleanObjectId(request.payload.draftid))}, function(error, dbDraft) {
+									reply({removed: !error})
+							});
+				});
 		}
 	});
-
-	server.route({
-		method: 'GET',
-		path: '/article/assigned',
-		handler: function(request, reply)
-		{
-			reply.view('page-article-assigned', {id: "article-assigned"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/article/reviewed',
-		handler: function(request, reply)
-		{
-			reply.view('page-article-reviewed', {id: "article-reviewed"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/article/submitted',
-		handler: function(request, reply)
-		{
-			reply.view('page-article-submitted', {id: "article-submitted"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/wallet',
-		handler: function(request, reply)
-		{
-			reply.view('page-wallet', {id: "wallet"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/article/editor',
-		handler: function(request, reply)
-		{
-			reply.view('page-article-editor', {id: "editor"});
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/article/editor/{id}',
-		handler: function(request, reply)
-		{
-			reply.view('page-article-editor', {id: "editor"});
-		}
-	});
-
-
 
 	/*
 	|--------------------------------------------------------------------------
@@ -393,7 +484,6 @@ server.register([require('vision'), require("inert")], function (err) {
 	*/
 	server.start(function()
 	{
-
-		console.log("### SERVER STARTED ###");
+			console.log("### SERVER STARTED ###");
 	});
 });

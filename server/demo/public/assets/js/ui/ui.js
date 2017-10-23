@@ -2,17 +2,7 @@
   "use strict"
 
   if (typeof $ === "function") {
-      $(document).on("ready", function() {
-
-          // Autoresize Textareas
-          //var $autoresizeElements = $("*[autoresize]");
-          //$autoresizeElements.on("input", function() {
-          //    var outerHeightPrevious = $(this).outerHeight();
-          //    $(this).outerHeight(38).outerHeight(this.scrollHeight);
-          //    if (outerHeightPrevious != $(this).outerHeight()) {
-          //        window.scrollTo(0,document.body.scrollHeight);
-          //    }
-         //});
+      $(function() {
 
           // Menu
           var $user = $("#user");

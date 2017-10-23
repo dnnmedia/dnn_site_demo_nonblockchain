@@ -28,29 +28,29 @@
 				angular.module('DNN')
 					.controller('TypeCtrl', ['$scope', '$location', '$timeout', '$controller', function($scope, $location, $timeout, $controller) {
 								  angular.element(window).on("load", function() {
-											if (handleBrowserWeb3EnabledIfNeeded()) {
-				 									DNN.User.handle(DNN.User.Types.Any)
-				 											.then(function(user) {
-																	$timeout(function() {
-																		  $scope.userType = user.userType
-																			$scope.DNN = DNN;
-																			$scope.save = function(type) {
-																					DNN.User.updateType(type, user.account)
-																							.then(function() {
-																									$timeout(function() {
-																											$scope.userType = type
-																											DNN.User.session.userType = type;
-																											var popup = new DNN.popup("notice","","Your account has been successfully updated. Please allow up to <strong>30 seconds</strong> for this change to go into effect.", ["Back to Dashboard"])
-																											popup.on("button", function() {
-																													window.location.href = "/dashboard";
-																											})
-																											popup.show();
-																									})
-																							})
-																			};
-																	});
-				 									  	})
-				 						 	}
+											// if (handleBrowserWeb3EnabledIfNeeded()) {
+											// 			DNN.User.handle(DNN.User.Types.Any)
+				 						// 					.then(function(user) {
+											// 						$timeout(function() {
+											// 							  $scope.userType = user.userType
+											// 								$scope.DNN = DNN;
+											// 								$scope.save = function(type) {
+											// 										DNN.User.updateType(type, user.account)
+											// 												.then(function() {
+											// 														$timeout(function() {
+											// 																$scope.userType = type
+											// 																DNN.User.session.userType = type;
+											// 																var popup = new DNN.popup("notice","","Your account has been successfully updated. Please allow up to <strong>30 seconds</strong> for this change to go into effect.", ["Back to Dashboard"])
+											// 																popup.on("button", function() {
+											// 																		window.location.href = "/dashboard";
+											// 																})
+											// 																popup.show();
+											// 														})
+											// 												})
+											// 								};
+											// 						});
+				 							// 		  	})
+											//  	}
 									});
 					}]);
 	  </script>

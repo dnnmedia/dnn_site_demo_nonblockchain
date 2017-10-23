@@ -55,7 +55,7 @@
 							 <p>DNN hopes to report on issues, free of any blatant falsehoods and statements describing events that never occurred or statements that were never made. Research that is both extensive and properly referenced, as well as based upon the most reputable authoritative and reliable sources available, can help mitigate conflicts in accuracy, even if it does not eliminate them altogether.</p>
 
 								<div class="bottom">
-			            <button onclick="window.location.href = '/dashboard'">Back to Dashboard</button>
+			            	<button onclick="window.location.href = '/dashboard'">Back to Dashboard</button>
 			          </div>
 
 					</main>
@@ -69,14 +69,14 @@
 				angular.module('DNN')
 					.controller('GuidelinesCtrl', ['$scope', '$location', '$timeout', '$controller', function($scope, $location, $timeout, $controller) {
 						window["addEventListener"]('load', function() {
-								if (handleBrowserWeb3EnabledIfNeeded()) {
-									DNN.User.handle(DNN.User.Types.Any)
-											.then(function(user) {
-													$timeout(function() {
-															$scope.DNN = DNN;
-														});
-												});
-									}
+								// if (handleBrowserWeb3EnabledIfNeeded()) {
+								// 	DNN.User.handle(DNN.User.Types.Any)
+								// 			.then(function(user) {
+								// 					$timeout(function() {
+								// 							$scope.DNN = DNN;
+								// 						});
+								// 				});
+								// 	}
 								});
 					}]);
 	  </script>

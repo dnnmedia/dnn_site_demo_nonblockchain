@@ -17,6 +17,13 @@
 								<p>For more information about where to find and how to install a web3 browser, please visit the DNN's <a href="http://dnn.media/faq" target="_blank">FAQ</a>.</p>
 						</section>
 
+						<!-- Blockchain/Non-Blockchain -->
+						<section data-section="version" ng-class="{visible: section == 'version'}">
+							<h1>DNN Alpha Versions</h1>
+							<p>By default, all testers are directed to the <strong>non-blockchain version</strong> of the DNN alpha for easier access. At anytime during the demo, testers can switch to the <strong>blockchain version</strong> of DNN to enable smart contract-based functionality. Functionality can only be tested on the blockchain version.</p>
+							<button ng-click="section = 'welcome'">Continue</button>
+					 </section>
+
 						<!-- Setup -->
 						<section data-section="setup" ng-class="{visible: section == 'setup'}">
 							<h1>DNN Alpha Checklist</h1>
@@ -46,7 +53,7 @@
 										</div>
 								</div>
 								<button ng-disabled="!isCheckListDone()" ng-click="checklistContinue()">Continue</button>
-								</section>
+					 </section>
 
 						<!-- Get Started -->
 						<section data-section="getstarted" ng-class="{visible: section == 'getstarted'}">
@@ -68,7 +75,6 @@
 										<div></div>
 										<div></div>
 										<div></div>
-										<div></div>
 								</div>
 						</section>
 
@@ -86,21 +92,16 @@
 									<div></div>
 									<div></div>
 									<div></div>
-									<div></div>
 							</div>
 						</section>
 
 						<!-- Sign up -->
 						<section data-section="signup" ng-class="{visible: section == 'signup'}">
-							<h1>Sign up for DNN</h1>
-							<p>Please enter your email.</p>
-							<div class="field">
-									<input type="email" placeholder="Email" ng-model="user.email">
-							</div>
-							<small>Your email will only be used for nofication purposes and nothing more.</small>
-							<button ng-disabled="user.email == ''" ng-click="section = 'selecttype'">Next</button>
+							<h1>Join the Conversation <div class="slack"></div></h1>
+							<p>All of DNN's discussions, announcements, important updates, and support queries are communicated on our Slack channel. Join to stay in the loop!</p>
+							<a class="button outline slack-button" href="http://slack.dnn.media/" target="_blank"><div class="slack"></div> Slack</a>
+							<button ng-click="section = 'notify'">Next</button>
 							<div id="page-indicator">
-									<div></div>
 									<div></div>
 									<div></div>
 									<div class="current"></div>
@@ -132,10 +133,9 @@
 						<!-- Save account -->
 						<section data-section="notify" ng-class="{visible: section == 'notify'}">
 							<h1>Save Account Details</h1>
-							<p>To finalize the creation of your account on the DNN network, a small amount of kovan ether will be required. You can use MetaMask or Parity to get some!</p>
+							<p>To finalize the creation of your account, please click save to add your account details on the DNN network.</p>
 							<button ng-click="save()">Save</button>
 							<div id="page-indicator">
-									<div></div>
 									<div></div>
 									<div></div>
 									<div></div>
@@ -148,9 +148,8 @@
 						<section data-section="done" ng-class="{visible: section == 'done'}">
 							<h1>You're all set, [[user.fullname]]</h1>
 							<p>You are now ready to try the DNN demo! If you have any feedback or questions, please don't hesitate to contact us at <strong>contact@dnn.media</strong></p>
-							<button onclick="window.location.href = '/dashboard'">Proceed to dashboard</button>
+							<button ng-click="DNN.Redirect('/alpha')">Proceed to dashboard</button>
 							<div id="page-indicator">
-									<div></div>
 									<div></div>
 									<div></div>
 									<div></div>
@@ -169,136 +168,130 @@
 			angular.module('DNN')
 				.controller('OnboardCtrl', ['$scope', '$location', '$timeout', '$interval', function($scope, $location, $timeout, $interval) {
 							window["addEventListener"]("load", function() {
-								if (isBrowserWeb3Enabled()) {
-										DNN.User.handle(DNN.User.Types.Any, true, true, true)
-												.then(function(user) {
 
-														if (user) window.location.href = "/dashboard";
+										// Handles loading appropriate section
+										var handleLocation = function()
+										{
+													switch ($location.url())
+													{
+															case "/noweb3":
+																$scope.section = "noweb3";
+																break;
 
-														var handleLocation = function() {
-															switch ($location.url()) {
-																		case "/getstarted":
-																			if (isBrowserWeb3Enabled()) $scope.section = "welcome";
-																			else $scope.section = "noweb3";
-																			break;
+															default:
+															case "/version":
+																	$scope.section = "version"
+																	break;
 
-																		case "/noweb3":
-																			if (isBrowserWeb3Enabled()) $scope.section = "welcome"
-																			else $scope.section = "noweb3";
-																			break;
+															case "/setup":
+																$scope.section = "setup"
+																break;
 
-																		default:
-																		case "/setup":
-																			if (isBrowserWeb3Enabled()) $scope.section = "setup"
-																			else $scope.section = "noweb3";
-																			break;
+															case "/welcome":
+																$scope.section = "welcome";
+																break;
 
-																		case "/welcome":
-																			if (isBrowserWeb3Enabled()) $scope.section = "welcome";
-																			else $scope.section = "noweb3";
-																			break;
+															case "/name":
+																$scope.section = "name";
+																break;
 
-																		case "/name":
-																			if (isBrowserWeb3Enabled()) $scope.section = "name";
-																			else $scope.section = "noweb3";
-																			break;
+															case "/signup":
+																$scope.section = "signup";
+																break;
 
-																		case "/signup":
-																			if (isBrowserWeb3Enabled()) $scope.section = "signup";
-																			else $scope.section = "noweb3";
-																			break;
+															case "/selecttype":
+																$scope.section = "selecttype";
+																break;
 
-																		case "/selecttype":
-																			if (isBrowserWeb3Enabled()) $scope.section = "selecttype";
-																			else $scope.section = "noweb3";
-																			break;
+															case "/notify":
+																$scope.section = "notify";
+																break;
 
-																		case "/notify":
-																			if (isBrowserWeb3Enabled()) $scope.section = "notify";
-																			else $scope.section = "noweb3";
-																			break;
+															case "/done":
+																$scope.section = "done";
+																break;
+												  }
+										};
 
-																		case "/done":
-																			if (isBrowserWeb3Enabled()) $scope.section = "done";
-																			else $scope.section = "noweb3";
-																			break;
-																	}
-															};
+										// DNN
+										$scope.DNN = DNN;
 
-														$scope.user = {
-																fullname: "",
-																email: "",
-																type: "writer"
-														};
+										// Stores user details
+										$scope.user = {fullname: "", email: ""};
 
-														$scope.checklist = {
-															 hasBrowser: false,
-															 hasStorage: false,
-															 hasKovan: false
-														};
+										// (Blockchain Version) State of checklist
+										$scope.checklist = {
+											 hasBrowser: false,
+											 hasStorage: false,
+											 hasKovan: false
+										};
 
-														$scope.isCheckListDone = function() {
-															 	return true;
-														};
+										// (Blockchain Version) Determine if checklist has been satisfied
+										$scope.isCheckListDone = function() {
+											 	return true;
+										};
 
-														$scope.checklistContinue = function() {
-																if ($scope.isCheckListDone()) {
-																	$scope.section = 'welcome';
-																}
-														};
+										// (Blockchain Version) Redirect to approprate section if checklist is satisfied
+										$scope.checklistContinue = function() {
+												if ($scope.isCheckListDone()) {
+													$scope.section = 'welcome';
+												}
+										};
 
-														$scope.section = "";
+										// Stores current section
+										$scope.section = "";
 
-														$scope.save = function() {
+										// Save details
+										$scope.save = function() {
+												// Persist email to newsletter DB
+												$.post("//dnn.media/save/email", {email: $scope.user.email});
 
-																	$.post("//dnn.media/save/email", {email: $scope.user.email});
+												// Show loading indicator while we save user details
+												LI.show();
 
-																	LI.show()
-																	IPFS.store({email: $scope.user.email,fullname: $scope.user.fullname})
-																			.then(function(res) {
+												// Save User Details
+												$.post("/api/v1/user/add", $scope.user)
+													.then(function(data) {
+															LI.hide();
+															DNN.Session.save(data.user);
+															$timeout(function() {
+																	$scope.section = "done";
+															});
+													})
+										};
 
-																								// Retrieve eth accounts
-																							 backend.eth.accounts().then(function(accs) {
+										// Update URL accordingly on section change
+										$scope.$watch("section", function(newVal, oldVal) {
+												if (newVal != oldVal && oldVal != "") $location.url($scope.section);
+										});
 
-																									  // Use the eth account to persist user data
-																										backend.contracts.UserContract.updateUserData(res.files[0].hash, {from:accs[0]})
-																												.then(function(userTx) {
-																													 		LI.hide();
-																															$timeout(function() {
-																																	$scope.section = "done";
-																															});
+										// On any scope changes handle updating section
+										$scope.$apply(function() {
+												if ($scope.section != "") handleLocation();
+												else {
+														$scope.section = "version"
+														$location.url($scope.section);
+												}
+										});
 
-																												})
-																												.catch(function(err) {
-																															LI.hide();
-																												})
-																								});
-																			})
-																		  .catch(function(err) {
-																					LI.hide();
-																					console.log(err);
-																			});
-														};
+										// Upon load handle setting onboard section
+									  $scope.$on('$locationChangeStart', function(event, next, current) {
+											 	handleLocation();
+										});
 
-														$scope.$watch("section", function(newVal, oldVal) {
-																if (newVal != oldVal && oldVal != "") $location.url($scope.section);
-														});
+										// Show loading indicator while we attempt to fetch session user
+										LI.show();
 
-														$scope.$apply(function() {
-																handleLocation();
-														});
+										// Attempt to obtain session user
+										DNN.Session.get()
+											.then(function(user) {
+													LI.hide();
+													DNN.Redirect("/alpha");
+											})
+											.catch(function() {
+													LI.hide();
+											})
 
-													  $scope.$on('$locationChangeStart', function(event, next, current) {
-															 	handleLocation();
-														});
-
-											});
-									}
-								else {
-										$timeout(function() {
-											 $scope.section = "noweb3";
-										})
-								}
 						});
 
 				}]);
