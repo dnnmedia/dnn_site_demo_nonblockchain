@@ -47,6 +47,13 @@
             .controller("AppCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
                 window["addEventListener"]("load", function() {
 
+
+											let unavailablePopup = function() {
+													let popup = new DNN.popup("message","","Thank you for your interest in the DNN demo. We are currently working to update our smart contracts, and will update you as soon as the demo becomes available.",[],"");
+													popup.preventHide = true;
+													popup.show();
+											};
+
 											// Indicates whether or not alpha is in simulated mode
 											$scope.isSimulated = false;
 
@@ -92,6 +99,7 @@
 											DNN.Session.get()
 												.then(function(user) {
 														LI.hide();
+														unavailablePopup();
 												})
 												.catch(function() {
 														LI.hide();

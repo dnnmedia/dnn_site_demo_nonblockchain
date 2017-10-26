@@ -776,6 +776,12 @@ a.btn {
         top: 100%;
         box-sizing: border-box;
         padding: 3rem;
+
+        @media (max-width: 45rem) {
+            margin-left: -45%;
+            width: 90%;
+            padding: 1rem;
+        }
     }
 
     .popup-icon {

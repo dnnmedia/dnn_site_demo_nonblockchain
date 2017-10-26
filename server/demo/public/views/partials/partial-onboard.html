@@ -170,7 +170,7 @@
 							window["addEventListener"]("load", function() {
 
 										// Handles loading appropriate section
-										var handleLocation = function()
+										let handleLocation = function()
 										{
 													switch ($location.url())
 													{
@@ -211,6 +211,12 @@
 																$scope.section = "done";
 																break;
 												  }
+										};
+
+										let unavailableOnMobile = function() {
+												let popup = new DNN.popup("message","","The DNN demo is currently only available on mobile. We will be working hard to add mobile support soon.",[],"");
+												popup.preventHide = true;
+												popup.show();
 										};
 
 										// DNN
@@ -290,6 +296,11 @@
 											})
 											.catch(function() {
 													LI.hide();
+
+													if (window.outerWidth < 700)
+													{
+															unavailableOnMobile();
+													}
 											})
 
 						});
