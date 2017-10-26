@@ -206,6 +206,15 @@ server.register([require('vision'), require("inert")], function (err) {
 		{
 			reply.redirect("/alpha");
 		}
+	});;
+
+	server.route({
+		method: 'GET',
+		path: '/dashboard',
+		handler: function(request, reply)
+		{
+			reply.redirect("/alpha");
+		}
 	});
 
 	server.route({
