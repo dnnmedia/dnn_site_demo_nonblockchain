@@ -18,7 +18,7 @@ Config.Mailer.password = "!dnnmedia!";
 
 // Review Configuration
 Config.Review = {};
-Config.Review.assignedLimit = 1;
+Config.Review.assignedLimit = 3;
 Config.Review.status = {
   QUEUED: 0,
   INREVIEW: 1,
