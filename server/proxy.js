@@ -1,10 +1,10 @@
-var proxy = require('redbird')({
+var proxy = require('./demo/node_modules/redbird')({
     port: 80,
     secure: true,
     ssl: {
         port: 443,
-        key: "./dnn_ssl/-.dnn.media_private_key.key",
-        cert: "./dnn_ssl/dnn.media_ssl_certificate.cer",
+        key: "../dnn_ssl/-.dnn.media_private_key.key",
+        cert: "../dnn_ssl/dnn.media_ssl_certificate.cer",
     }
 });
 
