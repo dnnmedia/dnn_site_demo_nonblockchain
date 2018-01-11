@@ -444,6 +444,7 @@ server.register([require('vision'), require("inert")], function (err) {
 				if (request.response.isBoom)
 				{
 						// HANDLE REQUEST ERROR
+						reply.redirect("/alpha");
 				}
 
 				return reply.continue();
@@ -461,6 +462,7 @@ server.register([require('vision'), require("inert")], function (err) {
 	server.on('internalError', function (request, err)
 	{
 			// HANDLE SERVER ERRORS
+			reply.redirect("/alpha");
 	});
 
 
