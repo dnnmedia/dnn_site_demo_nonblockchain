@@ -29,10 +29,10 @@
             <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('welcome')">Continue</a>
         </div>
         <div class="page" ng-show="page == 'welcome'">
-          <h3>Welcome to the DNN demo</h3>
-          <p>This demo is meant to be a very simple proof of concept, with Ethereum smart contract functionality in place. We will continue to improve upon it frequently, as we work toward building DNN in its entirety. Note that certain important aspects are unfinished or haven’t been added yet. The placeholder articles do not currently reflect what will be seen on DNN when it is finished.</p>
+          <h3>Welcome to the DNN Alpha</h3>
+          <p>This alpha is meant to be a very simple proof of concept, with Ethereum smart contract functionality in place. We will continue to improve upon it frequently, as we work toward building DNN in its entirety. Note that certain important aspects are unfinished or haven’t been added yet. The placeholder articles do not currently reflect what will be seen on DNN when it is finished.</p>
           <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('profile')">Continue</a>
-          <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('intro')" id="back-button">Back</a>
+          <!-- <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('intro')" id="back-button">Back</a> -->
         </div>
         <div class="page" ng-show="page == 'profile'">
           <h3>Profile Details</h3>
@@ -64,7 +64,7 @@
       .controller("SignupCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
           window["addEventListener"]("load", function() {
               $timeout(function() {
-                  $scope.page = "intro"
+                  $scope.page = "welcome"
                   $scope.user = {};
                   $scope.setPage = function(page) {
                       this.page = page;
