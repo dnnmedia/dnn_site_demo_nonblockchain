@@ -444,7 +444,7 @@ server.register([require('vision'), require("inert")], function (err) {
 				if (request.response.isBoom)
 				{
 						// HANDLE REQUEST ERROR
-						reply.redirect("/alpha");
+						return reply.redirect("/alpha");
 				}
 
 				return reply.continue();
