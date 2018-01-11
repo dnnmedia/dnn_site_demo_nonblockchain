@@ -14,8 +14,8 @@ proxy.register("slack.dnn.media", "http://localhost:8001", {ssl: true});
 proxy.register("dnnmedia.io", "http://localhost:8003", {ssl: false});
 proxy.register("slack.dnnmedia.io", "http://localhost:8001", {ssl: false});
 
-proxy.register("demo.dnn.media", "http://localhost:8003", {ssl: false});
-proxy.register("demo.dnnmedia.io", "http://localhost:8003", {ssl: false});
+proxy.register("demo.dnn.media", "http://localhost:8002", {ssl: false});
+proxy.register("demo.dnnmedia.io", "http://localhost:8002", {ssl: false});
 
 proxy.register("crowdsale.dnn.media", "http://localhost:8004", {ssl: false});
 proxy.register("crowdsale.dnnmedia.io", "http://localhost:8004", {ssl: false});
