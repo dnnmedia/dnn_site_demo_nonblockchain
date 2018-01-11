@@ -2596,7 +2596,7 @@ div[ng-controller="ComposeArticleCtrl"] .ql-editor {
 div[ng-controller="ComposeArticleCtrl"] #editor-cover {
   display: block;
   max-width: 50rem;
-  width: 90%;
+  width: 100%;
   margin: 1rem 0; }
   div[ng-controller="ComposeArticleCtrl"] #editor-cover img {
     width: 100%; }
