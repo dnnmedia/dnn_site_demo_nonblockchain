@@ -101,6 +101,26 @@
                 window["addEventListener"]("load", function() {
 											$timeout(function() {
 
+
+													// Desktop Only Notice
+													var desktopOnly = new DNN.Popup("message","Use Desktop Browser", "The DNN alpha is currently inaccessible on mobile. Please use a desktop web browser instead.");
+													desktopOnly.preventHide = true;
+
+													// Detect if desktop only notice should show
+													var shouldShouldDesktopOnlyNotice = function() {
+														 	if ($(window).width() < 700) {
+																 desktopOnly.show();
+															}
+															else {
+																desktopOnly.hide();
+															}
+													};
+
+													shouldShouldDesktopOnlyNotice();
+													$(window).on("resize", function() {
+														 	shouldShouldDesktopOnlyNotice();
+													});
+
 													// Main DNN object
 													$scope.DNN = DNN;
 

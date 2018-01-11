@@ -70,6 +70,11 @@
   padding-bottom: 5rem;
 }
 
+// helper: buffer right
+.buffer-right {
+  padding-right: 17rem;
+}
+
 // helper: buffer left
 .buffer-left {
   padding-left: 7rem;
@@ -211,7 +216,7 @@
     border-radius: 0.3rem;
     display: block;
     outline: none;
-    width: 80%;
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -219,8 +224,8 @@
     margin: 0.5rem 0;
     padding: 0.5rem 1rem;
     border: 0.05rem solid #979797;
-    max-width: 40rem;
-    width: 80%;
+    max-width: 50rem;
+    width: 100%;
     border-radius: 0.3rem;
     outline: none;
     display: block;
@@ -358,7 +363,7 @@
 
 // article
 article {
-  max-width: 40rem;
+  max-width: 50rem;
   width: 90%;
 
   #article-status {
@@ -606,7 +611,7 @@ a.dnn-link {
     .popup-content {
         position: fixed;
         z-index: 3;
-        max-width: 40rem;
+        max-width: 50rem;
         width: 100%;
         background-color: #FFFFFF;
         left: 50%;
@@ -786,7 +791,7 @@ div[ng-controller="MyTokensCtrl"] {
 
     #balance-ledger {
         width: 95%;
-        max-width: 40rem;
+        max-width: 50rem;
         background: #FFFFFF;
         box-shadow: 0 2px 4px 0 rgba(154, 153, 153, 0.5);
         text-align: center;
@@ -877,7 +882,7 @@ div[ng-controller="ComposeArticleCtrl"] {
 
     #editor-cover {
       display: block;
-      max-width: 40rem;
+      max-width: 50rem;
       width: 90%;
       margin: 1rem 0;
       img {
@@ -886,8 +891,8 @@ div[ng-controller="ComposeArticleCtrl"] {
     }
 
     #editor {
-      max-width: 42rem;
-      width: 80%;
+      max-width: 50rem;
+      width: 100%;
       min-height: 30rem;
       border: 0.05rem solid #979797;
       border-radius: 0.3rem;
@@ -918,7 +923,7 @@ div[ng-controller="ComposeArticleCtrl"] {
         width: 100%;
       }
       & > div {
-          max-width: 40rem;
+          max-width: 50rem;
           width: 95%;
           margin: 1rem auto;
       }
@@ -1134,7 +1139,7 @@ div[ng-controller="ReviewArticleCtrl"] {
 
       & > div {
           width: 95%;
-          max-width: 40rem;
+          max-width: 50rem;
           margin: 1rem auto;
           display: block;
           text-align: center;
@@ -1247,7 +1252,7 @@ div[ng-controller="ArticleReviewCtrl"] {
 // controller: Guidelines
 div[ng-controller="GuidelinesCtrl"] {
     & > div {
-        max-width: 40rem;
+        max-width: 50rem;
         display: block;
         padding: 2rem auto;
 
@@ -1260,7 +1265,7 @@ div[ng-controller="GuidelinesCtrl"] {
 // controller: Article Feedback
 div[ng-controller="ArticleFeedbackCtrl"] {
     .reviews {
-        max-width: 40rem;
+        max-width: 50rem;
 
       .review {
         margin-bottom: 1rem;
