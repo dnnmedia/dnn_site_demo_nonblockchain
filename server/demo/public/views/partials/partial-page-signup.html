@@ -1,0 +1,88 @@
+
+<div ng-controller="SignupCtrl">
+  <div class="wrapper">
+      <div id="side">
+          <div id="news-clips">
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/LFBRO9X70UDbq/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/s5MAalEYwRnSU/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/MmWVkbAFUDfcQ/giphy.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/i1QlPGyPogZAQ/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/SX9huRZaoD10Q/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/13CSlC3hJRnd0k/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/dBy6TdQOvu5YA/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/Ei1QM5fLGJvc4/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/FlvhVzN7lzECk/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/PxZBVGV9R3JRu/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/5hrt561wT1B7i/200.gif)"></div>
+              <div class="clip" style="background-image: url(https://media.giphy.com/media/8MtwDxRNsdOtW/200.gif)"></div>
+          </div>
+          <div id="side-overlay">
+              <div id="side-logo"></div>
+              <p>The future of DNN depends on your constructive thoughts and opinions.</p>
+              <p>Try out our platform and<br><a href="http://slack.dnn.media" target="_blank">let us know what you think</a>.</p>
+          </div>
+      </div>
+      <div id="pages">
+        <div class="page" ng-show="!page || page == 'intro'">
+            <h3>DNN Alpha Version</h3>
+            <p>By default, all testers are directed to the non-blockchain version of the DNN alpha for easier access. At anytime during the demo, testers can switch to the blockchain version of DNN to enable smart contract-based functionality. Functionality can only be tested on the blockchain version.</p>
+            <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('welcome')">Continue</a>
+        </div>
+        <div class="page" ng-show="page == 'welcome'">
+          <h3>Welcome to the DNN demo</h3>
+          <p>This demo is meant to be a very simple proof of concept, with Ethereum smart contract functionality in place. We will continue to improve upon it frequently, as we work toward building DNN in its entirety. Note that certain important aspects are unfinished or haven’t been added yet. The placeholder articles do not currently reflect what will be seen on DNN when it is finished.</p>
+          <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('profile')">Continue</a>
+          <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('intro')" id="back-button">Back</a>
+        </div>
+        <div class="page" ng-show="page == 'profile'">
+          <h3>Profile Details</h3>
+          <div class="field">
+              <label>Full Name</label>
+              <input type="text" ng-model="user.fullname">
+              <small>This name will be publically displayed on every article you write.</small>
+          </div>
+          <div class="field">
+              <label>Email</label>
+              <input type="text" ng-model="user.email">
+              <small>Used to notify you about the status of your written or reviewed article.</small>
+          </div>
+          <a href="javascript:void(0);" class="dnn-button" ng-disabled="!user || !user.fullname || !user.email" ng-click="createAccount()">Create Account</a>
+          <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('welcome')" id="back-button">Back</a>
+        </div>
+        <div class="page" ng-show="page == 'done'">
+          <h3>You're all set!</h3>
+          <p>You are now ready to try the DNN alpha! If you have any feedback or questions, please don't hesitate to contact us at<br><a href="mailto:contact@dnn.media" class="dnn-link">contact@dnn.media</a> or <a href="http://slack.dnn.media" class="dnn-link" target="_blank">join the discussion on slack</a>.</p>
+          <p>Improvements to the alpha will occur each week, so if you have ideas for how to make DNN better, please let us know!</p>
+          <a href="/" class="dnn-button">Done</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("SignupCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  $scope.page = "intro"
+                  $scope.user = {};
+                  $scope.setPage = function(page) {
+                      this.page = page;
+                  };
+                  $scope.createAccount = function() {
+                      LI.show();
+                      DNN.Session.create(JSON.parse(angular.toJson($scope.user)))
+                        .then(function() {
+                            LI.hide();
+                            $timeout(function() {
+                                $scope.page = "done";
+                            });
+                        })
+                        .catch(function() {
+                            LI.hide();
+                        })
+                  };
+              })
+          });
+      }])
+</script>

@@ -1,0 +1,64 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ArticlesReviewedCtrl">
+    <h1>Articles Reviewed</h1>
+    <p ng-show="!articles || articles.length == 0">You have not reviewed any articles yet.</p>
+    <div class="articles" ng-show="articles && articles.length > 0">
+        <div class="article" ng-repeat="article in articles">
+            <a href="javascript:void(0);" ng-click="$parent.viewArticle(article._id)">
+              <div class="card">
+                  <div class="overlay">
+                      <div class="author">Author: [[article.author]]</div>
+                      <div class="headline">[[article.headline]]</div>
+                      <div class="timestamp">[[article.created | fromnow]]</div>
+                  </div>
+                  <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+              </div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 0"><strong>QUEUED FOR REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 1"><strong>IN REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 2"><strong>REJECTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 3"><strong>ACCEPTED</strong></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticlesReviewedCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "articles-reviewed") {
+                          LI.show();
+                          DNN.Article.getReviewsByUser(DNN.Session.current._id)
+                            .then(function(data) {
+                                var articleids = data.reviews.map(function(review) {
+                                    return review.articleid;
+                                });
+
+                                DNN.Article.fetch(articleids)
+                                  .then(function(data) {
+                                      $timeout(function() {
+                                          LI.hide();
+                                          $scope.articles = data.articles.reverse();
+                                      });
+                                  })
+                                  .catch(function() {
+                                      $timeout(function() {
+                                          LI.hide();
+                                          $scope.$parent.setPage("feed");
+                                      });
+                                  })
+                            })
+                            .catch(function() {
+                              $timeout(function() {
+                                  LI.hide();
+                                  $scope.$parent.setPage("feed");
+                              });
+                            })
+                      }
+                  });
+              })
+          });
+    }]);
+</script>

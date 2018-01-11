@@ -7,34 +7,125 @@
         window.addEventListener("load", (function() {
             "use strict";
 
-            // $.post("/api/v1/user/add", {name:"Dondrey Taylor"});
-            // $.post("/api/v1/user/verify", {token:"016751c3d4f0c9cbecdfa521466504f9", userid: "597a29ebdb9bf604bc81ec87"});
+						var article = {
+								userid: "5a2df55257aa332cd90559c0",
+								content: {
+										body: {
+												text: "This is an awesome article right here. Please read it!"
+										}
+								}
+						};
 
-            var article = {
-                title: {
-                    text: "This is the article title right here"
-                },
-                body: {
-                    text: "This is the article body here.",
-                    textmarkup: "This is the <strong>article body</strong> here."
-                },
-                cover: "",
-                user: {
-                  id: "597a29ebdb9bf604bc81ec87",
-                  name: "Dondrey Taylor",
-                  photo: ""
-                }
-            };
-            // $.post("/api/v1/draft/article", {draftid: "597a3db48a3d480721ce01ef", token:"016751c3d4f0c9cbecdfa521466504f9", userid: "597a29ebdb9bf604bc81ec87", article: article});
-            // $.post("/api/v1/draft/article/remove", {draftid: "597a4226f391770860bf9c10", token:"016751c3d4f0c9cbecdfa521466504f9", userid: "597a29ebdb9bf604bc81ec87"});
-            // $.post("/api/v1/submit/article", {token:"016751c3d4f0c9cbecdfa521466504f9", userid: "597a29ebdb9bf604bc81ec87", article: article});
-            // $.post("/api/v1/review/article", {feedback:{text:"This is some of the feedback I would like to give to you right now. Your article sucks!", peerVote:false, personalVote: true}, articleid: "597a4332465e700899cdac06", token:"016751c3d4f0c9cbecdfa521466504f9", userid: "597a29ebdb9bf604bc81ec87"});
+						// DNN.Article.createDraft(article)
+						// 	.then(function(data) {
+						// 				console.log(data);
+						// 	});
 
-            var popup = new DNN.popup("uploader-local", "", "", ["Done"])
-            popup.on("uploaded", function(data) {
-                	console.log(data);
-            })
-            popup.show();
+						// DNN.Article.getDraft("5a300dc7c6fe1c74e8c6c51e")
+						// 	.then(function(data) {
+						// 			console.log(data);
+						// 	})
+
+						// DNN.Article.updateDraft(article)
+						// 	.then(function(data) {
+						// 				console.log(data);
+						// 	});
+
+						// DNN.Article.submit(article)
+						// 	.then(function(data) {
+						// 			console.log(data);
+						// 	})
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Article.getSubmittedByUser(DNN.Session.current._id)
+						// 			.then(function(data) {
+						// 					console.log(data);
+						// 			});
+						// });
+
+						// DNN.Article.removeDraft("5a3026bd516cfc831bb7e66e")
+						// 	.then(function(data) {
+						// 			console.log(data);
+						// 	})
+
+						// DNN.Article.getDraftsByUser("123")
+						// 	.then(function(data) {
+						// 			console.log(data);
+						// 	})
+
+						// DNN.Article.review("5a370a6f50d5560be4356079", "5a2df55257aa332cd90559c0", "Article could use some work", false, false)
+						// 	.then(function(data) {
+						// 				console.log(data);
+						// 	})
+
+            //
+						// DNN.Article.getReviews("59eba4ec9cbdfa6de910e249")
+						// 	.then(function(data) {
+						// 			console.log(data);
+						// 	})
+            //
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Article.getReviewsByUser(DNN.Session.current._id)
+						// 			.then(function(data) {
+						// 		  });
+						// });
+
+						// DNN.Article.hasReviewed("59eba4ec9cbdfa6de910e249", "123")
+						// 	.then(function() {
+						// 	});
+
+						// DNN.Article.getReviewsCount("59eba4ec9cbdfa6de910e249")
+						//  	.then(function() {
+						// 	});
+
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+									// DNN.Session.seedTokens(1000).then(function(data) {
+									// 		console.log(data);
+									// });
+
+									// DNN.Session.balance().then(function(data) {
+									// 		console.log(data);
+									// });
+						// });
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Session.spend(100).then(function(data) {
+						// 				console.log(data);
+						// 		});
+						// });
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Session.stake(150).then(function(data) {
+						// 				console.log(data);
+						// 		});
+						// });
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+									// DNN.Session.stake(150);
+									// DNN.Session.stake(150);
+									// DNN.Session.stake(150);
+									// DNN.Session.stake(150);
+									// DNN.Session.stake(150);
+						// });
+
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Session.didStake().then(function(data) {
+						// 				console.log(data);
+						// 		});
+						// });
+
+						// DNN.Session.verifyAndSetIfPossible().then(function() {
+						// 		DNN.Article.getAssigned(DNN.Session.current._id).then(function() {
+						// 		});
+						// });
+
+						// DNN.Article.fetch(["5a370a6f50d5560be4356079"])
+						// 	.then(function() {
+						// 	})
+ 
 
         }));
       </script>

@@ -1,0 +1,44 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ArticlesDraftedCtrl">
+    <h1>Articles Drafted</h1>
+    <p ng-show="!articles || articles.length == 0">You have not created any drafts yet.</p>
+    <div class="articles" ng-show="articles && articles.length > 0">
+        <div class="article" ng-repeat="article in articles">
+            <a href="javascript:void(0);" ng-click="$parent.viewDraft(article._id)">
+              <div class="card">
+                  <div class="overlay">
+                      <div class="author">Author: [[article.author]]</div>
+                      <div class="headline">[[article.headline]]</div>
+                      <div class="timestamp">[[article.updated | fromnow]]</div>
+                  </div>
+                  <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+              </div>
+            </a>
+            <a href="javascript:void(0)" class="dnn-button" ng-click="remove([[$index]], [[article._id]])">Delete Draft</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticlesDraftedCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "articles-drafted") {
+                          DNN.Article.getDraftsByUser(DNN.Session.current._id)
+                            .then(function(data) {
+                                $timeout(function() {
+                                    $scope.articles = data.articles.reverse();
+                                })
+                            })
+                      }
+                  });
+                  $scope.remove = function(index, id) {
+                      DNN.Article.removeDraft(id)
+                      $scope.articles.splice(index, 1);
+                  };
+              })
+          });
+    }]);
+</script>

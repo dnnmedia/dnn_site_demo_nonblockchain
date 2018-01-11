@@ -1,0 +1,51 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="FeedCtrl">
+    <h1>Published Articles</h1>
+    <p ng-show="articles.length > 0">The following articles have been accepted by the community</p>
+    <p ng-show="!articles || articles.length == 0">No published articles could be found</p>
+    <div class="articles" ng-show="articles && articles.length > 0">
+        <div class="article" ng-repeat="article in articles">
+            <a href="javascript:void(0);" ng-click="$parent.viewArticle(article._id)">
+              <div class="card">
+                  <div class="overlay">
+                      <div class="author">Author: [[article.author]]</div>
+                      <div class="headline">[[article.headline]]</div>
+                      <div class="timestamp">[[article.created | fromnow]]</div>
+                  </div>
+                  <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+              </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("FeedCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  var fetchFeedInterval = null;
+                  var fetchFeed = function() {
+                    DNN.Article.feed()
+                      .then(function(data) {
+                          $timeout(function() {
+                              $scope.articles = data.articles.reverse();
+                          })
+                      })
+                  };
+
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "feed") {
+                          fetchFeed();
+                          fetchFeedInterval = setInterval(function() {
+                            fetchFeed();
+                          },2000);
+                      }
+                      else {
+                          clearInterval(fetchFeedInterval);
+                      }
+                  });
+              })
+          });
+    }]);
+</script>

@@ -1,0 +1,304 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ComposeArticleCtrl">
+  <article ng-show="mode == 'preview'">
+      <a href="javascript:void(0);" ng-click="mode = 'edit'" id="edit-article" class="dnn-button">Edit Article</a>
+      <h1>[[article.headline]]</h1>
+      <div id="article-meta">
+        <span>Written by <strong>[[article.author]]</strong></span>
+        <span>Published <strong>[[article.created | fromnow]]</strong></span>
+      </div>
+      <div id="article-cover">
+          <img ng-if="article.cover" ng-src="/api/v1/media/[[article.cover]]">
+          <small ng-if="article.coverAttributes">[[article.coverAttributes]]</small>
+      </div>
+      <div id="article-main" ng-bind-html="article.body.html | trust"></div>
+  </article>
+  <div id="editor-wrapper" ng-show="mode == 'edit'">
+      <div class="field">
+          <label>Article Headline</label>
+          <input type="text" ng-model="article.headline">
+      </div>
+      <div class="field">
+          <label>Article Keywords (comma delimited)</label>
+          <input type="text" ng-model="article.keywords">
+      </div>
+      <div class="field">
+          <label>Cover</label>
+          <a class="dnn-link" ng-if="!article.cover" ng-click="addCover()" href="javascript:void(0);">+Add Cover Photo</a>
+          <a class="dnn-link" ng-if="article.cover" ng-click="removeCover()" href="javascript:void(0);">-Remove Cover Photo</a>
+          <img ng-if="article.cover" ng-src="/api/v1/media/[[article.cover]]" id="editor-cover">
+      </div>
+      <div class="field">
+          <label>Cover Attribution(s)</label>
+          <input type="text" ng-model="article.coverAttributes">
+      </div>
+      <div class="field">
+          <label>Article Body</label>
+          <editor ng-if="article" article="article"></editor>
+      </div>
+  </div>
+  <div id="editor-addsource" ng-show="sourceEditor.isVisible">
+      <div>
+        <h3>Add Source</h3>
+        <p>Please provide as much details about your source, to prevent your article from being rejected. Refer to the DNN Content Guidelines to learn more about acceptable sources.</p>
+        <div class="field">
+            <label>Type of source</label>
+            <select ng-model="sourceEditor.source.type">
+                <option value="">Choose Type</option>
+                <option value="book">Book</option>
+                <option value="magazine">Magazine</option>
+                <option value="newspaper">Newspaper</option>
+                <option value="website">Website</option>
+                <option value="journal">Journal</option>
+                <option value="film">Film</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Link to source (optional)</label>
+            <input type="text" ng-model="sourceEditor.source.link">
+        </div>
+        <div class="field">
+            <label>Provide complete source reference (e.g. MLA, APA, Chicago, or CSE)</label>
+            <textarea ng-model="sourceEditor.source.reference"></textarea>
+        </div>
+        <a href="javascript:void(0);" id="souce-add" class="dnn-button" ng-disabled="!sourceEditor.source.type && !sourceEditor.source.reference" ng-click="sourceEditor.add()">Add Source</a>
+        <a href="javascript:void(0);" id="source-cancel" class="dnn-link" ng-click="sourceEditor.cancel()">Cancel</a>
+      </div>
+  </div>
+  <div id="sources">
+      <h3>Article Sources</h3>
+      <a href="javascript:void(0);" ng-show="mode == 'edit'" class="dnn-button" ng-click="sourceEditor.show()">Add Source</a>
+      <div class="source" ng-repeat="source in article.sources">
+          <a ng-click="openURL([[source.link]])" target="_blank">
+              <p>[[source.reference]]</p>
+              <em>Source Reference: ([[source.id]])</em>
+          </a>
+          <a href="javascript:void(0);" ng-show="mode == 'edit'" ng-click="removeSource([[$index]])">remove source</a>
+      </div>
+  </div>
+  <a href="javascript:void(0);" ng-click="mode = 'preview'" ng-show="mode == 'edit'" id="preview-button"></a>
+  <a href="javascript:void(0);" ng-click="submit()" ng-show="mode == 'preview'" id="submit-button"></a>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ComposeArticleCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              var uploader = new DNN.ImageUploader();
+              var clearArticle = function() {
+                  $scope.article = {cover: "", sources: []};
+              };
+              $timeout(function() {
+                  var WRITERFEE = 500;
+                  var failedPopup = new DNN.Popup("message","Submission Failed","Your article failed to submit. Try resubmitting.",["Got it"]);
+                  failedPopup.preventHide = true;
+                  failedPopup.on("button", function() {
+                      failedPopup.hide();
+                  });
+
+                  var submittedPopup = new DNN.Popup("message","Article Submitted","Your article was successfully submitted and will be placed in review shortly. A fee of " + WRITERFEE + " tokens has been deducted from your account.",["Got it"]);
+                  submittedPopup.preventHide = true;
+                  submittedPopup.on("button", function() {
+                      stopAutoSaving();
+                      submittedPopup.hide();
+                      $timeout(function() {
+                          DNN.Session.spend(WRITERFEE, "Writer Fee");
+                          DNN.Article.removeDraft($scope.article._id);
+                          $scope.$parent.setPage("articles-submitted");
+                          $scope.$parent.clearBackHistory();
+                          $scope.mode = "edit";
+                          clearArticle();
+                      }, 1000);
+                  });
+
+                  var needFundsPopup = new DNN.Popup("message","Insufficient Balance","You do not have enough tokens to perform this action.",["Get Tokens"]);
+                  needFundsPopup.preventHide = true;
+                  needFundsPopup.on("button", function() {
+                      needFundsPopup.hide();
+                      $timeout(function() {
+                         $scope.$parent.setPage("my-tokens");
+                      });
+                  });
+
+                  var noBalancePopup = new DNN.Popup("message","No Balance","Your balance could not be retrieved. Try submitting your article again.",["Close"]);
+                  noBalancePopup.preventHide = true;
+                  noBalancePopup.on("button", function() {
+                      noBalancePopup.hide();
+                  });
+
+                  var autosave = null;
+                  var startAutoSaving = function() {
+                      autosave = setInterval(function() {
+                          DNN.Article.updateDraft(JSON.parse(angular.toJson($scope.article)))
+                      }, 1000);
+                  };
+                  var stopAutoSaving = function() {
+                      clearInterval(autosave);
+                  };
+
+                  $scope.mode = "edit" // edit, preview, submitted
+
+                  $scope.sourceEditor = {isVisible: false, source: {}};
+                  $scope.sourceEditor.show = function() {
+                      this.isVisible = true;
+                  };
+                  $scope.sourceEditor.hide = function() {
+                      this.isVisible = false;
+                  };
+                  $scope.sourceEditor.cancel = function() {
+                      this.source = {};
+                      this.hide();
+                  };
+                  $scope.sourceEditor.add = function() {
+
+                      if (!$scope.article.sources) {
+                          $scope.article.sources = [];
+                      }
+
+                      if ($scope.article.sources.length > 0) {
+                          this.source.id = $scope.article.sources[0].id+1;
+                      }
+                      else {
+                        this.source.id = 1;
+                      }
+                      $scope.article.sources.unshift(this.source);
+                      this.source = {};
+                      this.hide();
+                  };
+
+                  $scope.openURL = function(url) {
+                      window.open(url, "_blank");
+                  };
+                  $scope.addCover = function() {
+                      uploader.show();
+                      uploader.on("uploaded", function(data) {
+                          $timeout(function() {
+                              $scope.article.cover = data.detail.mediaid;
+                          });
+                      });
+                  };
+                  $scope.removeCover = function() {
+                      $scope.article.cover = "";
+                  };
+                  $scope.removeSource = function(index) {
+                      $scope.article.sources.splice(index, 1);
+                  };
+                  $scope.submit = function() {
+                      LI.show();
+                      DNN.Session.balance()
+                          .then(function(data) {
+                              if (data.balance >= WRITERFEE) {
+                                  DNN.Article.submit(JSON.parse(angular.toJson($scope.article)))
+                                    .then(function(data) {
+                                          LI.hide();
+                                          submittedPopup.show();
+                                    })
+                                    .catch(function() {
+                                        LI.hide();
+                                        failedPopup.show();
+                                    })
+                              }
+                              else {
+                                  LI.hide();
+                                  // Insufficient balance
+                                  needFundsPopup.show();
+                              }
+                          })
+                          .catch(function() {
+                              LI.hide();
+                              // Unable to get balance
+                              noBalancePopup.show();
+                          })
+                  };
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "compose-article") {
+                          var data = $scope.$parent.data;
+                          if (data.draft._id) {
+                            LI.show();
+                            DNN.Article.getDraft(data.draft._id)
+                            	.then(function(data) {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      if (data.article) {
+                                          $scope.article = data.article;
+                                          startAutoSaving();
+                                      }
+                                      else {
+                                        $scope.setPage("feed");
+                                      }
+                                  })
+                            	})
+                              .catch(function() {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      $scope.setPage("feed");
+                                  })
+                              })
+                          }
+                          else {
+                              $scope.setPage("feed");
+                          }
+                      }
+                      else {
+                          clearArticle();
+                          stopAutoSaving();
+                      }
+                  });
+              })
+          });
+      }])
+      .directive("editor", ["$timeout", function($timeout) {
+          return {
+              restrict: "E",
+              replace: true,
+              scope: {
+                  article: "="
+              },
+              template: "<div id='editor'><div id='editor-toolbar'></div><div id='editor-content'></div></div>",
+              link: function(scope) {
+                  $timeout(function() {
+                      var toolbarOptions = [
+                          ['blockquote', 'link', 'image'],
+                          ['bold', 'italic', 'underline', 'strike', {'script':'sub'}, {'script':'super'} ],        // toggled buttons
+                          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                          [
+                            { size: [ 'small', false, 'large', 'huge' ]},
+                            //{ 'header': [1, 2, 3, 4, 5, 6, false] }
+                          ],
+                          [{ 'align': [] }],
+                          ['clean']                                         // remove formatting button
+                        ];
+                        var quill = new Quill('#editor', {
+                            modules: {
+                                toolbar: toolbarOptions
+                            },
+                            scrollingContainer: 'html,body',
+                            theme: 'snow'
+                        });
+
+                        scope.$watch("article", function() {
+                            if (quill.getText().length == 1 || !scope.article.body) {
+                              if (scope.article.body) {
+                                  quill.clipboard.dangerouslyPasteHTML(scope.article.body.html)
+                                }
+                                else {
+                                  quill.clipboard.dangerouslyPasteHTML("")
+                                }
+                            }
+                        },true);
+
+                        quill.on('text-change', function(delta, oldDelta, source) {
+                              $timeout(function() {
+                                    scope.article.body = {
+                                        html: quill.root.innerHTML,
+                                        text: quill.getText()
+                                    };
+                              });
+                        });
+                  });
+              }
+          };
+      }]);
+</script>

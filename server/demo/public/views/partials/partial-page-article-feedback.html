@@ -1,0 +1,92 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ArticleFeedbackCtrl">
+  <div>
+  		 <h1>Article Feedback</h1>
+       <p>The following is feedback left by each reviewer assigned to this article</p>
+       <div class="reviews">
+          <div class="review" ng-repeat="review in reviews" data-peervote="[[review.peerVote]]" data-personalvote="[[review.personalVote]]">
+              <span class="review-reviewer">Reviewer #[[$index+1]] Feedback</span>
+              <p class="review-feedback">[[review.feedback]]</p>
+              <div class="review-vote">
+                  <span ng-show="review.personalVote"><strong>Personal Decision: </strong>Should Accept</span>
+                  <span ng-show="!review.personalVote"><strong>Personal Decision: </strong>Should Reject</span>
+              </div>
+              <div class="review-vote">
+                  <span ng-show="review.peerVote"><strong>Peer Guess: </strong>Will Accept</span>
+                  <span ng-show="!review.peerVote"><strong>Peer Guess: </strong>Will REJECT</span>
+              </div>
+              <div class="review-posted" ng-if="reviewer.posted">
+                  <span>[[reviewer.posted | fromnow]]</span>
+              </div>
+          </div>
+       </div>
+  </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticleFeedbackCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+
+            var notReviewed = new DNN.Popup("message","Feedback Unavailable","There is no feedback for this article because it has not yet been reviewed.",["Got it"]);
+            notReviewed.preventHide = true;
+            notReviewed.on("button", function() {
+                notReviewed.hide();
+            });
+
+            $scope.$parent.$watch("page", function() {
+                if ($scope.$parent.page === "article-feedback") {
+                    var data = $scope.$parent.data;
+                    if (data.article._id) {
+                      LI.show();
+                      DNN.Article.fetch([data.article._id])
+                        .then(function(data) {
+                            if (data.articles[0].status > 1) {
+                              DNN.Article.getReviews(data.articles[0]._id)
+                                .then(function(data) {
+                                    LI.hide();
+                                    $timeout(function() {
+                                        if (data.reviews.length > 0) {
+                                            $scope.reviews = data.reviews;
+                                        }
+                                        else {
+                                          $scope.$parent.back();
+                                        }
+                                    })
+                                })
+                                .catch(function() {
+                                    LI.hide();
+                                    $timeout(function() {
+                                        $scope.$parent.back();
+                                    })
+                                })
+                            }
+                            else {
+                                LI.hide();
+                                notReviewed.on("button", function() {
+                                    $timeout(function() {
+                                      $scope.$parent.back();
+                                    });
+                                })
+                                notReviewed.show();
+                            }
+                        })
+                        .catch(function() {
+                            LI.hide();
+                            $timeout(function() {
+                              $scope.$parent.back();
+                            });
+                        })
+                    }
+                    else {
+                        LI.hide();
+                        $timeout(function() {
+                          $scope.$parent.back();
+                        });
+                    }
+                }
+            });
+
+          });
+    }]);
+</script>

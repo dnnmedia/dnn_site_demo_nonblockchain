@@ -1,0 +1,136 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ReviewArticleCtrl">
+  <h1>Review Article</h1>
+  <p ng-show="articles.length == 0 && hasStaked == false">To get assigned an article to review, please stake an arbitrary amount of tokens. The speed at which articles get assigned and solely up to the network and may vary.</p>
+  <p ng-show="articles.length == 0 && hasStaked">You have not yet been assigned an article. Once an article becomes available, we will notify you. The amount of time it takes to get assigned may vary.</p>
+  <p ng-show="articles.length > 0">Please take the time to review the following article.</p>
+  <div id="searching-indicator" ng-show="articles.length == 0 && hasStaked">
+      <div></div>
+  </div>
+  <a ng-show="articles.length == 0 && !hasStaked" href="javascript:void(0);" class="dnn-button" ng-click="stakeOverlay.isVisible = true">Stake Tokens to Review</a>
+  <div class="articles">
+      <div class="article" ng-repeat="article in articles">
+          <a href="javascript:void(0);" ng-click="$parent.reviewArticle(article._id)">
+            <div class="card">
+                <div class="overlay">
+                    <div class="author">Author: [[article.author]]</div>
+                    <div class="headline">[[article.headline]]</div>
+                    <div class="timestamp">[[article.created | fromnow]]</div>
+                </div>
+                <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+            </div>
+            <div class="status" data-status="[[article.status]]" ng-show="article.status == 0"><strong>QUEUED FOR REVIEW</strong></div>
+            <div class="status" data-status="[[article.status]]" ng-show="article.status == 1"><strong>IN REVIEW</strong></div>
+            <div class="status" data-status="[[article.status]]" ng-show="article.status == 2"><strong>REJECTED</strong></div>
+            <div class="status" data-status="[[article.status]]" ng-show="article.status == 3"><strong>ACCEPTED</strong></div>
+          </a>
+      </div>
+  </div>
+  <div id="review-stake" ng-show="stakeOverlay.isVisible">
+      <div>
+          <h3>Stake Tokens to Review</h3>
+          <p>Choose how many tokens you would like to stake. Your current balance is <strong>[[balance]]</strong>. The more tokens you stake, the higher the potential token reward.</p>
+          <input type="number" ng-model="stakeOverlay.stake.amount" placeholder="0">
+          <a href="javascript:void(0);" class="dnn-button" ng-click="stakeOverlay.submit()" ng-disabled="balance == 0 || stakeOverlay.stake.amount < 0 || stakeOverlay.stake.amount > balance">Submit</a>
+          <a href="javascript:void(0);" class="dnn-link" ng-click="stakeOverlay.isVisible = false">Cancel</a>
+      </div>
+  </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ReviewArticleCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+
+                  var checkForAssignedInterval = null;
+                  var getAssignedArticle = function() {
+                      DNN.Article.getAssigned(DNN.Session.current._id)
+                        .then(function(data) {
+                            if (data.stakes.length > 0) {
+                              DNN.Article.fetch([data.stakes[0].articleid])
+                                .then(function(data) {
+                                    $timeout(function() {
+                                        $scope.articles = data.articles;
+                                    })
+                                })
+                                .catch(function() {
+                                })
+                            }
+                            else {
+                                $timeout(function() {
+                                    $scope.articles = [];
+                                })
+                            }
+                        })
+                        .catch(function() {
+                            $timeout(function() {
+                                $scope.articles = [];
+                            })
+                        })
+                  };
+
+                  $scope.articles = [];
+                  $scope.balance = 0;
+                  $scope.hasStaked = null;
+                  $scope.assignedArticle = {};
+                  $scope.stakeOverlay = {
+                      stake: {amount: 0},
+                      isVisible: false,
+                      clear: function() {
+                          this.stake = {amount: 0};
+                      },
+                      submit: function() {
+                          if (this.stake.amount <= $scope.balance && $scope.balance != 0) {
+                            LI.show()
+                            DNN.Session.stake(this.stake.amount, "Stake for review")
+                              .then(function(data) {
+                                  LI.hide()
+                                  $timeout(function() {
+                                      $scope.stakeOverlay.isVisible = false;
+                                      $scope.hasStaked = true;
+                                  });
+                              })
+                              .catch(function() {
+                                  LI.hide()
+                              })
+                          }
+                      }
+                  };
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "review-article") {
+                          LI.show();
+                          DNN.Session.balance()
+                            .then(function(data) {
+                                $timeout(function() {
+                                    $scope.balance = data.balance;
+                                })
+                            })
+
+                          DNN.Session.didStake()
+                            .then(function(data) {
+                                $timeout(function() {
+                                    LI.hide();
+                                    $scope.hasStaked = data.staked;
+                                })
+                            })
+                            .catch(function() {
+                                $timeout(function() {
+                                    $scope.hasStaked = false;
+                                    LI.hide();
+                                })
+                            })
+
+                            getAssignedArticle();
+                            checkForAssignedInterval = setInterval(function() {
+                                getAssignedArticle();
+                            },2000);
+                      }
+                      else  {
+                          clearInterval(checkForAssignedInterval);
+                      }
+                  });
+              })
+          });
+    }]);
+</script>
