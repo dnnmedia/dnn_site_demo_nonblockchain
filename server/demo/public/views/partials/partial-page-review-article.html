@@ -49,10 +49,10 @@
                         .then(function(data) {
 
                             if (data.stakes.length > 0) {
-                              DNN.Article.hasReviewed(data.stakes[0].articleid, DNN.Session.current._id)
+                              DNN.Article.hasReviewed(data.stakes[data.stakes.length-1].articleid, DNN.Session.current._id)
                                   .then(function(data) {
-                                      if (data.stakes.length == 0) {
-                                          DNN.Article.fetch([data.stakes[0].articleid])
+                                      if (!data.reviewed) {
+                                          DNN.Article.fetch([data.stakes[data.stakes.length-1].articleid])
                                             .then(function(data) {
                                                 $timeout(function() {
                                                     $scope.articles = data.articles;
