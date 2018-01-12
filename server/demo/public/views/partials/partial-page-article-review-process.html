@@ -88,15 +88,17 @@
                       window.open(url, "_blank");
                   };
                   $scope.submit = function() {
-                      LI.show();
-                      DNN.Article.review($scope.$parent.data.article._id, DNN.Session.current._id, $scope.review.feedback, $scope.review.peerVote, $scope.review.personalVote)
-                        .then(function() {
-                            LI.hide();
-                            submittedPopup.show()
-                        })
-                        .catch(function() {
-                            LI.hide();
-                        })
+                      if ($scope.review.feedback.length > 0) {
+                          LI.show();
+                          DNN.Article.review($scope.$parent.data.article._id, DNN.Session.current._id, $scope.review.feedback, $scope.review.peerVote, $scope.review.personalVote)
+                            .then(function() {
+                                LI.hide();
+                                submittedPopup.show()
+                            })
+                            .catch(function() {
+                                LI.hide();
+                            })
+                      }
                   };
                   $scope.$parent.$watch("page", function() {
                       if ($scope.$parent.page === "article-review-process") {
