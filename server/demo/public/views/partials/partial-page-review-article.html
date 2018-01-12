@@ -46,13 +46,13 @@
                   var checkForAssignedInterval = null;
                   var getAssignedArticle = function() {
                       DNN.Article.getAssigned(DNN.Session.current._id)
-                        .then(function(data) {
+                        .then(function(_data) {
 
-                            if (data.stakes.length > 0) {
-                              DNN.Article.hasReviewed(data.stakes[data.stakes.length-1].articleid, DNN.Session.current._id)
+                            if (_data.stakes.length > 0) {
+                              DNN.Article.hasReviewed(_data.stakes[_data.stakes.length-1].articleid, DNN.Session.current._id)
                                   .then(function(data) {
                                       if (!data.reviewed) {
-                                          DNN.Article.fetch([data.stakes[data.stakes.length-1].articleid])
+                                          DNN.Article.fetch([_data.stakes[_data.stakes.length-1].articleid])
                                             .then(function(data) {
                                                 $timeout(function() {
                                                     $scope.articles = data.articles;
