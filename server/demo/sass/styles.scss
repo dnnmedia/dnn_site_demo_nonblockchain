@@ -1211,7 +1211,7 @@ div[ng-controller="ArticleReviewCtrl"] {
       width: 100%;
       position: fixed;
       bottom: 0;
-      padding: 1rem 18rem 1rem 1rem;
+      padding: 1rem 25rem 1rem 1rem;
       z-index: 0;
       margin-left: -1rem;
 
@@ -1233,6 +1233,7 @@ div[ng-controller="ArticleReviewCtrl"] {
 
       .field {
         margin-bottom: 1rem;
+        max-width: 50rem;
 
         & > label {
           display: block;
