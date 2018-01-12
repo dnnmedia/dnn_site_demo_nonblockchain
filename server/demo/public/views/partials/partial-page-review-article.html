@@ -47,15 +47,21 @@
                   var getAssignedArticle = function() {
                       DNN.Article.getAssigned(DNN.Session.current._id)
                         .then(function(data) {
+
                             if (data.stakes.length > 0) {
-                              DNN.Article.fetch([data.stakes[0].articleid])
-                                .then(function(data) {
-                                    $timeout(function() {
-                                        $scope.articles = data.articles;
-                                    })
-                                })
-                                .catch(function() {
-                                })
+                              DNN.Article.hasReviewed(data.stakes[0].articleid, DNN.Session.current._id)
+                                  .then(function(data) {
+                                      if (data.reviews.length == 0) {
+                                          DNN.Article.fetch([data.stakes[0].articleid])
+                                            .then(function(data) {
+                                                $timeout(function() {
+                                                    $scope.articles = data.articles;
+                                                })
+                                            })
+                                            .catch(function() {
+                                            })
+                                       }
+                                  });
                             }
                             else {
                                 $timeout(function() {

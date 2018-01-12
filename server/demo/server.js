@@ -795,7 +795,7 @@ server.register([require('vision'), require("inert")], function (err) {
 				query.userid = request.params.id || "";
 				db.collection("AlphaArticleReview").find(query, function(error, dbReviews) {
 						if (!error && dbReviews) reply({reviews:dbReviews, error:error})
-						else reply({reviews:dbReviews, error:error})
+						else reply({reviews:[], error:error})
 				})
 		}
 	});
