@@ -59,7 +59,15 @@
                                                 })
                                             })
                                             .catch(function() {
+                                                $timeout(function() {
+                                                    $scope.articles = [];
+                                                })
                                             })
+                                       }
+                                       else {
+                                         $timeout(function() {
+                                             $scope.articles = [];
+                                         })
                                        }
                                   });
                             }
