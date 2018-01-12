@@ -9,6 +9,7 @@ Config.DB.mongoConnectionString = "dnnmedia:dnnmedia@dnn.media:37018/dnnmedia";
 // Server Configuration
 Config.Server = {};
 Config.Server.port = 8002;
+Config.Server.url = "http://platform.dnn.media:"+Config.Server.port+"/";
 
 // Email Configuration
 Config.Mailer = {};

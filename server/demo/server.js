@@ -287,10 +287,10 @@ var assignArticleIfPossible = function() {
 											 db.collection("AlphaArticleReviewStake").update({_id: {$in: stakes}}, {$set: {articleid: article._id.toString()}}, {multi: true});
 											 db.collection("AlphaArticle").update({_id: mongojs.ObjectId(article._id)}, {$set: {status: Config.Review.status.INREVIEW}});
 											 getUserEmails(dbStakes, function(emails) {
-				 									sendEmail(emails, "You have been selected to review '"+article.headline+"'", "<p>Dear Reviewer,</p><p>You have been selected to review the following article:<strong>"+article.headline+"</strong>.</p><p>To review this article, please go to your <a href='http://localhost:8002/'>dashboard</a> and choose <strong>review article</strong>.</p><p>Remember to always refer to the DNN Content Guidelines when reviewing articles, to reduce your chance of losing your token stake and increase the likelihood of receiving a token reward.</p><p>Token rewards will be issued when all assigned reviewers for this article have voted. Please note: The total review time may vary depending on the response time of each reviewer.</p><p>Thanks,<br>Decentralized News Network</p>")
+				 									sendEmail(emails, "You have been selected to review '"+article.headline+"'", "<p>Dear Reviewer,</p><p>You have been selected to review the following article:<strong>"+article.headline+"</strong>.</p><p>To review this article, please go to your <a href='"+Config.Server.url+"'>dashboard</a> and choose <strong>review article</strong>.</p><p>Remember to always refer to the DNN Content Guidelines when reviewing articles, to reduce your chance of losing your token stake and increase the likelihood of receiving a token reward.</p><p>Token rewards will be issued when all assigned reviewers for this article have voted. Please note: The total review time may vary depending on the response time of each reviewer.</p><p>Thanks,<br>Decentralized News Network</p>")
 				 							 });
 											 getUserEmails([article], function(emails) {
-				 									sendEmail(emails, "'"+article.headline+"' is now in review'", "<p>Dear Writer,</p><p>Your article with the title <strong>"+article.headline+"</strong> is now in review<p><p>You will receive an email notification when the review has completed. The amount of time required to complete a review of your article may vary depending on the response time of each reviewer, so please be patient.</p><p>Thanks,<br>Decentralized News Network</p><br>To view your article, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+				 									sendEmail(emails, "'"+article.headline+"' is now in review'", "<p>Dear Writer,</p><p>Your article with the title <strong>"+article.headline+"</strong> is now in review<p><p>You will receive an email notification when the review has completed. The amount of time required to complete a review of your article may vary depending on the response time of each reviewer, so please be patient.</p><p>Thanks,<br>Decentralized News Network</p><br>To view your article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 				 							});
 									 }
 								 }
@@ -334,20 +334,20 @@ var concludeReviewIfPossible = function(articleid) {
 																			addOrRemoveTokensFromUser("Stake returned for correct vote", review.userid, reviewerStakes[index]);
 																			addOrRemoveTokensFromUser("Tokens rewarded for correct vote", review.userid, reviewerReward);
 																			getUserEmails([review], function(emails) {
-																					sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> matched the majority vote of the other assigned reviewers for this article.</p><p>As a result, you will retain your token stake and you will receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+																					sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> matched the majority vote of the other assigned reviewers for this article.</p><p>As a result, you will retain your token stake and you will receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 																			});
 																	}
 																	else if (review.personalVote === "false" && rejects > accepts) {
 																			addOrRemoveTokensFromUser("Stake returned for correct vote", review.userid, reviewerStakes[index]);
 																			addOrRemoveTokensFromUser("Tokens rewarded for correct vote", review.userid, reviewerReward);
 																			getUserEmails([review], function(emails) {
-																					sendEmail(emails, "'"+dbArticle.headline+"' has been rejected", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> matched the majority vote of the other assigned reviewers for this article.</p><p>As a result, you will retain your token stake and you will receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+																					sendEmail(emails, "'"+dbArticle.headline+"' has been rejected", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> matched the majority vote of the other assigned reviewers for this article.</p><p>As a result, you will retain your token stake and you will receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 																			});
 																	}
 																	else {
 																			addOrRemoveTokensFromUser("Stake forfeited for incorrect vote", review.userid, 0);
 																			getUserEmails([dbArticle], function(emails) {
-																					sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> did not match the majority vote of the other assigned reviewers for this article.</p><p>As a result, your token stake has been forfeited and you will not receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+																					sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> did not match the majority vote of the other assigned reviewers for this article.</p><p>As a result, your token stake has been forfeited and you will not receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 																			});
 																	}
 															});
@@ -357,12 +357,12 @@ var concludeReviewIfPossible = function(articleid) {
 
 															if (accepts > rejects) {
 																	getUserEmails([dbArticle], function(emails) {
-						 				 									sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Writer,</p><p>Your article with the title <strong>"+dbArticle.headline+"</strong> has been accepted by the community.</p><p>A token reward has been issued to your account and your article has been published!<p></p><p>Thanks,<br>Decentralized News Network</p><br>To view your published article in the feed, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+						 				 									sendEmail(emails, "'"+dbArticle.headline+"' has been accepted", "<p>Dear Writer,</p><p>Your article with the title <strong>"+dbArticle.headline+"</strong> has been accepted by the community.</p><p>A token reward has been issued to your account and your article has been published!<p></p><p>Thanks,<br>Decentralized News Network</p><br>To view your published article in the feed, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 						 				 							});
 															}
 															else if (rejects > accepts) {
 																	getUserEmails([dbArticle], function(emails) {
-						 				 									sendEmail(emails, "'"+dbArticle.headline+"' has been rejected", "<p>Dear Writer,</p><p>Your article with the title <strong>"+dbArticle.headline+"</strong> has been rejected by the community.</p><p>To view the feedback left by reviewers, please refer to your dashboard and select the article under <strong>articles submitted</strong></p><p>Thanks,<br>Decentralized News Network</p><br>To view reviewer feedback, please refer to your <a href='http://localhost:8002/'>dashboard</a> and select the article under <strong>articles submitted</strong>.")
+						 				 									sendEmail(emails, "'"+dbArticle.headline+"' has been rejected", "<p>Dear Writer,</p><p>Your article with the title <strong>"+dbArticle.headline+"</strong> has been rejected by the community.</p><p>To view the feedback left by reviewers, please refer to your dashboard and select the article under <strong>articles submitted</strong></p><p>Thanks,<br>Decentralized News Network</p><br>To view reviewer feedback, please refer to your <a href='"+Config.Server.url+"'>dashboard</a> and select the article under <strong>articles submitted</strong>.")
 						 				 							});
 															}
 													}
@@ -707,7 +707,7 @@ server.register([require('vision'), require("inert")], function (err) {
 						if (!error && dbArticle) {
 							assignArticleIfPossible();
 							getUserEmails([article], function(emails) {
-									sendEmail(emails, "'"+article.headline+"' has been submitted'", "<p>Dear Writer,</p><p>Your article with the title <strong>"+article.headline+"</strong> has successfully been submitted and will be in review shortly.</p><p>You will receive an email notification when it has been placed in review. Articles queued for review will be assigned to reviewers as they become available, so please be patient. The amount of time required to complete a review of your article may vary depending on the amount of articles currently in review.</p><p>Thanks,<br>Decentralized News Network</p><br>To view your article, please refer to your <a href='http://localhost:8002/'>dashboard</a>.")
+									sendEmail(emails, "'"+article.headline+"' has been submitted'", "<p>Dear Writer,</p><p>Your article with the title <strong>"+article.headline+"</strong> has successfully been submitted and will be in review shortly.</p><p>You will receive an email notification when it has been placed in review. Articles queued for review will be assigned to reviewers as they become available, so please be patient. The amount of time required to complete a review of your article may vary depending on the amount of articles currently in review.</p><p>Thanks,<br>Decentralized News Network</p><br>To view your article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 							});
 							reply({article:dbArticle, error:error})
 						}
