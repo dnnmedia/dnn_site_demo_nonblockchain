@@ -8,12 +8,12 @@
               <span class="review-reviewer">Reviewer #[[$index+1]] Feedback</span>
               <p class="review-feedback">[[review.feedback]]</p>
               <div class="review-vote">
-                  <span ng-show="review.personalVote"><strong>Personal Decision: </strong>Should Accept</span>
-                  <span ng-show="!review.personalVote"><strong>Personal Decision: </strong>Should Reject</span>
+                  <span ng-show="review.personalVote == 'true'"><strong>Personal Decision: </strong>Should Accept</span>
+                  <span ng-show="review.personalVote == 'false'"><strong>Personal Decision: </strong>Should Reject</span>
               </div>
               <div class="review-vote">
-                  <span ng-show="review.peerVote"><strong>Peer Guess: </strong>Will Accept</span>
-                  <span ng-show="!review.peerVote"><strong>Peer Guess: </strong>Will REJECT</span>
+                  <span ng-show="review.peerVote == 'true'"><strong>Peer Guess: </strong>Will Accept</span>
+                  <span ng-show="review.peerVote == 'false'"><strong>Peer Guess: </strong>Will REJECT</span>
               </div>
               <div class="review-posted" ng-if="reviewer.posted">
                   <span>[[reviewer.posted | fromnow]]</span>
