@@ -2,7 +2,7 @@
 <div class="buffer-left buffer-top buffer-bottom buffer-right" ng-controller="ReviewArticleCtrl">
   <h1>Review Article</h1>
   <p ng-show="articles.length == 0 && hasStaked == false">To get assigned an article to review, please stake an arbitrary amount of tokens. The speed at which articles get assigned and solely up to the network and may vary.</p>
-  <p ng-show="articles.length == 0 && hasStaked">You have not yet been assigned an article. Once an article becomes available, we will notify you. The amount of time it takes to get assigned may vary.</p>
+  <p ng-show="articles.length == 0 && hasStaked">You have not yet been assigned an article. Once an article becomes available, we will notify you by email. The amount of time it takes to get assigned may vary.</p>
   <p ng-show="articles.length > 0">Please take the time to review the following article.</p>
   <div id="searching-indicator" ng-show="articles.length == 0 && hasStaked">
       <div></div>
