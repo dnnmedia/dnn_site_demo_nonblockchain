@@ -277,7 +277,7 @@ var assignArticleIfPossible = function() {
 				 if (!error && dbArticles.length > 0) {
 
 						 // Find stakes that have not yet been assigned
-						 db.collection("AlphaArticleReviewStake").find({articleid: {$exists: false}}, {}, {limit : Config.Review.assignedLimit}, function(error, dbStakes) {
+						 db.collection("AlphaArticleReviewStake").find({$and: [{articleid: {$exists: false}}, {userid: {$ne: dbArticle._id.toString()}}]}, {}, {limit : Config.Review.assignedLimit}, function(error, dbStakes) {
 								 if (!error) {
 
 									 // Assign reviewers if we have enough bids
