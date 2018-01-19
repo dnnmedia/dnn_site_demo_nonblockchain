@@ -34,7 +34,7 @@
     "nodemailer": "^4.4.1",
     "path": "^0.12.7",
     "redbird": "^0.6.15",
-    "request": "^2.64.0",
+    "request": "^2.83.0",
     "slackin": "^0.13.0",
     "uniq": "^1.0.1",
     "vision": "^3.0.0",
