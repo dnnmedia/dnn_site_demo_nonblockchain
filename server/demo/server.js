@@ -277,7 +277,7 @@ var assignArticleIfPossible = function() {
 				 if (!error && dbArticles.length > 0) {
 
 						 // Find stakes that have not yet been assigned
-						 db.collection("AlphaArticleReviewStake").find({$and: [{articleid: {$exists: false}}, {userid: {$ne: dbArticle._id.toString()}}]}, {}, {limit : Config.Review.assignedLimit}, function(error, dbStakes) {
+						 db.collection("AlphaArticleReviewStake").find({$and: [{articleid: {$exists: false}}, {userid: {$ne: dbArticles[0].userid}}]}, {}, {limit : Config.Review.assignedLimit}, function(error, dbStakes) {
 								 if (!error) {
 
 									 // Assign reviewers if we have enough bids
@@ -547,6 +547,16 @@ server.register([require('vision'), require("inert")], function (err) {
 	| All api endpoint routes
 	|
 	*/
+	server.route({
+		method: 'GET',
+		path: '/api/v1/trigger/assign',
+		handler: function(request, reply)
+		{
+				assignArticleIfPossible();
+				reply({assigning: true});
+		}
+	});;
+
 	server.route({
 		method: 'POST',
 		path: '/api/v1/user/verify',
