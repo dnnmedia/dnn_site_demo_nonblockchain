@@ -128,7 +128,14 @@
                       user: {},
                       signin: function() {
                           if (this.user.email) {
+                              LI.show();
                               DNN.Session.signin({email:this.user.email})
+                                .then(function() {
+                                    LI.hide();
+                                })
+                                .catch(function() {
+                                    LI.hide();
+                                })
                               $scope.setPage("signin-sent");
                           }
                       },
