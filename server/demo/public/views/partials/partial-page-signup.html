@@ -31,8 +31,23 @@
         <div class="page" ng-show="page == 'welcome'">
           <h3>Welcome to the DNN Alpha</h3>
           <p>This alpha is meant to be a very simple proof of concept, with Ethereum smart contract functionality in place. We will continue to improve upon it frequently, as we work toward building DNN in its entirety. Note that certain important aspects are unfinished or haven’t been added yet.</p>
-          <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('profile')">Continue</a>
-          <!-- <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('intro')" id="back-button">Back</a> -->
+          <a href="javascript:void(0);" class="dnn-button" ng-click="setPage('profile')">Create Account</a>
+          <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('signin')">I already have an account</a>
+        </div>
+        <div class="page" ng-show="page == 'signin'">
+          <h3>Sign In</h3>
+          <p>Please provide the email address associated with your account to receive a link, which you can then use to access your DNN account.</p>
+          <div class="field">
+              <label>Email</label>
+              <input type="text" ng-model="login.user.email">
+          </div>
+          <a href="javascript:void(0);" class="dnn-button" ng-disabled="!login.user.email" ng-click="login.signin()">Send Sign In link</a>
+          <a href="javascript:void(0);" class="dnn-link" ng-click="setPage('welcome')" id="back-button">Back</a>
+        </div>
+        <div class="page" ng-show="page == 'signin-sent'">
+          <h3>Link Sent!</h3>
+          <p>A link which you can use to sign in has been sent to your email</p>
+          <a href="javascript:void(0);" class="dnn-button" ng-disabled="!login.user.email" ng-click="login.signin()">Resend Sign In link</a>
         </div>
         <div class="page" ng-show="page == 'profile'">
           <h3>Profile Details</h3>
@@ -64,6 +79,33 @@
       .controller("SignupCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
           window["addEventListener"]("load", function() {
               $timeout(function() {
+                  var getParameterByName = function(name, url)
+                  {
+                      if (!url) url = window.location.href;
+                      name = name.replace(/[\[\]]/g, "\\$&");
+                      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                          results = regex.exec(url);
+                      if (!results) return null;
+                      if (!results[2]) return '';
+                      return decodeURIComponent(results[2].replace(/\+/g, " "));
+                  };
+                  var t = getParameterByName("t");
+                  if (t) {
+                    LI.show();
+                    DNN.Session.fetch({t:t})
+                      .then(function(session) {
+                          LI.hide();
+                          if (session.user) {
+                             DNN.Session.setCurrent(session.user);
+                             window.location.href = "/alpha";
+                          }
+                      })
+                      .catch(function() {
+                          LI.hide();
+                      })
+                  }
+
+
                   $scope.page = "welcome"
                   $scope.user = {};
                   $scope.setPage = function(page) {
@@ -82,6 +124,15 @@
                             LI.hide();
                         })
                   };
+                  $scope.login  = {
+                      user: {},
+                      signin: function() {
+                          if (this.user.email) {
+                              DNN.Session.signin(this.user.email)
+                          }
+                      },
+                  };
+
               })
           });
       }])

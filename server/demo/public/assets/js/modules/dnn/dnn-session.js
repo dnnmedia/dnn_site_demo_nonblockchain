@@ -7,6 +7,39 @@ DNN.Session = {};
 // Holds current user session
 DNN.Session.current = null;
 
+// Sends out sign in link
+DNN.Session.signin = function(data) {
+
+  return new Promise(function(resolve, reject) {
+
+      // Sends out sign in link to access account
+      DNN.Request.post("/api/"+DNN.Constants.APIVERSION+"/user/signin", data)
+          .then(function(data) {
+              resolve(data);
+          })
+          .fail(function() {
+              reject();
+          })
+      });
+};
+
+// Retrieves user session
+DNN.Session.fetch = function(data) {
+
+  return new Promise(function(resolve, reject) {
+
+      // Retrieves user session
+      DNN.Request.post("/api/"+DNN.Constants.APIVERSION+"/user", data)
+          .then(function(data) {
+              if (data.user) resolve(data);
+              else reject();
+          })
+          .fail(function() {
+              reject();
+          })
+      });
+};
+
 // Creates a new user
 DNN.Session.create = function(data) {
 

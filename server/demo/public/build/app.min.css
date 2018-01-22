@@ -2748,7 +2748,8 @@ div[ng-controller="SignupCtrl"] .wrapper {
         max-width: 8rem;
         display: block; }
       div[ng-controller="SignupCtrl"] .wrapper #pages .page .dnn-link {
-        display: inline-block; }
+        display: block;
+        text-align: center; }
         div[ng-controller="SignupCtrl"] .wrapper #pages .page .dnn-link#back-button {
           margin: 2rem auto;
           display: block; }

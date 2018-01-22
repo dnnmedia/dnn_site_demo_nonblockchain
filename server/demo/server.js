@@ -639,6 +639,37 @@ server.register([require('vision'), require("inert")], function (err) {
 
 	server.route({
 		method: 'POST',
+		path: '/api/v1/user/signin',
+		handler: function(request, reply)
+		{
+			 	db.collection("AlphaUser").find({ email: request.payload.email}, function(error, dbUsers) {
+						if (!error && dbUsers.length > 0) {
+								var user = dbUsers[dbUsers.length-1];
+								sendEmail([user.email], "Access your DNN account", "<p>To access your account, please use the following link</p><p><a href='http://platform.dnn.media/alpha?t="+user.token+"'>http://platform.dnn.media/alpha?t="+user.token+"</a>.</p>")
+								reply({sent: true, email: user.email})
+						}
+						else reply({sent: false})
+				})
+		}
+	});
+
+	server.route({
+		method: 'POST',
+		path: '/api/v1/user',
+		handler: function(request, reply)
+		{
+			 	db.collection("AlphaUser").find({ token: request.payload.t }, function(error, dbUsers) {
+						if (!error && dbUsers.length > 0) {
+								var user = dbUsers[dbUsers.length-1];
+								reply({user: user})
+						}
+						else reply({user: false})
+				})
+		}
+	});
+
+	server.route({
+		method: 'POST',
 		path: '/api/v1/draft/article',
 		handler: function(request, reply)
 		{
