@@ -346,7 +346,7 @@ var concludeReviewIfPossible = function(articleid) {
 																	}
 																	else {
 																			addOrRemoveTokensFromUser("Stake forfeited for incorrect vote", review.userid, 0);
-																			getUserEmails([dbArticle], function(emails) {
+																			getUserEmails([review], function(emails) {
 																					sendEmail(emails, "'"+dbArticle.headline+"' publish decision reached", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> did not match the majority vote of the other assigned reviewers for this article.</p><p>As a result, your token stake has been forfeited and you will not receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 																			});
 																	}
