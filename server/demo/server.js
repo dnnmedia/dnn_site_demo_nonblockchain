@@ -329,7 +329,8 @@ var concludeReviewIfPossible = function(articleid) {
 											db.collection("AlphaArticle").findOne({_id: mongojs.ObjectID(cleanObjectId(articleid))}, function(error, dbArticle) {
 													if (!error && dbArticle) {
 
-															dbReviews.forEach(function(review, index) {
+															var index = 0;
+															dbReviews.forEach(function(review) {
 																	if (review.personalVote === "true" && accepts > rejects) {
 																			addOrRemoveTokensFromUser("Stake returned for correct vote", review.userid, reviewerStakes[index]);
 																			addOrRemoveTokensFromUser("Tokens rewarded for correct vote", review.userid, reviewerReward);
@@ -350,6 +351,7 @@ var concludeReviewIfPossible = function(articleid) {
 																					sendEmail(emails, "'"+dbArticle.headline+"' publish decision reached", "<p>Dear Reviewer,</p><p>Your vote for the article <strong>"+dbArticle.headline+"</strong> did not match the majority vote of the other assigned reviewers for this article.</p><p>As a result, your token stake has been forfeited and you will not receive a token reward for this article.<p></p><p>Thanks,<br>Decentralized News Network</p><br>To review another article, please refer to your <a href='"+Config.Server.url+"'>dashboard</a>.")
 																			});
 																	}
+																	++index;
 															});
 
 														 	if (accepts > rejects) addOrRemoveTokensFromUser("Article acceptance token reward", dbArticle.userid, writerReward);
