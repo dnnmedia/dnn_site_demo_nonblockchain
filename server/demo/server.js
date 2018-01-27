@@ -970,7 +970,7 @@ server.register([require('vision'), require("inert")], function (err) {
 		path: '/api/v1/article/feed',
 		handler: function(request, reply)
 		{
-				db.collection("AlphaArticle").find({status: {$gt: 1}}, function(error, dbArticles) {
+				db.collection("AlphaArticle").find({/*status: {$gt: 1}*/}, function(error, dbArticles) {
 					 	if (error || dbArticles.length === 0) reply({articles: [], error: error})
 						else reply({articles: dbArticles});
 				});
