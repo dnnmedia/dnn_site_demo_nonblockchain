@@ -1,6 +1,6 @@
 
 <div class="buffer-left buffer-top buffer-bottom" ng-controller="FeedCtrl">
-    <h1>Published Articles</h1>
+    <h1>Article Feed</h1>
     <p ng-show="articles.length > 0">The following articles have been accepted by the community</p>
     <p ng-show="!articles || articles.length == 0">No published articles could be found</p>
     <div class="articles" ng-show="articles && articles.length > 0">
@@ -14,6 +14,10 @@
                   </div>
                   <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
               </div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 0"><strong>QUEUED FOR REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 1"><strong>IN REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 2"><strong>REJECTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 3"><strong>ACCEPTED</strong></div>
             </a>
         </div>
     </div>
