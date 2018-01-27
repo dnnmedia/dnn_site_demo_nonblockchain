@@ -1,7 +1,7 @@
 
 <div class="buffer-left buffer-top buffer-bottom" ng-controller="FeedCtrl">
     <h1>Article Feed</h1>
-    <p ng-show="articles.length > 0">The following articles have been accepted by the community</p>
+    <p ng-show="articles.length > 0">The following articles have been accepted or rejected by the community</p>
     <p ng-show="!articles || articles.length == 0">No published articles could be found</p>
     <div class="articles" ng-show="articles && articles.length > 0">
         <div class="article" ng-repeat="article in articles">
