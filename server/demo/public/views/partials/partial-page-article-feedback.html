@@ -36,6 +36,7 @@
 
             $scope.$parent.$watch("page", function() {
                 if ($scope.$parent.page === "article-feedback") {
+                    $scope.reviews = [];
                     var data = $scope.$parent.data;
                     if (data.article._id) {
                       LI.show();
