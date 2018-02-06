@@ -4,7 +4,7 @@ var Config = {};
 
 // DB Configuration
 Config.DB = {};
-Config.DB.mongoConnectionString = "dnnmedia:dnnmedia@dnn.media:37018/dnnmedia";
+Config.DB.mongoConnectionString = "";
 
 // Server Configuration
 Config.Server = {};
@@ -13,9 +13,9 @@ Config.Server.url = "http://platform.dnn.media:"+Config.Server.port+"/";
 
 // Email Configuration
 Config.Mailer = {};
-Config.Mailer.service = "gmail";
-Config.Mailer.email = "application@dnn.media";
-Config.Mailer.password = "!dnnmedia!";
+Config.Mailer.service = "";
+Config.Mailer.email = "";
+Config.Mailer.password = "";
 
 // Review Configuration
 Config.Review = {};
