@@ -137,24 +137,28 @@
 
 													// Go to previous page
 													$scope.back = function() {
-															$anchorScroll();
-															if (pages.length > 0) {
-																	$scope.page = pages[pages.length-1];
-																	pages.pop();
-															}
-															else {
-																 	$scope.page = "feed";
-															}
+															$timeout(function() {
+																	$anchorScroll();
+																	if (pages.length > 0) {
+																			$scope.page = pages[pages.length-1];
+																			pages.pop();
+																	}
+																	else {
+																		 	$scope.page = "feed";
+																	}
+															});
 													};
 
 													// Changes page
 													$scope.setPage = function(page, shouldRequireSession) {
-															$anchorScroll();
-															if (!shouldRequireSession) {
-																	$scope.page = page;
-																	pages.push(page);
-															}
-															else $scope.page = "signup";
+															$timeout(function() {
+																$anchorScroll();
+																if (!shouldRequireSession) {
+																		$scope.page = page;
+																		pages.push(page);
+																	}
+																	else $scope.page = "signup";
+															});
 													};
 
 													// Loads article and views it

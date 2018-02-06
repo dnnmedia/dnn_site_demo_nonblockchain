@@ -192,6 +192,10 @@
       &[data-status="3"] {
           color: #47D400;
       }
+
+      &[data-status="4"] {
+          color: #000000;
+      }
   }
 
   .dnn-button {
@@ -391,6 +395,10 @@ article {
 
     &[data-status="3"] {
         background-color: #47D400;
+    }
+
+    &[data-status="4"] {
+        background-color: #000000;
     }
   }
 
@@ -1083,7 +1091,7 @@ div[ng-controller="SignupCtrl"] {
           .dnn-link {
             display: block;
             text-align: center;
-            
+
             &#back-button {
               margin: 2rem auto;
               display: block;

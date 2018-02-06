@@ -2129,6 +2129,8 @@ th {
       color: #D40044; }
     .article .status[data-status="3"] {
       color: #47D400; }
+    .article .status[data-status="4"] {
+      color: #000000; }
   .article .dnn-button {
     display: block;
     margin: 1rem auto;
@@ -2270,6 +2272,8 @@ article {
       background-color: #D40044; }
     article #article-status[data-status="3"] {
       background-color: #47D400; }
+    article #article-status[data-status="4"] {
+      background-color: #000000; }
   article #edit-article {
     margin: 1rem 0 2rem 0;
     display: block;

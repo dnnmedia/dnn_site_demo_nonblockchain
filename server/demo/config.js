@@ -24,6 +24,7 @@ Config.Review.status = {
   QUEUED: 0,
   INREVIEW: 1,
   REJECTED: 2,
-  ACCEPTED: 3
+  ACCEPTED: 3,
+  VOIDED: 4
 }
 module.exports = Config;

@@ -8,7 +8,7 @@
     <a href="javascript:void(0);" ng-show="page == 'feed'" ng-click="setPage('articles-submitted')" data-action="articles-submitted"></a>
     <a href="javascript:void(0);" ng-show="page == 'feed'" ng-click="setPage('articles-drafted')" data-action="articles-drafted"></a>
     <a href="javascript:void(0);" ng-show="page == 'feed'" ng-click="setPage('my-profile')" data-action="my-profile"></a>
-    <a href="javascript:void(0);" ng-show="page != 'feed'" ng-click="back()" data-action="back"></a>
+    <a href="javascript:void(0);" ng-show="page != 'feed'" ng-click="setPage('feed')" data-action="back"></a>
     <a href="javascript:void(0);" ng-show="page == 'article-review-process' || page == 'article' || page == 'compose-article'" ng-click="setPage('dnn-guidelines')" data-action="dnn-guidelines"></a>
     <a href="javascript:void(0);" ng-show="page == 'article'" ng-click="setPage('article-feedback')" data-action="article-feedback"></a>
 </div>
