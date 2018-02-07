@@ -1,0 +1,136 @@
+
+<div class="buffer-left buffer-top buffer-bottom buffer-right" ng-controller="ArticleReviewCtrl">
+  <article>
+      <div id="article-status" data-status="[[article.status]]" ng-bind-html="articleStatus | trust"></div>
+      <h1>[[article.headline]]</h1>
+      <div id="article-meta">
+          <span>Written by <strong>[[article.author]]</strong></span>
+          <span>Published <strong>[[article.created | fromnow]]</strong></span>
+      </div>
+      <div id="article-cover">
+          <img ng-if="article.cover" ng-src="/api/v1/media/[[article.cover]]">
+          <small ng-if="article.coverAttributes">[[article.coverAttributes]]</small>
+      </div>
+      <div id="article-main" ng-bind-html="article.body.html | trust"></div>
+  </article>
+  <div id="sources">
+      <h3>Article Sources</h3>
+      <div class="source" ng-repeat="source in article.sources">
+          <a ng-click="openURL([[source.link]])" target="_blank">
+              <p>[[source.reference]]</p>
+              <em>Source Reference: ([[source.id]])</em>
+          </a>
+      </div>
+  </div>
+  <div id="review-panel">
+      <div class="field">
+          <label>Based on the DNN editorial guidelines, should this article get published?</label>
+          <div class="radio">
+              <input type="radio" name="personalVote" ng-model="review.personalVote" ng-value="true">
+              <label>Yes</label>
+          </div>
+          <div class="radio">
+              <input type="radio" name="personalVote" ng-model="review.personalVote" ng-value="false">
+              <label>No</label>
+          </div>
+      </div>
+      <div class="field">
+          <label>Based on the contents of the article, do you think the other assigned reviewers will accept or reject this article?</label>
+          <div class="radio">
+              <input type="radio" name="peerVote" ng-model="review.peerVote" ng-value="true">
+              <label>Accept</label>
+          </div>
+          <div class="radio">
+              <input type="radio" name="peerVote" ng-model="review.peerVote" ng-value="false">
+              <label>Reject</label>
+          </div>
+      </div>
+      <div class="field">
+          <label>Please leave detailed feedback explaining why this article should be accepted or rejected</label>
+          <textarea name="feedback" ng-model="review.feedback"></textarea>
+      </div>
+  </div>
+  <a href="javascript:void(0);" ng-click="submit()" ng-disabled="review.feedback.length === 0" id="submit-button"></a>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticleReviewCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+
+                var failedPopup = new DNN.Popup("message","Submission Failed","Your review failed to submit. Try resubmitting.",["Got it"]);
+                failedPopup.preventHide = true;
+                failedPopup.on("button", function() {
+                    failedPopup.hide();
+                });
+
+                var submittedPopup = new DNN.Popup("message","Review Submitted","Your review was successfully submitted. A publishing decision for this article will post when all reviewers of this article have casted a vote.",["Got it"]);
+                submittedPopup.preventHide = true;
+                submittedPopup.on("button", function() {
+                    submittedPopup.hide();
+                    $timeout(function() {
+                        $scope.review = {feedback: "", peerVote: false, personalVote: false};
+                        $scope.$parent.setPage("articles-reviewed");
+                        $scope.$parent.clearBackHistory();
+                    })
+                });
+
+                 var ArticleStatusMessages = {
+                      "0": "This article is currently <strong>queued for review</strong>",
+                      "1": "This article is currently <strong>in review</strong>",
+                      "2": "This article has been <strong>rejected</strong> by the community and may contain inaccuaries",
+                      "3": "This article has been <strong>accepted</strong> by the community"
+                  };
+                  $scope.article = {};
+                  $scope.review = {feedback: "", peerVote: false, personalVote: false};
+                  $scope.openURL = function(url) {
+                      window.open(url, "_blank");
+                  };
+                  $scope.submit = function() {
+                      if ($scope.review.feedback.length > 0) {
+                          LI.show();
+                          DNN.Article.review($scope.$parent.data.article._id, DNN.Session.current._id, $scope.review.feedback, $scope.review.peerVote, $scope.review.personalVote)
+                            .then(function() {
+                                LI.hide();
+                                submittedPopup.show()
+                            })
+                            .catch(function() {
+                                LI.hide();
+                            })
+                      }
+                  };
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "article-review-process") {
+                          var data = $scope.$parent.data;
+                          if (data.article._id) {
+                            LI.show();
+                            DNN.Article.fetch([data.article._id])
+                            	.then(function(data) {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      if (data.articles.length > 0) {
+                                          $scope.article = data.articles[0];
+                                          $scope.articleStatus = ArticleStatusMessages[$scope.article.status];
+                                      }
+                                      else {
+                                        $scope.setPage("feed");
+                                      }
+                                  })
+                            	})
+                              .catch(function() {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      $scope.setPage("feed");
+                                  })
+                              })
+                          }
+                          else {
+                              $scope.setPage("feed");
+                          }
+                      }
+                  });
+              })
+          });
+      }])
+</script>

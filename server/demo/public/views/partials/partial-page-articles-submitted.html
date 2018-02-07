@@ -1,0 +1,44 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="ArticlesSubmittedCtrl">
+    <h1>Articles Submitted</h1>
+    <p ng-show="!articles || articles.length == 0">You have not submitted any articles yet.</p>
+    <div class="articles" ng-show="articles && articles.length > 0">
+        <div class="article" ng-repeat="article in articles">
+            <a href="javascript:void(0);" ng-click="$parent.viewArticle(article._id)">
+              <div class="card">
+                  <div class="overlay">
+                      <div class="author">Author: [[article.author]]</div>
+                      <div class="headline">[[article.headline]]</div>
+                      <div class="timestamp">[[article.created | fromnow]]</div>
+                  </div>
+                  <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+              </div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 0"><strong>QUEUED FOR REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 1"><strong>IN REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 2"><strong>REJECTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 3"><strong>ACCEPTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 4"><strong>REVIEW VOIDED</strong></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticlesSubmittedCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "articles-submitted") {
+                          DNN.Article.getSubmittedByUser(DNN.Session.current._id)
+                            .then(function(data) {
+                                $timeout(function() {
+                                    $scope.articles = data.articles.reverse();
+                                })
+                            })
+                      }
+                  });
+              })
+          });
+    }]);
+</script>

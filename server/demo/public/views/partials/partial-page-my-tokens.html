@@ -1,0 +1,78 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="MyTokensCtrl">
+    <h1>My Tokens</h1>
+    <div id="balance">
+        <h3>[[balance]]</h3>
+        <small>Tokens Remaining</small>
+        <button class="dnn-button" ng-click="getTokens()" ng-disabled="balance >= balanceLimit">Get Tokens</button>
+    </div>
+    <div id="balance-ledger">
+        <table>
+            <tr>
+                <th>[[$index]]</th>
+                <th>Transaction</th>
+                <th>Amount</th>
+                <th>Balance</th>
+            </tr>
+            <tr ng-repeat="transaction in transactions">
+                <td></td>
+                <td>[[transaction.message]]</td>
+                <td>[[(transaction.amount > 0 ? "+" : "") + transaction.amount]]</td>
+                <td>[[transaction.total]]</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("MyTokensCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+                $scope.getTokens = function() {
+                    if ($scope.balance < $scope.balanceLimit) {
+                        DNN.Session.seedTokens(1000, "Token deposit")
+                          .then(function(data) {
+                              $timeout(function() {
+                                  $scope.balance = data.balance;
+                                  $scope.getTransactions();
+                              })
+                          })
+                    }
+                };
+                $scope.getBalance = function() {
+                    DNN.Session.balance()
+                      .then(function(data) {
+                          $timeout(function() {
+                              $scope.balance = data.balance;
+                              $scope.getTransactions();
+                          })
+                      })
+                };
+                $scope.getTransactions = function() {
+                    LI.show();
+                    DNN.Session.getTransactions()
+                      .then(function(data) {
+                          LI.hide();
+                          $timeout(function() {
+                            data.transactions = data.transactions.map(function(transaction, index) {
+                                  transaction.total = parseFloat(transaction.amount)  + (index == 0 ? 0 : parseFloat(data.transactions[index-1].total))
+                                  return transaction;
+                            });
+                            $scope.transactions = data.transactions.reverse()
+                          });
+                      })
+                      .fail(function() {
+                          LI.hide();
+                      })
+                };
+
+                $scope.$parent.$watch("page", function() {
+                    if ($scope.$parent.page === "my-tokens") {
+                        $scope.balanceLimit = 10000;
+                        $scope.balance = 0;
+                        $scope.getBalance();
+                    }
+                })
+          });
+    }]);
+</script>

@@ -1,0 +1,219 @@
+{{#extend "layout-base"}}
+	  {{#content "body"}}
+		  <div ng-controller="AppCtrl">
+					{{#embed "partial-sidebar"}}{{/embed}}
+					<div id="app-pages">
+							<!------------------>
+							<!-- PAGE: Feed -->
+							<!------------------>
+              <div class="app-page hide" data-page="feed" ng-class="{show: page === 'feed', hide: page != 'feed' && page != ''}">
+									{{#embed "partial-page-feed"}}{{/embed}}
+							</div>
+
+							<!--------------------------->
+							<!-- PAGE: Compose Article -->
+							<!--------------------------->
+              <div class="app-page hide" data-page="compose-article" ng-class="{show: page === 'compose-article', hide: page != 'compose-article' && page != ''}">
+									{{#embed "partial-page-compose-article"}}{{/embed}}
+							</div>
+
+							<!-------------------------->
+							<!-- PAGE: Review Article -->
+							<!-------------------------->
+              <div class="app-page hide" data-page="review-article" ng-class="{show: page === 'review-article', hide: page != 'review-article' && page != ''}">
+									{{#embed "partial-page-review-article"}}{{/embed}}
+							</div>
+
+							<!----------------------------->
+							<!-- PAGE: Articles Reviewed -->
+							<!----------------------------->
+              <div class="app-page hide" data-page="articles-reviewed" ng-class="{show: page === 'articles-reviewed', hide: page != 'articles-reviewed' && page != ''}">
+									{{#embed "partial-page-articles-reviewed"}}{{/embed}}
+							</div>
+
+							<!------------------------------>
+							<!-- PAGE: Articles Submitted -->
+							<!------------------------------>
+              <div class="app-page hide" data-page="articles-submitted" ng-class="{show: page === 'articles-submitted', hide: page != 'articles-submitted' && page != ''}">
+									{{#embed "partial-page-articles-submitted"}}{{/embed}}
+							</div>
+
+							<!---------------------->
+							<!-- PAGE: My Profile -->
+							<!---------------------->
+              <div class="app-page hide" data-page="my-profile" ng-class="{show: page === 'my-profile', hide: page != 'my-profile' && page != ''}">
+									{{#embed "partial-page-my-profile"}}{{/embed}}
+							</div>
+
+							<!--------------------->
+							<!-- PAGE: My Tokens -->
+							<!--------------------->
+              <div class="app-page hide" data-page="my-tokens" ng-class="{show: page === 'my-tokens', hide: page != 'my-tokens' && page != ''}">
+									{{#embed "partial-page-my-tokens"}}{{/embed}}
+							</div>
+
+							<!---------------------------->
+							<!-- PAGE: Articles Drafted -->
+							<!---------------------------->
+              <div class="app-page hide" data-page="articles-drafted" ng-class="{show: page === 'articles-drafted', hide: page != 'articles-drafted' && page != ''}">
+									{{#embed "partial-page-articles-drafted"}}{{/embed}}
+							</div>
+
+							<!---------------------------->
+							<!-- PAGE: Articles Drafted -->
+							<!---------------------------->
+              <div class="app-page hide" data-page="signup" ng-class="{show: page === 'signup', hide: page != 'signup' && page != ''}">
+									{{#embed "partial-page-signup"}}{{/embed}}
+							</div>
+
+							<!---------------------------->
+							<!-- PAGE: Articles Viewer  -->
+							<!---------------------------->
+              <div class="app-page hide" data-page="article" ng-class="{show: page === 'article', hide: page != 'article' && page != ''}">
+									{{#embed "partial-page-article"}}{{/embed}}
+							</div>
+
+							<!----------------------------------->
+							<!-- PAGE: Article Review Process  -->
+							<!----------------------------------->
+              <div class="app-page hide" data-page="article" ng-class="{show: page === 'article-review-process', hide: page != 'article-review-process' && page != ''}">
+									{{#embed "partial-page-article-review-process"}}{{/embed}}
+							</div>
+
+							<!----------------------->
+							<!-- PAGE: Guidelines  -->
+							<!----------------------->
+              <div class="app-page hide" data-page="article" ng-class="{show: page === 'dnn-guidelines', hide: page != 'dnn-guidelines' && page != ''}">
+									{{#embed "partial-page-dnn-guidelines"}}{{/embed}}
+							</div>
+
+							<!----------------------------->
+							<!-- PAGE: Article Feedback  -->
+							<!----------------------------->
+              <div class="app-page hide" data-page="article" ng-class="{show: page === 'article-feedback', hide: page != 'article-feedback' && page != ''}">
+									{{#embed "partial-page-article-feedback"}}{{/embed}}
+							</div>
+      		</div>
+			</div>
+      <script>
+          angular.module("DNN")
+            .controller("AppCtrl", ["$scope", "$timeout", "$location", "$anchorScroll", function($scope, $timeout, $location, $anchorScroll) {
+                window["addEventListener"]("load", function() {
+											$timeout(function() {
+
+
+													// Desktop Only Notice
+													var desktopOnly = new DNN.Popup("message","Use Desktop Browser", "The DNN alpha is currently inaccessible on mobile. Please use a desktop web browser instead.");
+													desktopOnly.preventHide = true;
+
+													// Detect if desktop only notice should show
+													var shouldShouldDesktopOnlyNotice = function() {
+														 	if ($(window).width() < 700) {
+																 desktopOnly.show();
+															}
+															else {
+																desktopOnly.hide();
+															}
+													};
+
+													shouldShouldDesktopOnlyNotice();
+													$(window).on("resize", function() {
+														 	shouldShouldDesktopOnlyNotice();
+													});
+
+													// Main DNN object
+													$scope.DNN = DNN;
+
+													// Used to pass data between pages
+													$scope.data = {};
+
+													// Keep track of navigation
+													var pages = [];
+
+													// Clears back history (set to default)
+													$scope.clearBackHistory = function() {
+														 	pages = ["feed"];
+													};
+
+													// Go to previous page
+													$scope.back = function() {
+															$timeout(function() {
+																	$anchorScroll();
+																	if (pages.length > 0) {
+																			$scope.page = pages[pages.length-1];
+																			pages.pop();
+																	}
+																	else {
+																		 	$scope.page = "feed";
+																	}
+															});
+													};
+
+													// Changes page
+													$scope.setPage = function(page, shouldRequireSession) {
+															$timeout(function() {
+																$anchorScroll();
+																if (!shouldRequireSession) {
+																		$scope.page = page;
+																		pages.push(page);
+																	}
+																	else $scope.page = "signup";
+															});
+													};
+
+													// Loads article and views it
+													$scope.viewArticle = function(id) {
+															$scope.data.article = {_id: id};
+															$scope.setPage("article");
+													};
+
+													// Loads article and views it
+													$scope.reviewArticle = function(id) {
+															$scope.data.article = {_id: id};
+															$scope.setPage("article-review-process");
+													};
+
+													// Loads draft article. Changes view to edit.
+													$scope.viewDraft = function(id) {
+															$scope.data.draft = {_id: id};
+															$scope.setPage("compose-article");
+													};
+
+													// Creates article draft. Changes view to edit
+													$scope.composeArticle = function() {
+															LI.show();
+															DNN.Article.createDraft({author: DNN.Session.current.fullname, userid: DNN.Session.current._id})
+																.then(function(data) {
+																		LI.hide();
+																		$timeout(function() {
+																				$scope.data.draft = data.article;
+																				$scope.setPage("compose-article");
+																		})
+																})
+																.catch(function() {
+																		LI.hide();
+																})
+													};
+
+													// Load Session if possible. If session cannot be loaded
+													// direct user to signup.
+													LI.show();
+													DNN.Session.verifyAndSetIfPossible()
+														.then(function() {
+																$timeout(function() {
+																		LI.hide();
+																	 	$scope.setPage("feed");
+																});
+														})
+														.catch(function() {
+																$timeout(function() {
+																		LI.hide();
+																		$scope.setPage("signup");
+																});
+														})
+											});
+								});
+        		}]);
+      </script>
+		{{/content}}
+{{/extend}}

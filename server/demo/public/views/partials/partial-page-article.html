@@ -1,0 +1,77 @@
+
+<div class="buffer-left buffer-top buffer-bottom buffer-right" ng-controller="ArticleCtrl">
+  <article>
+      <div id="article-status" data-status="[[article.status]]" ng-bind-html="articleStatus | trust"></div>
+      <h1>[[article.headline]]</h1>
+      <div id="article-meta">
+          <span>Written by <strong>[[article.author]]</strong></span>
+          <span>Published <strong>[[article.created | fromnow]]</strong></span>
+      </div>
+      <div id="article-cover">
+          <img ng-if="article.cover" ng-src="/api/v1/media/[[article.cover]]">
+          <small ng-if="article.coverAttributes">[[article.coverAttributes]]</small>
+      </div>
+      <div id="article-main" ng-bind-html="article.body.html | trust"></div>
+  </article>
+  <div id="sources">
+      <h3>Article Sources</h3>
+      <div class="source" ng-repeat="source in article.sources">
+          <a ng-click="openURL([[source.link]])" target="_blank">
+              <p>[[source.reference]]</p>
+              <em>Source Reference: ([[source.id]])</em>
+          </a>
+      </div>
+  </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("ArticleCtrl", ["$scope", "$timeout", "$location", "$anchorScroll", function($scope, $timeout, $location, $anchorScroll) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                 var ArticleStatusMessages = {
+                      "0": "This article is currently <strong>queued for review</strong>",
+                      "1": "This article is currently <strong>in review</strong>",
+                      "2": "This article has been <strong>rejected</strong> by the community and may contain inaccuaries",
+                      "3": "This article has been <strong>accepted</strong> by the community",
+                      "4": "Reviewers of this article failed to reach a publishing decision. This article may contain inaccuraries."
+                  };
+                  $scope.article = {};
+                  $scope.openURL = function(url) {
+                      window.open(url, "_blank");
+                  };
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "article") {
+                          $anchorScroll();
+                          var data = $scope.$parent.data;
+                          if (data.article._id) {
+                            LI.show();
+                            DNN.Article.fetch([data.article._id])
+                            	.then(function(data) {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      if (data.articles.length > 0) {
+                                          $scope.article = data.articles[0];
+                                          $scope.articleStatus = ArticleStatusMessages[$scope.article.status];
+                                      }
+                                      else {
+                                        $scope.setPage("feed");
+                                      }
+                                  })
+                            	})
+                              .catch(function() {
+                                  LI.hide();
+                                  $timeout(function() {
+                                      $scope.setPage("feed");
+                                  })
+                              })
+                          }
+                          else {
+                              $scope.setPage("feed");
+                          }
+                      }
+                  });
+              })
+          });
+      }])
+</script>

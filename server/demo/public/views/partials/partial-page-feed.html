@@ -1,0 +1,56 @@
+
+<div class="buffer-left buffer-top buffer-bottom" ng-controller="FeedCtrl">
+    <h1>Article Feed</h1>
+    <p ng-show="articles.length > 0">The following articles are currently either in various stages of review or have been fully vetted by at least three random community members.</p>
+    <p ng-show="!articles || articles.length == 0">No published articles could be found</p>
+    <div class="articles" ng-show="articles && articles.length > 0">
+        <div class="article" ng-repeat="article in articles">
+            <a href="javascript:void(0);" ng-click="$parent.viewArticle(article._id)">
+              <div class="card">
+                  <div class="overlay">
+                      <div class="author">Author: [[article.author]]</div>
+                      <div class="headline">[[article.headline]]</div>
+                      <div class="timestamp">[[article.created | fromnow]]</div>
+                  </div>
+                  <div class="media" style="background-image:url(/api/v1/media/[[article.cover]])"></div>
+              </div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 0"><strong>QUEUED FOR REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 1"><strong>IN REVIEW</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 2"><strong>REJECTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 3"><strong>ACCEPTED</strong></div>
+              <div class="status" data-status="[[article.status]]" ng-show="article.status == 4"><strong>REVIEW VOIDED</strong></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    angular.module("DNN")
+      .controller("FeedCtrl", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+          window["addEventListener"]("load", function() {
+              $timeout(function() {
+                  var fetchFeedInterval = null;
+                  var fetchFeed = function() {
+                    DNN.Article.feed()
+                      .then(function(data) {
+                          $timeout(function() {
+                              $scope.articles = data.articles.reverse();
+                          })
+                      })
+                  };
+
+                  $scope.$parent.$watch("page", function() {
+                      if ($scope.$parent.page === "feed") {
+                          fetchFeed();
+                          fetchFeedInterval = setInterval(function() {
+                            fetchFeed();
+                          },2000);
+                      }
+                      else {
+                          clearInterval(fetchFeedInterval);
+                      }
+                  });
+              })
+          });
+    }]);
+</script>
